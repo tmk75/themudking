@@ -1,0 +1,668 @@
+import React, { useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
+
+const ConcreteLogisticsDashboard = () => {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-900 relative overflow-hidden">
+      {/* Background Glass Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-32 right-32 w-96 h-96 bg-sky-400/15 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-indigo-400/10 rounded-full blur-3xl"></div>
+      </div>
+
+      {/* Main Container */}
+      <div className="relative max-w-7xl mx-auto p-6 lg:p-8 space-y-8">
+        
+        {/* Header */}
+        <div className="text-center space-y-4 mb-12">
+          <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-sky-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent">
+            🚛 智能混凝土物流运输仪表板
+          </h1>
+          <p className="text-xl lg:text-2xl text-slate-300 font-medium">实时监控</p>
+          <p className="text-lg text-slate-400">为客户提供优质混凝土配送服务</p>
+        </div>
+
+        {/* Key Metrics - 4 Square Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          
+          {/* Customer Satisfaction */}
+          <div className="aspect-square bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-6 flex flex-col items-center justify-center text-center space-y-3 hover:bg-white/15 transition-all duration-300">
+            <div className="w-12 h-12 bg-green-500/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-green-400/30">
+              <div className="text-2xl">🎯</div>
+            </div>
+            <div className="text-4xl lg:text-5xl font-bold text-green-400 drop-shadow-lg">96.8%</div>
+            <div className="text-base lg:text-lg font-semibold text-white">客户满意度</div>
+            <div className="text-xs text-slate-300 leading-relaxed">
+              基于1,428份客户反馈<br/>
+              较去年提升3.2%
+            </div>
+          </div>
+
+          {/* On-time Delivery */}
+          <div className="aspect-square bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-6 flex flex-col items-center justify-center text-center space-y-3 hover:bg-white/15 transition-all duration-300">
+            <div className="w-12 h-12 bg-sky-500/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-sky-400/30">
+              <div className="text-2xl">⚡</div>
+            </div>
+            <div className="text-4xl lg:text-5xl font-bold text-sky-400 drop-shadow-lg">94.2%</div>
+            <div className="text-base lg:text-lg font-semibold text-white">准时交付率</div>
+            <div className="text-xs text-slate-300 leading-relaxed">
+              月均配送2,847车<br/>
+              平均提前15分钟
+            </div>
+          </div>
+
+          {/* Cost Savings */}
+          <div className="aspect-square bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-6 flex flex-col items-center justify-center text-center space-y-3 hover:bg-white/15 transition-all duration-300">
+            <div className="w-12 h-12 bg-purple-500/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-purple-400/30">
+              <div className="text-2xl">💰</div>
+            </div>
+            <div className="text-4xl lg:text-5xl font-bold text-purple-400 drop-shadow-lg">¥1.8M</div>
+            <div className="text-base lg:text-lg font-semibold text-white">为客户节省成本</div>
+            <div className="text-xs text-slate-300 leading-relaxed">
+              通过路线优化<br/>
+              年均节省18%
+            </div>
+          </div>
+
+          {/* Quality Rate */}
+          <div className="aspect-square bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-6 flex flex-col items-center justify-center text-center space-y-3 hover:bg-white/15 transition-all duration-300">
+            <div className="w-12 h-12 bg-orange-500/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-orange-400/30">
+              <div className="text-2xl">🔧</div>
+            </div>
+            <div className="text-4xl lg:text-5xl font-bold text-orange-400 drop-shadow-lg">0.03%</div>
+            <div className="text-base lg:text-lg font-semibold text-white">不合格率</div>
+            <div className="text-xs text-slate-300 leading-relaxed">
+              严格质量控制<br/>
+              低于行业92%
+            </div>
+          </div>
+
+        </div>
+
+        {/* Two Column Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          
+          {/* Customer Satisfaction Trend */}
+          <div className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-8 hover:bg-white/15 transition-all duration-300">
+            <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
+              <span className="mr-4 text-3xl">📈</span>
+              客户满意度趋势分析
+            </h3>
+            <div className="grid grid-cols-1 gap-6">
+              <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+                <div className="text-3xl lg:text-4xl font-bold text-sky-300">9.7/10</div>
+                <div className="text-sm text-slate-300 mt-2">混凝土质量评分</div>
+              </div>
+              <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+                <div className="text-3xl lg:text-4xl font-bold text-blue-300">9.4/10</div>
+                <div className="text-sm text-slate-300 mt-2">配送速度评分</div>
+              </div>
+              <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+                <div className="text-3xl lg:text-4xl font-bold text-indigo-300">9.8/10</div>
+                <div className="text-sm text-slate-300 mt-2">服务质量评分</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Order Fulfillment */}
+          <div className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-8 hover:bg-white/15 transition-all duration-300">
+            <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
+              <span className="mr-4 text-3xl">📦</span>
+              订单履行与配送分析
+            </h3>
+            <div className="grid grid-cols-1 gap-6">
+              <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+                <div className="text-4xl lg:text-5xl font-bold text-white">2,847</div>
+                <div className="text-sm text-slate-300 mt-2">本月完成订单</div>
+                <div className="text-sm text-sky-400 mt-1">↗ 比计划多187单</div>
+              </div>
+              <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+                <div className="text-4xl lg:text-5xl font-bold text-white">3.8天</div>
+                <div className="text-sm text-slate-300 mt-2">平均配送周期</div>
+                <div className="text-sm text-blue-400 mt-1">↓ 较承诺提前1.2天</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Value Creation Section */}
+        <div className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-8 mb-8 hover:bg-white/15 transition-all duration-300">
+          <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
+            <span className="mr-4 text-3xl">🎯</span>
+            质量改进为客户创造的价值
+          </h3>
+          <div className="text-center mb-6">
+            <div className="text-xl font-semibold text-slate-300">客户收益亮点</div>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="text-3xl lg:text-4xl font-bold text-sky-300">¥627K</div>
+              <div className="text-sm text-slate-300 mt-2">减少客户质量成本</div>
+            </div>
+            <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="text-3xl lg:text-4xl font-bold text-blue-300">97.8%</div>
+              <div className="text-sm text-slate-300 mt-2">首次通过率</div>
+            </div>
+            <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="text-3xl lg:text-4xl font-bold text-indigo-300">18%</div>
+              <div className="text-sm text-slate-300 mt-2">客户库存成本降低</div>
+            </div>
+            <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="text-3xl lg:text-4xl font-bold text-cyan-300">96.8%</div>
+              <div className="text-sm text-slate-300 mt-2">客户推荐意愿</div>
+            </div>
+          </div>
+        </div>
+
+        {/* GIS Truck Tracking Map */}
+        <div className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-8 mb-8 hover:bg-white/15 transition-all duration-300">
+          <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
+            <span className="mr-4 text-3xl">🗺️</span>
+            实时GPS车辆追踪地图
+          </h3>
+          
+          {/* Map Container */}
+          <div className="bg-slate-900/60 backdrop-blur-sm rounded-2xl border border-white/20 h-96 relative overflow-hidden">
+            
+            {/* Mock Map Grid Background */}
+            <div className="absolute inset-0 opacity-20">
+              <svg width="100%" height="100%" viewBox="0 0 800 400">
+                <defs>
+                  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#475569" strokeWidth="0.5"/>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+              </svg>
+            </div>
+
+            {/* Mock Roads */}
+            <svg className="absolute inset-0 w-full h-full">
+              {/* Main Highway */}
+              <path d="M 0 200 Q 200 180 400 200 Q 600 220 800 200" stroke="#64748B" strokeWidth="6" fill="none" opacity="0.6"/>
+              
+              {/* Secondary Roads */}
+              <path d="M 150 0 L 150 400" stroke="#64748B" strokeWidth="3" fill="none" opacity="0.4"/>
+              <path d="M 400 0 L 400 400" stroke="#64748B" strokeWidth="3" fill="none" opacity="0.4"/>
+              <path d="M 650 0 L 650 400" stroke="#64748B" strokeWidth="3" fill="none" opacity="0.4"/>
+              
+              {/* Cross Roads */}
+              <path d="M 0 100 L 800 100" stroke="#64748B" strokeWidth="3" fill="none" opacity="0.4"/>
+              <path d="M 0 300 L 800 300" stroke="#64748B" strokeWidth="3" fill="none" opacity="0.4"/>
+            </svg>
+
+            {/* Truck Markers */}
+            <div className="absolute inset-0">
+              
+              {/* Truck 1 - Delivering */}
+              <div className="absolute" style={{ left: '15%', top: '25%' }}>
+                <div className="relative">
+                  <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                    <span className="text-xs text-white">🚛</span>
+                  </div>
+                  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-green-500/90 backdrop-blur-sm text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+                    T-045 配送中
+                  </div>
+                </div>
+              </div>
+
+              {/* Truck 2 - On Route */}
+              <div className="absolute" style={{ left: '45%', top: '40%' }}>
+                <div className="relative">
+                  <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                    <span className="text-xs text-white">🚛</span>
+                  </div>
+                  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-blue-500/90 backdrop-blur-sm text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+                    T-023 运输中
+                  </div>
+                </div>
+              </div>
+
+              {/* Truck 3 - Loading */}
+              <div className="absolute" style={{ left: '75%', top: '15%' }}>
+                <div className="relative">
+                  <div className="w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg">
+                    <span className="text-xs text-white">🚛</span>
+                  </div>
+                  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-yellow-500/90 backdrop-blur-sm text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+                    T-067 装载中
+                  </div>
+                </div>
+              </div>
+
+              {/* Truck 4 - Returning */}
+              <div className="absolute" style={{ left: '30%', top: '70%' }}>
+                <div className="relative">
+                  <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                    <span className="text-xs text-white">🚛</span>
+                  </div>
+                  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-purple-500/90 backdrop-blur-sm text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+                    T-091 返程中
+                  </div>
+                </div>
+              </div>
+
+              {/* Truck 5 - Idle */}
+              <div className="absolute" style={{ left: '60%', top: '80%' }}>
+                <div className="relative">
+                  <div className="w-6 h-6 bg-gray-500 rounded-full flex items-center justify-center shadow-lg">
+                    <span className="text-xs text-white">🚛</span>
+                  </div>
+                  <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-500/90 backdrop-blur-sm text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+                    T-134 待命中
+                  </div>
+                </div>
+              </div>
+
+              {/* Factory/Depot Markers */}
+              <div className="absolute" style={{ left: '8%', top: '45%' }}>
+                <div className="w-4 h-4 bg-orange-500 rounded-sm flex items-center justify-center">
+                  <span className="text-xs">🏭</span>
+                </div>
+                <div className="text-xs text-white mt-1">混凝土厂</div>
+              </div>
+
+              <div className="absolute" style={{ left: '85%', top: '60%' }}>
+                <div className="w-4 h-4 bg-red-500 rounded-sm flex items-center justify-center">
+                  <span className="text-xs">🏗️</span>
+                </div>
+                <div className="text-xs text-white mt-1">工地A</div>
+              </div>
+
+              <div className="absolute" style={{ left: '25%', top: '10%' }}>
+                <div className="w-4 h-4 bg-red-500 rounded-sm flex items-center justify-center">
+                  <span className="text-xs">🏗️</span>
+                </div>
+                <div className="text-xs text-white mt-1">工地B</div>
+              </div>
+
+            </div>
+
+            {/* Route Lines */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none">
+              {/* Route from factory to site A */}
+              <path d="M 64 180 Q 200 160 680 240" stroke="#10B981" strokeWidth="2" strokeDasharray="5,5" fill="none" opacity="0.7">
+                <animate attributeName="stroke-dashoffset" values="0;10" dur="1s" repeatCount="indefinite"/>
+              </path>
+              
+              {/* Route from factory to site B */}
+              <path d="M 64 180 Q 150 120 200 40" stroke="#3B82F6" strokeWidth="2" strokeDasharray="5,5" fill="none" opacity="0.7">
+                <animate attributeName="stroke-dashoffset" values="0;10" dur="1s" repeatCount="indefinite"/>
+              </path>
+            </svg>
+
+          </div>
+
+          {/* Map Legend */}
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mt-6">
+            <div className="flex items-center space-x-2">
+              <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+              <span className="text-sm text-slate-300">配送中 (2)</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
+              <span className="text-sm text-slate-300">运输中 (1)</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-4 h-4 bg-yellow-500 rounded-full"></div>
+              <span className="text-sm text-slate-300">装载中 (1)</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-4 h-4 bg-purple-500 rounded-full"></div>
+              <span className="text-sm text-slate-300">返程中 (1)</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-4 h-4 bg-gray-500 rounded-full"></div>
+              <span className="text-sm text-slate-300">待命中 (3)</span>
+            </div>
+          </div>
+
+          {/* Live Statistics */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="text-2xl font-bold text-green-400">8</div>
+              <div className="text-sm text-slate-300">活跃车辆</div>
+            </div>
+            <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="text-2xl font-bold text-blue-400">127.3km</div>
+              <div className="text-sm text-slate-300">今日总里程</div>
+            </div>
+            <div className="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="text-2xl font-bold text-purple-400">98.5%</div>
+              <div className="text-sm text-slate-300">GPS信号质量</div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* KPI Analytics Dashboard */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          
+          {/* Delivery Performance Metrics */}
+          <div className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-8 hover:bg-white/15 transition-all duration-300">
+            <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
+              <span className="mr-4 text-3xl">📊</span>
+              配送性能指标
+            </h3>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 mb-6">
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={[
+                  { month: '1月', onTime: 92.3, avgTime: 52, satisfaction: 94.2 },
+                  { month: '2月', onTime: 93.1, avgTime: 49, satisfaction: 95.1 },
+                  { month: '3月', onTime: 94.8, avgTime: 48, satisfaction: 96.3 },
+                  { month: '4月', onTime: 93.5, avgTime: 51, satisfaction: 95.8 },
+                  { month: '5月', onTime: 95.2, avgTime: 46, satisfaction: 97.1 },
+                  { month: '6月', onTime: 94.2, avgTime: 48, satisfaction: 96.8 }
+                ]}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#475569" opacity={0.3} />
+                  <XAxis dataKey="month" stroke="#94A3B8" />
+                  <YAxis stroke="#94A3B8" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(15, 23, 42, 0.95)', 
+                      border: '1px solid rgba(71, 85, 105, 0.5)',
+                      borderRadius: '12px',
+                      backdropFilter: 'blur(16px)',
+                      color: '#F8FAFC'
+                    }} 
+                  />
+                  <Line type="monotone" dataKey="onTime" stroke="#10B981" strokeWidth={3} name="准时率%" />
+                  <Line type="monotone" dataKey="satisfaction" stroke="#3B82F6" strokeWidth={3} name="满意度%" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="text-center p-3 bg-white/10 backdrop-blur-sm rounded-xl">
+                <div className="text-lg font-bold text-green-400">94.2%</div>
+                <div className="text-xs text-slate-300">准时率</div>
+              </div>
+              <div className="text-center p-3 bg-white/10 backdrop-blur-sm rounded-xl">
+                <div className="text-lg font-bold text-blue-400">48分钟</div>
+                <div className="text-xs text-slate-300">平均时间</div>
+              </div>
+              <div className="text-center p-3 bg-white/10 backdrop-blur-sm rounded-xl">
+                <div className="text-lg font-bold text-purple-400">96.8%</div>
+                <div className="text-xs text-slate-300">满意度</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Fleet Utilization & Efficiency */}
+          <div className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-8 hover:bg-white/15 transition-all duration-300">
+            <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
+              <span className="mr-4 text-3xl">🚛</span>
+              车队利用率与效率
+            </h3>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 mb-6">
+              <ResponsiveContainer width="100%" height={300}>
+                <AreaChart data={[
+                  { week: '第1周', utilization: 85.2, efficiency: 78.3, fuelEff: 6.8 },
+                  { week: '第2周', utilization: 87.6, efficiency: 82.1, fuelEff: 6.5 },
+                  { week: '第3周', utilization: 89.3, efficiency: 85.7, fuelEff: 6.2 },
+                  { week: '第4周', utilization: 87.5, efficiency: 84.2, fuelEff: 6.3 },
+                  { week: '第5周', utilization: 91.2, efficiency: 87.9, fuelEff: 6.1 },
+                  { week: '第6周', utilization: 88.7, efficiency: 86.4, fuelEff: 6.2 }
+                ]}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#475569" opacity={0.3} />
+                  <XAxis dataKey="week" stroke="#94A3B8" />
+                  <YAxis stroke="#94A3B8" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(15, 23, 42, 0.95)', 
+                      border: '1px solid rgba(71, 85, 105, 0.5)',
+                      borderRadius: '12px',
+                      backdropFilter: 'blur(16px)',
+                      color: '#F8FAFC'
+                    }} 
+                  />
+                  <Area type="monotone" dataKey="utilization" stackId="1" stroke="#06B6D4" fill="#06B6D4" fillOpacity={0.6} name="利用率%" />
+                  <Area type="monotone" dataKey="efficiency" stackId="2" stroke="#8B5CF6" fill="#8B5CF6" fillOpacity={0.4} name="效率%" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="text-center p-3 bg-white/10 backdrop-blur-sm rounded-xl">
+                <div className="text-lg font-bold text-cyan-400">88.7%</div>
+                <div className="text-xs text-slate-300">车队利用率</div>
+              </div>
+              <div className="text-center p-3 bg-white/10 backdrop-blur-sm rounded-xl">
+                <div className="text-lg font-bold text-purple-400">86.4%</div>
+                <div className="text-xs text-slate-300">运营效率</div>
+              </div>
+              <div className="text-center p-3 bg-white/10 backdrop-blur-sm rounded-xl">
+                <div className="text-lg font-bold text-orange-400">6.2L</div>
+                <div className="text-xs text-slate-300">百公里油耗</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Quality Control & Financial KPIs */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          
+          {/* Quality Control Metrics */}
+          <div className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-8 hover:bg-white/15 transition-all duration-300">
+            <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
+              <span className="mr-4 text-3xl">🔬</span>
+              质量控制指标
+            </h3>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 mb-6">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={[
+                  { metric: '温度合规', value: 98.5, target: 98.0 },
+                  { metric: '坍落度', value: 96.2, target: 95.0 },
+                  { metric: '强度测试', value: 97.8, target: 96.0 },
+                  { metric: '首次通过', value: 97.8, target: 95.0 },
+                  { metric: '客户验收', value: 99.1, target: 98.0 }
+                ]}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#475569" opacity={0.3} />
+                  <XAxis dataKey="metric" stroke="#94A3B8" fontSize={12} />
+                  <YAxis stroke="#94A3B8" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(15, 23, 42, 0.95)', 
+                      border: '1px solid rgba(71, 85, 105, 0.5)',
+                      borderRadius: '12px',
+                      backdropFilter: 'blur(16px)',
+                      color: '#F8FAFC'
+                    }} 
+                  />
+                  <Bar dataKey="value" fill="#10B981" name="实际值%" />
+                  <Bar dataKey="target" fill="#64748B" name="目标值%" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="text-center p-3 bg-white/10 backdrop-blur-sm rounded-xl">
+                <div className="text-lg font-bold text-green-400">0.03%</div>
+                <div className="text-xs text-slate-300">不合格率</div>
+              </div>
+              <div className="text-center p-3 bg-white/10 backdrop-blur-sm rounded-xl">
+                <div className="text-lg font-bold text-blue-400">99.1%</div>
+                <div className="text-xs text-slate-300">客户验收率</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Financial Performance KPIs */}
+          <div className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-8 hover:bg-white/15 transition-all duration-300">
+            <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
+              <span className="mr-4 text-3xl">💹</span>
+              财务绩效指标
+            </h3>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 mb-6">
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={[
+                  { month: '1月', revenue: 2.1, costPerKm: 3.2, margin: 18.5 },
+                  { month: '2月', revenue: 2.3, costPerKm: 3.1, margin: 19.2 },
+                  { month: '3月', revenue: 2.5, costPerKm: 2.9, margin: 21.3 },
+                  { month: '4月', revenue: 2.4, costPerKm: 3.0, margin: 20.1 },
+                  { month: '5月', revenue: 2.6, costPerKm: 2.8, margin: 22.5 },
+                  { month: '6月', revenue: 2.7, costPerKm: 2.7, margin: 23.2 }
+                ]}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#475569" opacity={0.3} />
+                  <XAxis dataKey="month" stroke="#94A3B8" />
+                  <YAxis stroke="#94A3B8" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(15, 23, 42, 0.95)', 
+                      border: '1px solid rgba(71, 85, 105, 0.5)',
+                      borderRadius: '12px',
+                      backdropFilter: 'blur(16px)',
+                      color: '#F8FAFC'
+                    }} 
+                  />
+                  <Line type="monotone" dataKey="revenue" stroke="#F59E0B" strokeWidth={3} name="每车收入(万)" />
+                  <Line type="monotone" dataKey="margin" stroke="#10B981" strokeWidth={3} name="利润率%" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="text-center p-3 bg-white/10 backdrop-blur-sm rounded-xl">
+                <div className="text-lg font-bold text-yellow-400">¥2.7万</div>
+                <div className="text-xs text-slate-300">每车收入</div>
+              </div>
+              <div className="text-center p-3 bg-white/10 backdrop-blur-sm rounded-xl">
+                <div className="text-lg font-bold text-green-400">23.2%</div>
+                <div className="text-xs text-slate-300">利润率</div>
+              </div>
+              <div className="text-center p-3 bg-white/10 backdrop-blur-sm rounded-xl">
+                <div className="text-lg font-bold text-red-400">¥2.7</div>
+                <div className="text-xs text-slate-300">每公里成本</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Real-time Order Status */}
+        <div className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-8 mb-8 hover:bg-white/15 transition-all duration-300">
+          <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
+            <span className="mr-4 text-3xl">📋</span>
+            实时订单配送状态
+          </h3>
+          <div className="space-y-4">
+            
+            <div className="flex justify-between items-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div>
+                <div className="font-semibold text-white text-lg">订单 #ORD-2024-8847</div>
+                <div className="text-sm text-slate-300">C30混凝土 | 数量: 25立方米</div>
+              </div>
+              <div className="text-sm font-medium text-sky-300 bg-sky-500/20 px-3 py-2 rounded-xl border border-sky-400/30">提前30分钟</div>
+            </div>
+
+            <div className="flex justify-between items-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div>
+                <div className="font-semibold text-white text-lg">订单 #ORD-2024-8848</div>
+                <div className="text-sm text-slate-300">C40高强混凝土 | 数量: 18立方米</div>
+              </div>
+              <div className="text-sm font-medium text-blue-300 bg-blue-500/20 px-3 py-2 rounded-xl border border-blue-400/30">按时交付</div>
+            </div>
+
+            <div className="flex justify-between items-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div>
+                <div className="font-semibold text-white text-lg">订单 #ORD-2024-8849</div>
+                <div className="text-sm text-slate-300">C25普通混凝土 | 数量: 32立方米</div>
+              </div>
+              <div className="text-sm font-medium text-sky-300 bg-sky-500/20 px-3 py-2 rounded-xl border border-sky-400/30">提前45分钟</div>
+            </div>
+
+            <div className="flex justify-between items-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div>
+                <div className="font-semibold text-white text-lg">订单 #ORD-2024-8850</div>
+                <div className="text-sm text-slate-300">防水混凝土 | 数量: 12立方米</div>
+              </div>
+              <div className="text-sm font-medium text-blue-300 bg-blue-500/20 px-3 py-2 rounded-xl border border-blue-400/30">按时交付</div>
+            </div>
+
+            <div className="flex justify-between items-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div>
+                <div className="font-semibold text-white text-lg">订单 #ORD-2024-8851</div>
+                <div className="text-sm text-slate-300">自密实混凝土 | 数量: 8立方米</div>
+              </div>
+              <div className="text-sm font-medium text-sky-300 bg-sky-500/20 px-3 py-2 rounded-xl border border-sky-400/30">提前1小时</div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Customer Feedback */}
+        <div className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-8 mb-8 hover:bg-white/15 transition-all duration-300">
+          <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
+            <span className="mr-4 text-3xl">💬</span>
+            客户反馈与评价
+          </h3>
+          
+          <div className="text-center mb-8 p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+            <div className="text-lg font-semibold text-slate-300 mb-2">整体评分</div>
+            <div className="text-5xl font-bold text-white mb-3">4.8/5.0</div>
+            <div className="text-yellow-400 text-3xl">★★★★★</div>
+          </div>
+          
+          <div className="space-y-6">
+            
+            <div className="p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="text-yellow-400 text-xl mb-2">★★★★★</div>
+              <div className="font-semibold text-white text-lg mb-2">中建三局工程部</div>
+              <div className="text-slate-300">"混凝土质量稳定，配送准时，施工进度得到有效保障。合作2年来从未出现质量问题，大大降低了我们的工程风险。"</div>
+            </div>
+            
+            <div className="p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="text-yellow-400 text-xl mb-2">★★★★★</div>
+              <div className="font-semibold text-white text-lg mb-2">万科地产项目部</div>
+              <div className="text-slate-300">"强度超出预期，每次都能提前交付。智能化的配送管理让我们印象深刻，值得长期合作。"</div>
+            </div>
+            
+            <div className="p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="text-yellow-400 text-xl mb-2">★★★★☆</div>
+              <div className="font-semibold text-white text-lg mb-2">保利建设集团</div>
+              <div className="text-slate-300">"产品质量稳定，技术创新能力强。希望未来在成本优化方面能有更多合作空间。"</div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Improvement Suggestions */}
+        <div className="bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl p-8 hover:bg-white/15 transition-all duration-300">
+          <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
+            <span className="mr-4 text-3xl">🚀</span>
+            持续改进建议
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <div className="p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="font-semibold text-sky-300 text-xl mb-3">优化配送路线</div>
+              <div className="text-slate-300 mb-3">通过AI算法优化配送路径，可进一步缩短配送时间20分钟</div>
+              <div className="text-slate-400">预计客户满意度提升2.5%</div>
+            </div>
+            
+            <div className="p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="font-semibold text-blue-300 text-xl mb-3">定制化配方服务</div>
+              <div className="text-slate-300 mb-3">增加特殊工程项目定制混凝土配方，满足客户个性化需求</div>
+              <div className="text-slate-400">预计新增收入12%</div>
+            </div>
+            
+            <div className="p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="font-semibold text-indigo-300 text-xl mb-3">质量追溯系统</div>
+              <div className="text-slate-300 mb-3">建立完整的混凝土质量追溯链，增强客户信心</div>
+              <div className="text-slate-400">预计客户留存率提升6%</div>
+            </div>
+            
+            <div className="p-6 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="font-semibold text-cyan-300 text-xl mb-3">数字化服务平台</div>
+              <div className="text-slate-300 mb-3">为客户提供实时配送跟踪和质量报告查询服务</div>
+              <div className="text-slate-400">预计客户体验评分提升0.4</div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+export default ConcreteLogisticsDashboard;

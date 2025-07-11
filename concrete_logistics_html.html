@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能混凝土物流运输仪表板</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(to bottom right, #0f172a, #1e3a8a, #0f172a);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Background glass elements */
+        .bg-orbs {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+        }
+
+        .bg-orb-1 {
+            top: 5rem;
+            left: 5rem;
+            width: 18rem;
+            height: 18rem;
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .bg-orb-2 {
+            bottom: 8rem;
+            right: 8rem;
+            width: 24rem;
+            height: 24rem;
+            background: rgba(14, 165, 233, 0.15);
+        }
+
+        .bg-orb-3 {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20rem;
+            height: 20rem;
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* Glass card styling */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(32px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .glass-card-sm {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Container */
+        .container {
+            max-width: 112rem;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #7dd3fc, #93c5fd, #a5b4fc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            margin-bottom: 0.5rem;
+        }
+
+        .header span {
+            font-size: 1.125rem;
+            color: #94a3b8;
+        }
+
+        /* Grid layouts */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Metric cards */
+        .metric-card {
+            aspect-ratio: 1;
+            padding: 0.25rem 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 0.25rem;
+        }
+
+        .metric-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.875rem;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+        }
+
+        .metric-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .metric-desc {
+            font-size: 0.75rem;
+            color: #cbd5e1;
+            line-height: 1.2;
+        }
+
+        /* Content sections */
+        .section {
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title span {
+            margin-right: 1rem;
+            font-size: 1.875rem;
+        }
+
+        /* Map container */
+        .map-container {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            height: 24rem;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .map-grid {
+            position: absolute;
+            inset: 0;
+            opacity: 0.2;
+            background-image: 
+                linear-gradient(rgba(71, 85, 105, 0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(71, 85, 105, 0.5) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .truck-marker {
+            position: absolute;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            font-size: 0.75rem;
+            color: white;
+        }
+
+        .truck-marker.active {
+            animation: pulse 2s infinite;
+        }
+
+        .truck-tooltip {
+            position: absolute;
+            top: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            white-space: nowrap;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Legend */
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-dot {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+        }
+
+        .legend-text {
+            font-size: 0.875rem;
+            color: #cbd5e1;
+        }
+
+        /* Statistics grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #cbd5e1;
+        }
+
+        /* Chart container */
+        .chart-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            height: 300px;
+        }
+
+        /* Order list */
+        .order-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .order-info h4 {
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .order-info p {
+            font-size: 0.875rem;
+            color: #cbd5e1;
+        }
+
+        .order-status {
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Feedback section */
+        .feedback-rating {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .rating-score {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+        }
+
+        .rating-stars {
+            font-size: 1.875rem;
+            color: #fbbf24;
+            margin-bottom: 0.5rem;
+        }
+
+        .feedback-item {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 1.5rem;
+        }
+
+        .feedback-stars {
+            font-size: 1.25rem;
+            color: #fbbf24;
+            margin-bottom: 0.5rem;
+        }
+
+        .feedback-company {
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feedback-text {
+            color: #cbd5e1;
+        }
+
+        /* Improvement suggestions */
+        .suggestions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .suggestion-card {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .suggestion-title {
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .suggestion-desc {
+            color: #cbd5e1;
+            margin-bottom: 0.75rem;
+        }
+
+        .suggestion-impact {
+            color: #94a3b8;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .metric-value {
+                font-size: 1.25rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-orbs">
+        <div class="bg-orb bg-orb-1"></div>
+        <div class="bg-orb bg-orb-2"></div>
+        <div class="bg-orb bg-orb-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🚛 智能混凝土物流运输仪表板</h1>
+            <p>实时监控</p>
+            <span>为客户提供优质混凝土配送服务</span>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="grid-4">
+            <div class="glass-card metric-card">
+                <div class="metric-icon" style="background: rgba(34, 197, 94, 0.2); border-color: rgba(74, 222, 128, 0.3);">🎯</div>
+                <div class="metric-value" style="color: #4ade80;">96.8%</div>
+                <div class="metric-title">客户满意度</div>
+                <div class="metric-desc">1,428份反馈<br/>提升3.2%</div>
+            </div>
+            
+            <div class="glass-card metric-card">
+                <div class="metric-icon" style="background: rgba(14, 165, 233, 0.2); border-color: rgba(56, 189, 248, 0.3);">⚡</div>
+                <div class="metric-value" style="color: #38bdf8;">94.2%</div>
+                <div class="metric-title">准时交付率</div>
+                <div class="metric-desc">月均2,847车<br/>提前15分钟</div>
+            </div>
+            
+            <div class="glass-card metric-card">
+                <div class="metric-icon" style="background: rgba(168, 85, 247, 0.2); border-color: rgba(196, 181, 253, 0.3);">💰</div>
+                <div class="metric-value" style="color: #a855f7;">¥1.8M</div>
+                <div class="metric-title">节省成本</div>
+                <div class="metric-desc">路线优化<br/>年均18%</div>
+            </div>
+            
+            <div class="glass-card metric-card">
+                <div class="metric-icon" style="background: rgba(249, 115, 22, 0.2); border-color: rgba(251, 146, 60, 0.3);">🔧</div>
+                <div class="metric-value" style="color: #fb923c;">0.03%</div>
+                <div class="metric-title">不合格率</div>
+                <div class="metric-desc">质量控制<br/>低于行业92%</div>
+            </div>
+        </div>
+
+        <!-- Two Column Section -->
+        <div class="grid-2">
+            <!-- Customer Satisfaction Trend -->
+            <div class="glass-card section">
+                <h3 class="section-title">
+                    <span>📈</span>
+                    客户满意度趋势分析
+                </h3>
+                <div class="grid-4">
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value" style="color: #7dd3fc;">9.7/10</div>
+                        <div class="stat-label">混凝土质量评分</div>
+                    </div>
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value" style="color: #93c5fd;">9.4/10</div>
+                        <div class="stat-label">配送速度评分</div>
+                    </div>
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value" style="color: #a5b4fc;">9.8/10</div>
+                        <div class="stat-label">服务质量评分</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Fulfillment -->
+            <div class="glass-card section">
+                <h3 class="section-title">
+                    <span>📦</span>
+                    订单履行与配送分析
+                </h3>
+                <div class="grid-2" style="grid-template-columns: 1fr 1fr;">
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value">2,847</div>
+                        <div class="stat-label">本月完成订单</div>
+                        <div style="color: #38bdf8; font-size: 0.875rem;">↗ 比计划多187单</div>
+                    </div>
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value">3.8天</div>
+                        <div class="stat-label">平均配送周期</div>
+                        <div style="color: #60a5fa; font-size: 0.875rem;">↓ 较承诺提前1.2天</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Value Creation Section -->
+        <div class="glass-card section">
+            <h3 class="section-title">
+                <span>🎯</span>
+                质量改进为客户创造的价值
+            </h3>
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+                <div style="font-size: 1.25rem; font-weight: 600; color: #cbd5e1;">客户收益亮点</div>
+            </div>
+            <div class="grid-4">
+                <div class="glass-card-sm stat-card">
+                    <div class="stat-value" style="color: #7dd3fc;">¥627K</div>
+                    <div class="stat-label">减少客户质量成本</div>
+                </div>
+                <div class="glass-card-sm stat-card">
+                    <div class="stat-value" style="color: #93c5fd;">97.8%</div>
+                    <div class="stat-label">首次通过率</div>
+                </div>
+                <div class="glass-card-sm stat-card">
+                    <div class="stat-value" style="color: #a5b4fc;">18%</div>
+                    <div class="stat-label">客户库存成本降低</div>
+                </div>
+                <div class="glass-card-sm stat-card">
+                    <div class="stat-value" style="color: #22d3ee;">96.8%</div>
+                    <div class="stat-label">客户推荐意愿</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GIS Truck Tracking Map -->
+        <div class="glass-card section">
+            <h3 class="section-title">
+                <span>🗺️</span>
+                实时GPS车辆追踪地图
+            </h3>
+            
+            <div class="map-container">
+                <div class="map-grid"></div>
+                
+                <!-- Truck markers -->
+                <div class="truck-marker active" style="left: 15%; top: 25%; background: #10b981;">
+                    🚛
+                    <div class="truck-tooltip" style="background: rgba(16, 185, 129, 0.9);">T-045 配送中</div>
+                </div>
+                
+                <div class="truck-marker active" style="left: 45%; top: 40%; background: #3b82f6;">
+                    🚛
+                    <div class="truck-tooltip" style="background: rgba(59, 130, 246, 0.9);">T-023 运输中</div>
+                </div>
+                
+                <div class="truck-marker" style="left: 75%; top: 15%; background: #eab308;">
+                    🚛
+                    <div class="truck-tooltip" style="background: rgba(234, 179, 8, 0.9);">T-067 装载中</div>
+                </div>
+                
+                <div class="truck-marker active" style="left: 30%; top: 70%; background: #8b5cf6;">
+                    🚛
+                    <div class="truck-tooltip" style="background: rgba(139, 92, 246, 0.9);">T-091 返程中</div>
+                </div>
+                
+                <div class="truck-marker" style="left: 60%; top: 80%; background: #6b7280;">
+                    🚛
+                    <div class="truck-tooltip" style="background: rgba(107, 114, 128, 0.9);">T-134 待命中</div>
+                </div>
+
+                <!-- Factory and site markers -->
+                <div style="position: absolute; left: 8%; top: 45%;">
+                    <div style="width: 1rem; height: 1rem; background: #f97316; border-radius: 0.25rem; display: flex; align-items: center; justify-content: center; font-size: 0.75rem;">🏭</div>
+                    <div style="font-size: 0.75rem; color: white; margin-top: 0.25rem;">混凝土厂</div>
+                </div>
+                
+                <div style="position: absolute; left: 85%; top: 60%;">
+                    <div style="width: 1rem; height: 1rem; background: #ef4444; border-radius: 0.25rem; display: flex; align-items: center; justify-content: center; font-size: 0.75rem;">🏗️</div>
+                    <div style="font-size: 0.75rem; color: white; margin-top: 0.25rem;">工地A</div>
+                </div>
+                
+                <div style="position: absolute; left: 25%; top: 10%;">
+                    <div style="width: 1rem; height: 1rem; background: #ef4444; border-radius: 0.25rem; display: flex; align-items: center; justify-content: center; font-size: 0.75rem;">🏗️</div>
+                    <div style="font-size: 0.75rem; color: white; margin-top: 0.25rem;">工地B</div>
+                </div>
+            </div>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: #10b981;"></div>
+                    <span class="legend-text">配送中 (2)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: #3b82f6;"></div>
+                    <span class="legend-text">运输中 (1)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: #eab308;"></div>
+                    <span class="legend-text">装载中 (1)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: #8b5cf6;"></div>
+                    <span class="legend-text">返程中 (1)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: #6b7280;"></div>
+                    <span class="legend-text">待命中 (3)</span>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="glass-card-sm stat-card">
+                    <div class="stat-value" style="color: #10b981;">8</div>
+                    <div class="stat-label">活跃车辆</div>
+                </div>
+                <div class="glass-card-sm stat-card">
+                    <div class="stat-value" style="color: #3b82f6;">127.3km</div>
+                    <div class="stat-label">今日总里程</div>
+                </div>
+                <div class="glass-card-sm stat-card">
+                    <div class="stat-value" style="color: #8b5cf6;">98.5%</div>
+                    <div class="stat-label">GPS信号质量</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KPI Analytics Dashboard -->
+        <div class="grid-2">
+            <!-- Delivery Performance Metrics -->
+            <div class="glass-card section">
+                <h3 class="section-title">
+                    <span>📊</span>
+                    配送性能指标
+                </h3>
+                <div class="chart-container">
+                    <canvas id="deliveryChart"></canvas>
+                </div>
+                <div class="stats-grid">
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value" style="color: #10b981;">94.2%</div>
+                        <div class="stat-label">准时率</div>
+                    </div>
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value" style="color: #3b82f6;">48分钟</div>
+                        <div class="stat-label">平均时间</div>
+                    </div>
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value" style="color: #8b5cf6;">96.8%</div>
+                        <div class="stat-label">满意度</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fleet Utilization -->
+            <div class="glass-card section">
+                <h3 class="section-title">
+                    <span>🚛</span>
+                    车队利用率与效率
+                </h3>
+                <div class="chart-container">
+                    <canvas id="fleetChart"></canvas>
+                </div>
+                <div class="stats-grid">
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value" style="color: #06b6d4;">88.7%</div>
+                        <div class="stat-label">车队利用率</div>
+                    </div>
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value" style="color: #8b5cf6;">86.4%</div>
+                        <div class="stat-label">运营效率</div>
+                    </div>
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value" style="color: #f97316;">6.2L</div>
+                        <div class="stat-label">百公里油耗</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quality Control & Financial KPIs -->
+        <div class="grid-2">
+            <!-- Quality Control -->
+            <div class="glass-card section">
+                <h3 class="section-title">
+                    <span>🔬</span>
+                    质量控制指标
+                </h3>
+                <div class="chart-container">
+                    <canvas id="qualityChart"></canvas>
+                </div>
+                <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value" style="color: #10b981;">0.03%</div>
+                        <div class="stat-label">不合格率</div>
+                    </div>
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value" style="color: #3b82f6;">99.1%</div>
+                        <div class="stat-label">客户验收率</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Performance -->
+            <div class="glass-card section">
+                <h3 class="section-title">
+                    <span>💹</span>
+                    财务绩效指标
+                </h3>
+                <div class="chart-container">
+                    <canvas id="financialChart"></canvas>
+                </div>
+                <div class="stats-grid">
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value" style="color: #eab308;">¥2.7万</div>
+                        <div class="stat-label">每车收入</div>
+                    </div>
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value" style="color: #10b981;">23.2%</div>
+                        <div class="stat-label">利润率</div>
+                    </div>
+                    <div class="glass-card-sm stat-card">
+                        <div class="stat-value" style="color: #ef4444;">¥2.7</div>
+                        <div class="stat-label">每公里成本</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real-time Orders -->
+        <div class="glass-card section">
+            <h3 class="section-title">
+                <span>📋</span>
+                实时订单配送状态
+            </h3>
+            <div class="order-list">
+                <div class="order-item">
+                    <div class="order-info">
+                        <h4>订单 #ORD-2024-8847</h4>
+                        <p>C30混凝土 | 数量: 25立方米</p>
+                    </div>
+                    <div class="order-status" style="color: #7dd3fc; background: rgba(14, 165, 233, 0.2);">提前30分钟</div>
+                </div>
+                
+                <div class="order-item">
+                    <div class="order-info">
+                        <h4>订单 #ORD-2024-8848</h4>
+                        <p>C40高强混凝土 | 数量: 18立方米</p>
+                    </div>
+                    <div class="order-status" style="color: #93c5fd; background: rgba(59, 130, 246, 0.2);">按时交付</div>
+                </div>
+                
+                <div class="order-item">
+                    <div class="order-info">
+                        <h4>订单 #ORD-2024-8849</h4>
+                        <p>C25普通混凝土 | 数量: 32立方米</p>
+                    </div>
+                    <div class="order-status" style="color: #7dd3fc; background: rgba(14, 165, 233, 0.2);">提前45分钟</div>
+                </div>
+                
+                <div class="order-item">
+                    <div class="order-info">
+                        <h4>订单 #ORD-2024-8850</h4>
+                        <p>防水混凝土 | 数量: 12立方米</p>
+                    </div>
+                    <div class="order-status" style="color: #93c5fd; background: rgba(59, 130, 246, 0.2);">按时交付</div>
+                </div>
+                
+                <div class="order-item">
+                    <div class="order-info">
+                        <h4>订单 #ORD-2024-8851</h4>
+                        <p>自密实混凝土 | 数量: 8立方米</p>
+                    </div>
+                    <div class="order-status" style="color: #7dd3fc; background: rgba(14, 165, 233, 0.2);">提前1小时</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Feedback -->
+        <div class="glass-card section">
+            <h3 class="section-title">
+                <span>💬</span>
+                客户反馈与评价
+            </h3>
+            
+            <div class="feedback-rating">
+                <div style="font-size: 1.125rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.5rem;">整体评分</div>
+                <div class="rating-score">4.8/5.0</div>
+                <div class="rating-stars">★★★★★</div>
+            </div>
+            
+            <div class="feedback-item">
+                <div class="feedback-stars">★★★★★</div>
+                <div class="feedback-company">中建三局工程部</div>
+                <div class="feedback-text">"混凝土质量稳定，配送准时，施工进度得到有效保障。合作2年来从未出现质量问题，大大降低了我们的工程风险。"</div>
+            </div>
+            
+            <div class="feedback-item">
+                <div class="feedback-stars">★★★★★</div>
+                <div class="feedback-company">万科地产项目部</div>
+                <div class="feedback-text">"强度超出预期，每次都能提前交付。智能化的配送管理让我们印象深刻，值得长期合作。"</div>
+            </div>
+            
+            <div class="feedback-item">
+                <div class="feedback-stars">★★★★☆</div>
+                <div class="feedback-company">保利建设集团</div>
+                <div class="feedback-text">"产品质量稳定，技术创新能力强。希望未来在成本优化方面能有更多合作空间。"</div>
+            </div>
+        </div>
+
+        <!-- Improvement Suggestions -->
+        <div class="glass-card section">
+            <h3 class="section-title">
+                <span>🚀</span>
+                持续改进建议
+            </h3>
+            <div class="suggestions-grid">
+                <div class="suggestion-card">
+                    <div class="suggestion-title" style="color: #7dd3fc;">优化配送路线</div>
+                    <div class="suggestion-desc">通过AI算法优化配送路径，可进一步缩短配送时间20分钟</div>
+                    <div class="suggestion-impact">预计客户满意度提升2.5%</div>
+                </div>
+                
+                <div class="suggestion-card">
+                    <div class="suggestion-title" style="color: #93c5fd;">定制化配方服务</div>
+                    <div class="suggestion-desc">增加特殊工程项目定制混凝土配方，满足客户个性化需求</div>
+                    <div class="suggestion-impact">预计新增收入12%</div>
+                </div>
+                
+                <div class="suggestion-card">
+                    <div class="suggestion-title" style="color: #a5b4fc;">质量追溯系统</div>
+                    <div class="suggestion-desc">建立完整的混凝土质量追溯链，增强客户信心</div>
+                    <div class="suggestion-impact">预计客户留存率提升6%</div>
+                </div>
+                
+                <div class="suggestion-card">
+                    <div class="suggestion-title" style="color: #22d3ee;">数字化服务平台</div>
+                    <div class="suggestion-desc">为客户提供实时配送跟踪和质量报告查询服务</div>
+                    <div class="suggestion-impact">预计客户体验评分提升0.4</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart.js configuration with dark theme
+        Chart.defaults.color = '#CBD5E1';
+        Chart.defaults.borderColor = 'rgba(71, 85, 105, 0.3)';
+        Chart.defaults.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+
+        // Delivery Performance Chart
+        const deliveryCtx = document.getElementById('deliveryChart').getContext('2d');
+        new Chart(deliveryCtx, {
+            type: 'line',
+            data: {
+                labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+                datasets: [{
+                    label: '准时率%',
+                    data: [92.3, 93.1, 94.8, 93.5, 95.2, 94.2],
+                    borderColor: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4
+                }, {
+                    label: '满意度%',
+                    data: [94.2, 95.1, 96.3, 95.8, 97.1, 96.8],
+                    borderColor: '#3B82F6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#CBD5E1'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 90,
+                        grid: {
+                            color: 'rgba(71, 85, 105, 0.3)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(71, 85, 105, 0.3)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Fleet Utilization Chart
+        const fleetCtx = document.getElementById('fleetChart').getContext('2d');
+        new Chart(fleetCtx, {
+            type: 'line',
+            data: {
+                labels: ['第1周', '第2周', '第3周', '第4周', '第5周', '第6周'],
+                datasets: [{
+                    label: '利用率%',
+                    data: [85.2, 87.6, 89.3, 87.5, 91.2, 88.7],
+                    borderColor: '#06B6D4',
+                    backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: '效率%',
+                    data: [78.3, 82.1, 85.7, 84.2, 87.9, 86.4],
+                    borderColor: '#8B5CF6',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#CBD5E1'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 75,
+                        grid: {
+                            color: 'rgba(71, 85, 105, 0.3)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(71, 85, 105, 0.3)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Quality Control Chart
+        const qualityCtx = document.getElementById('qualityChart').getContext('2d');
+        new Chart(qualityCtx, {
+            type: 'bar',
+            data: {
+                labels: ['温度合规', '坍落度', '强度测试', '首次通过', '客户验收'],
+                datasets: [{
+                    label: '实际值%',
+                    data: [98.5, 96.2, 97.8, 97.8, 99.1],
+                    backgroundColor: '#10B981',
+                    borderRadius: 4
+                }, {
+                    label: '目标值%',
+                    data: [98.0, 95.0, 96.0, 95.0, 98.0],
+                    backgroundColor: '#64748B',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#CBD5E1'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 94,
+                        grid: {
+                            color: 'rgba(71, 85, 105, 0.3)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(71, 85, 105, 0.3)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Financial Performance Chart
+        const financialCtx = document.getElementById('financialChart').getContext('2d');
+        new Chart(financialCtx, {
+            type: 'line',
+            data: {
+                labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+                datasets: [{
+                    label: '每车收入(万)',
+                    data: [2.1, 2.3, 2.5, 2.4, 2.6, 2.7],
+                    borderColor: '#F59E0B',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    tension: 0.4,
+                    yAxisID: 'y'
+                }, {
+                    label: '利润率%',
+                    data: [18.5, 19.2, 21.3, 20.1, 22.5, 23.2],
+                    borderColor: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    yAxisID: 'y1'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#CBD5E1'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        grid: {
+                            color: 'rgba(71, 85, 105, 0.3)'
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        grid: {
+                            drawOnChartArea: false,
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(71, 85, 105, 0.3)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

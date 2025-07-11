@@ -13,659 +13,503 @@
         }
         
         body {
-            background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             min-height: 100vh;
         }
         
         .glass-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(30, 58, 138, 0.1);
-            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 8px 32px rgba(30, 58, 138, 0.1);
         }
         
         .glass-header {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(30, 58, 138, 0.15);
-            border-radius: 24px;
-            box-shadow: 0 12px 40px rgba(30, 58, 138, 0.12);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(15, 23, 42, 0.2);
+        }
+        
+        .glass-accent {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .text-primary {
-            color: #1E3A8A;
+            color: #0f172a;
         }
         
         .text-secondary {
-            color: #0F172A;
+            color: #1e3a8a;
         }
         
-        .bg-primary {
-            background-color: #1E3A8A;
+        .text-accent {
+            color: #374151;
         }
         
-        .bg-secondary {
-            background-color: #0F172A;
-        }
-        
-        .border-primary {
-            border-color: #1E3A8A;
+        .hover-glass:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(30, 58, 138, 0.15);
         }
         
         .gradient-text {
-            background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         
-        .skill-tag {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.1) 0%, rgba(15, 23, 42, 0.05) 100%);
-            border: 1px solid rgba(30, 58, 138, 0.2);
-            border-radius: 12px;
-            padding: 8px 16px;
-            color: #1E3A8A;
-            font-weight: 500;
-            font-size: 0.875rem;
-        }
-        
-        .experience-card {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(30, 58, 138, 0.08);
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(30, 58, 138, 0.08);
-            margin-bottom: 24px;
-        }
-        
-        .section-title {
-            color: #1E3A8A;
-            font-weight: 700;
-            font-size: 1.875rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        
-        .company-title {
-            color: #0F172A;
-            font-weight: 600;
-            font-size: 1.25rem;
-        }
-        
-        .role-title {
-            color: #1E3A8A;
-            font-weight: 600;
-            font-size: 1.125rem;
-        }
-        
-        .metric-highlight {
-            background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
-        }
-        
-        .icon-container {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.1) 0%, rgba(15, 23, 42, 0.05) 100%);
-            border-radius: 12px;
-            padding: 12px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 12px;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            color: #0F172A;
-        }
-        
-        .print-optimized {
-            page-break-inside: avoid;
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #1e3a8a 20%, #0f172a 80%, transparent 100%);
         }
         
         @media print {
             body {
                 background: white;
             }
-            .glass-card, .glass-header, .experience-card {
+            .glass-card, .glass-header, .glass-accent {
                 background: white;
-                border: 1px solid #E5E7EB;
+                border: 1px solid #e5e7eb;
                 box-shadow: none;
+                backdrop-filter: none;
             }
         }
     </style>
 </head>
-<body class="text-gray-800">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
+<body class="text-gray-900">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
         <!-- Header Section -->
-        <div class="glass-header p-8 mb-8 print-optimized">
+        <div class="glass-header rounded-3xl p-8 mb-8 text-white">
             <div class="text-center">
-                <h1 class="text-4xl font-bold gradient-text mb-2">VICTOR LEE</h1>
-                <h2 class="text-xl text-secondary mb-4">Senior Executive | Digital Transformation Leader | MBA</h2>
-                <div class="flex flex-wrap justify-center gap-6 text-sm">
-                    <div class="contact-item">
-                        <div class="icon-container">
-                            <i class="fas fa-birthday-cake text-primary"></i>
-                        </div>
+                <h1 class="text-5xl font-bold mb-4">VICTOR LEE</h1>
+                <h2 class="text-2xl font-medium mb-6 text-blue-200">Senior Executive | Digital Transformation Leader | MBA</h2>
+                <div class="flex flex-wrap justify-center gap-6 text-lg">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-birthday-cake text-blue-300"></i>
                         <span>Age: 49</span>
                     </div>
-                    <div class="contact-item">
-                        <div class="icon-container">
-                            <i class="fas fa-phone text-primary"></i>
-                        </div>
-                        <span>186.1694.9345</span>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-mobile-alt text-blue-300"></i>
+                        <span>130.6187.6002</span>
                     </div>
-                    <div class="contact-item">
-                        <div class="icon-container">
-                            <i class="fab fa-weixin text-primary"></i>
-                        </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fab fa-weixin text-blue-300"></i>
                         <span>drlg0011</span>
                     </div>
-                    <div class="contact-item">
-                        <div class="icon-container">
-                            <i class="fas fa-envelope text-primary"></i>
-                        </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-envelope text-blue-300"></i>
                         <span>pcvlee@gmail.com</span>
                     </div>
-                    <div class="contact-item">
-                        <div class="icon-container">
-                            <i class="fas fa-map-marker-alt text-primary"></i>
-                        </div>
-                        <span>China</span>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-map-marker-alt text-blue-300"></i>
+                        <span>Shanghai, China</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Executive Summary -->
-        <div class="glass-card p-8 mb-8 print-optimized">
-            <h2 class="section-title">EXECUTIVE SUMMARY</h2>
-            <div class="space-y-4 text-gray-700 leading-relaxed">
-                <p>Accomplished senior executive with over <span class="metric-highlight">20 years of leadership</span> in consumer-focused digital transformation, sales enablement, and marketing technology at Fortune 500 multinational corporations. Renowned for designing and executing robust digital ecosystems that drive revenue growth, elevate customer experiences, and maximize marketing ROI.</p>
-                
-                <p>Proven track record leading teams of over <span class="metric-highlight">100 professionals</span> and managing multi-million-dollar digital transformation budgets, delivering impactful results such as <span class="metric-highlight">17.2% efficiency gains</span> and <span class="metric-highlight">27% sales growth</span>. Expertise lies in e-commerce platform optimization, AI-driven precision marketing, and omnichannel customer experience design, seamlessly bridging technology and business goals.</p>
-                
+        <div class="glass-card rounded-3xl p-8 mb-8 hover-glass transition-all duration-300">
+            <h3 class="text-3xl font-bold text-primary mb-6 flex items-center gap-3">
+                <i class="fas fa-user-tie text-secondary"></i>
+                Executive Summary
+            </h3>
+            <div class="section-divider mb-6"></div>
+            <div class="text-lg text-accent leading-relaxed space-y-4">
+                <p>Accomplished senior executive with over 20 years of leadership in consumer-focused digital transformation, sales enablement, and marketing technology at Fortune 500 multinational corporations. Renowned for designing and executing robust digital ecosystems that drive revenue growth, elevate customer experiences, and maximize marketing ROI.</p>
+                <p>Proven track record leading teams of over 100 professionals and managing multi-million-dollar digital transformation budgets, delivering impactful results such as 17.2% efficiency gains and 27% sales growth. Expertise lies in e-commerce platform optimization, AI-driven precision marketing, and omnichannel customer experience design, seamlessly bridging technology and business goals.</p>
                 <p>Expert in Online-Merge-Offline (OMO) integration, leveraging seamless digital-physical ecosystems to drive enhanced commercial value and market penetration. Proficient in consumer data analytics to deliver personalized, data-driven experiences across channels, and adept at cross-functional collaboration with sales and marketing teams to amplify brand engagement and optimize customer journeys. Recognized for strategic vision and ability to deliver measurable business outcomes in dynamic, high-stakes environments.</p>
             </div>
         </div>
 
         <!-- Core Competencies -->
-        <div class="glass-card p-8 mb-8 print-optimized">
-            <h2 class="section-title">CORE COMPETENCIES</h2>
+        <div class="glass-card rounded-3xl p-8 mb-8 hover-glass transition-all duration-300">
+            <h3 class="text-3xl font-bold text-primary mb-6 flex items-center gap-3">
+                <i class="fas fa-cogs text-secondary"></i>
+                Core Competencies
+            </h3>
+            <div class="section-divider mb-6"></div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="company-title mb-4">Digital Transformation & Strategy</h3>
-                    <div class="space-y-2 text-gray-700">
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>Consumer Digital Ecosystem Design</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>Online-Merge-Offline (OMO) Integration</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>Digital Customer Experience Optimization</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>E-commerce Platform Development</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>AI-Powered Marketing Solutions</div>
-                    </div>
+                <div class="glass-accent rounded-2xl p-6 text-white">
+                    <h4 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-digital-tachograph"></i>
+                        Digital Transformation & Strategy
+                    </h4>
+                    <ul class="space-y-2 text-blue-100">
+                        <li>• Consumer Digital Ecosystem Design</li>
+                        <li>• Online-to-Offline (O2O) Integration</li>
+                        <li>• Digital Customer Experience Optimization</li>
+                        <li>• E-commerce Platform Development</li>
+                        <li>• AI-Powered Marketing Solutions</li>
+                    </ul>
                 </div>
-                
-                <div>
-                    <h3 class="company-title mb-4">Business Leadership & Operations</h3>
-                    <div class="space-y-2 text-gray-700">
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>P&L Management & Revenue Growth</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>Cross-Functional Team Leadership</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>Stakeholder Management & Alignment</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>Budget Management & ROI Optimization</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>Change Management & Organizational Development</div>
-                    </div>
+                <div class="glass-accent rounded-2xl p-6 text-white">
+                    <h4 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-users"></i>
+                        Business Leadership & Operations
+                    </h4>
+                    <ul class="space-y-2 text-blue-100">
+                        <li>• P&L Management & Revenue Growth</li>
+                        <li>• Cross-Functional Team Leadership</li>
+                        <li>• Stakeholder Management & Alignment</li>
+                        <li>• Budget Management & ROI Optimization</li>
+                        <li>• Change Management & Organizational Development</li>
+                    </ul>
                 </div>
-                
-                <div>
-                    <h3 class="company-title mb-4">Sales & Marketing Technology</h3>
-                    <div class="space-y-2 text-gray-700">
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>Marketing & Customer Segmentation</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>CRM & Member Management Systems</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>Sales Enablement Platform Design</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>Marketing Automation & Attribution</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>Customer Journey Optimization</div>
-                    </div>
+                <div class="glass-accent rounded-2xl p-6 text-white">
+                    <h4 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-chart-line"></i>
+                        Sales & Marketing Technology
+                    </h4>
+                    <ul class="space-y-2 text-blue-100">
+                        <li>• Marketing & Customer Segmentation</li>
+                        <li>• CRM & Member Management Systems</li>
+                        <li>• Sales Enablement Platform Design</li>
+                        <li>• Marketing Automation & Attribution</li>
+                        <li>• Customer Journey Optimization</li>
+                    </ul>
                 </div>
-                
-                <div>
-                    <h3 class="company-title mb-4">Technology & Data Analytics</h3>
-                    <div class="space-y-2 text-gray-700">
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>Cloud Computing & Big Data Architecture</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>AI & Machine Learning Implementation</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>Data Governance & Compliance</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>WeChat Ecosystem Integration</div>
-                        <div class="flex items-center"><i class="fas fa-check-circle text-primary mr-2"></i>Marketing Technology Stack Management</div>
-                    </div>
+                <div class="glass-accent rounded-2xl p-6 text-white">
+                    <h4 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <i class="fas fa-database"></i>
+                        Technology & Data Analytics
+                    </h4>
+                    <ul class="space-y-2 text-blue-100">
+                        <li>• Cloud Computing & Big Data Architecture</li>
+                        <li>• AI & Machine Learning Implementation</li>
+                        <li>• Data Governance & Compliance</li>
+                        <li>• WeChat Ecosystem Integration</li>
+                        <li>• Marketing Technology Stack Management</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
         <!-- Professional Experience -->
-        <div class="glass-card p-8 mb-8 print-optimized">
-            <h2 class="section-title">PROFESSIONAL EXPERIENCE</h2>
+        <div class="glass-card rounded-3xl p-8 mb-8 hover-glass transition-all duration-300">
+            <h3 class="text-3xl font-bold text-primary mb-6 flex items-center gap-3">
+                <i class="fas fa-briefcase text-secondary"></i>
+                Professional Experience
+            </h3>
+            <div class="section-divider mb-6"></div>
             
-            <!-- The Coca-Cola Company -->
-            <div class="experience-card p-6">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="company-title">The Coca-Cola Company (China)</h3>
-                        <h4 class="role-title">Digital Transformation Advisor (External)</h4>
-                    </div>
-                    <div class="text-right">
-                        <div class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium">
-                            November 2024 - Present
-                        </div>
-                    </div>
+            <!-- Coca-Cola -->
+            <div class="border-l-4 border-secondary pl-6 mb-8">
+                <div class="glass-accent rounded-2xl p-6 text-white mb-4">
+                    <h4 class="text-2xl font-bold mb-2">The Coca-Cola Company (China) - Digital Transformation Advisor (External)</h4>
+                    <p class="text-blue-200 font-medium">November 2024 - Present</p>
                 </div>
-                
-                <div class="space-y-4 text-gray-700">
+                <div class="text-accent space-y-4">
                     <div>
-                        <h4 class="font-semibold text-primary mb-2">Strategic Digital Ecosystem Development</h4>
-                        <p>Spearheaded the design and execution of Coca-Cola China's tailored digital transformation strategy, building a localized, integrated ecosystem that enhances Online-Merge-Offline (OMO) integration while aligning with the global digital transformation road map. This strategy addresses China's unique consumer behaviors, digital ecosystem, regulatory environment, and competitive landscape.</p>
+                        <h5 class="font-semibold text-lg text-primary mb-2">Strategic Digital Ecosystem Development</h5>
+                        <p>Spearheaded the design and execution of Coca-Cola China's tailored digital transformation strategy, building a localized, integrated ecosystem that enhances Online-Merge-Offline (OMO) integration while aligning with the global digital transformation road map.</p>
                     </div>
-                    
                     <div>
-                        <h4 class="font-semibold text-primary mb-2">Key Achievements</h4>
-                        <ul class="space-y-2">
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Achieved <span class="metric-highlight">17.2% improvement</span> in overall business efficiency through comprehensive OMO integration</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Enhanced product recommendation accuracy by <span class="metric-highlight">34%</span> with AI-powered consumer behavior prediction models</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Increased conversion rates by <span class="metric-highlight">28%</span> through e-commerce platform optimization</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Improved marketing ROI by <span class="metric-highlight">31%</span> with AI-powered precision marketing solutions</span>
-                            </li>
+                        <h5 class="font-semibold text-lg text-primary mb-2">Key Achievements:</h5>
+                        <ul class="space-y-2 pl-4">
+                            <li>• Delivered 17.2% business efficiency improvement through comprehensive digital transformation</li>
+                            <li>• Developed AI-powered consumer behavior prediction models enhancing product recommendation accuracy by 34%</li>
+                            <li>• Led e-commerce platform optimization resulting in 28% increase in conversion rates</li>
+                            <li>• Managed high-performance team of 100+ professionals</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- ZEISS Greater China -->
-            <div class="experience-card p-6">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="company-title">ZEISS Greater China</h3>
-                        <h4 class="role-title">Head of ZEISS Digital Technologies and Information Technologies</h4>
-                    </div>
-                    <div class="text-right">
-                        <div class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium">
-                            May 2022 - April 2024
-                        </div>
-                    </div>
+            <!-- ZEISS -->
+            <div class="border-l-4 border-secondary pl-6 mb-8">
+                <div class="glass-accent rounded-2xl p-6 text-white mb-4">
+                    <h4 class="text-2xl font-bold mb-2">ZEISS Greater China – Head of ZEISS Digital Technologies and Information Technologies</h4>
+                    <p class="text-blue-200 font-medium">May 2022 - April 2024</p>
                 </div>
-                
-                <div class="space-y-4 text-gray-700">
+                <div class="text-accent space-y-4">
                     <div>
-                        <h4 class="font-semibold text-primary mb-2">Consumer Digital Experience & Sales Transformation</h4>
-                        <p>Spearheaded digital transformation initiatives focused on enhancing customer experience, optimizing sales processes, and driving e-commerce growth across Greater China. Led comprehensive digitalization strategy that transformed traditional sales channels into integrated omnichannel customer experience platforms.</p>
-                    </div>
-                    
-                    <div>
-                        <h4 class="font-semibold text-primary mb-2">Key Achievements</h4>
-                        <ul class="space-y-2">
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Launched <span class="metric-highlight">150+ consumer-facing digital products</span> including mobile apps and AR/VR tools</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Improved conversion rates by <span class="metric-highlight">35%</span> through customer journey optimization</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Increased online revenue by <span class="metric-highlight">45%</span> with comprehensive e-commerce platform</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Established China as <span class="metric-highlight">ZEISS Global AI Center of Excellence</span></span>
-                            </li>
+                        <h5 class="font-semibold text-lg text-primary mb-2">Key Achievements:</h5>
+                        <ul class="space-y-2 pl-4">
+                            <li>• Led development and launch of 150+ consumer-facing digital products</li>
+                            <li>• Improved conversion rates by 35% through customer journey optimization</li>
+                            <li>• Designed e-commerce platform resulting in 45% increase in online revenue</li>
+                            <li>• Established China as ZEISS Global AI Center of Excellence</li>
+                            <li>• Led cross-functional team of 180+ professionals</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Porsche Digital North America -->
-            <div class="experience-card p-6">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="company-title">Porsche Digital North America</h3>
-                        <h4 class="role-title">Digital Transformation Strategy Advisor (External)</h4>
-                    </div>
-                    <div class="text-right">
-                        <div class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium">
-                            February 2017 - December 2021
-                        </div>
-                    </div>
+            <!-- Porsche Digital -->
+            <div class="border-l-4 border-secondary pl-6 mb-8">
+                <div class="glass-accent rounded-2xl p-6 text-white mb-4">
+                    <h4 class="text-2xl font-bold mb-2">Porsche Digital North America – Digital Transformation Strategy Advisor (External)</h4>
+                    <p class="text-blue-200 font-medium">February 2017 - December 2021</p>
                 </div>
-                
-                <div class="space-y-4 text-gray-700">
+                <div class="text-accent space-y-4">
                     <div>
-                        <h4 class="font-semibold text-primary mb-2">Automotive Digital Experience & Customer Engagement</h4>
-                        <p>Directed comprehensive digital transformation strategy for Porsche North America, focusing on revolutionizing customer experience, optimizing sales processes, and building direct-to-consumer digital channels. Led initiatives that transformed traditional automotive retail into integrated digital-first customer experience.</p>
-                    </div>
-                    
-                    <div>
-                        <h4 class="font-semibold text-primary mb-2">Key Achievements</h4>
-                        <ul class="space-y-2">
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Generated <span class="metric-highlight">$15M+ annually</span> in new revenue streams through mobile app development</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Achieved <span class="metric-highlight">27% increase</span> in overall sales through e-commerce platform</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Improved customer lifetime value by <span class="metric-highlight">36%</span> through unified customer data platform</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Successfully supported <span class="metric-highlight">Porsche IPO process</span> in Germany</span>
-                            </li>
+                        <h5 class="font-semibold text-lg text-primary mb-2">Key Achievements:</h5>
+                        <ul class="space-y-2 pl-4">
+                            <li>• Achieved 27% increase in overall sales through digital transformation initiatives</li>
+                            <li>• Developed revolutionary mobile application creating $15M+ in new revenue streams</li>
+                            <li>• Improved customer satisfaction scores by 38% and retention rates by 29%</li>
+                            <li>• Successfully supported Porsche IPO process in Germany</li>
+                            <li>• Created direct-to-consumer channels accounting for 23% of total sales</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Huawei Technologies -->
-            <div class="experience-card p-6">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="company-title">Huawei Technologies</h3>
-                        <h4 class="role-title">Global Head of Digital Technology</h4>
-                    </div>
-                    <div class="text-right">
-                        <div class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium">
-                            July 2013 - December 2016
-                        </div>
-                    </div>
+            <!-- Huawei -->
+            <div class="border-l-4 border-secondary pl-6 mb-8">
+                <div class="glass-accent rounded-2xl p-6 text-white mb-4">
+                    <h4 class="text-2xl font-bold mb-2">Huawei Technologies - Global Head of Digital Technology</h4>
+                    <p class="text-blue-200 font-medium">July 2013 - December 2016</p>
                 </div>
-                
-                <div class="space-y-4 text-gray-700">
+                <div class="text-accent space-y-4">
                     <div>
-                        <h4 class="font-semibold text-primary mb-2">Enterprise Digital Solutions & Market Expansion</h4>
-                        <p>Led global digital transformation initiatives for Huawei's Enterprise Business Unit, developing consumer-facing digital products and solutions that enabled business growth across international markets.</p>
-                    </div>
-                    
-                    <div>
-                        <h4 class="font-semibold text-primary mb-2">Key Achievements</h4>
-                        <ul class="space-y-2">
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Built and managed global digital product portfolio valued at <span class="metric-highlight">$142M+</span></span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Reduced customer-facing service interruptions by <span class="metric-highlight">45%</span> through data center modernization</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-trophy text-primary mr-2 mt-1"></i>
-                                <span>Developed encrypted communication software for European consumer market</span>
-                            </li>
+                        <h5 class="font-semibold text-lg text-primary mb-2">Key Achievements:</h5>
+                        <ul class="space-y-2 pl-4">
+                            <li>• Built and managed global digital product portfolio valued at $142M+</li>
+                            <li>• Developed encrypted communication software for European consumer market</li>
+                            <li>• Directed modernization of large-scale data centers across multiple countries</li>
+                            <li>• Implemented customer data analytics platform providing strategic business insights</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Previous Experience Summary -->
-            <div class="space-y-4">
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-semibold text-primary mb-2">Alcatel-Lucent - Cloud Platform CIO (2011-2013)</h3>
-                    <p class="text-gray-700">Led digital transformation initiatives for Japanese and Korean telecommunications operators, developing customized cloud computing solutions that enhanced customer experience and competitive positioning.</p>
+            <!-- Alcatel-Lucent -->
+            <div class="border-l-4 border-secondary pl-6 mb-8">
+                <div class="glass-accent rounded-2xl p-6 text-white mb-4">
+                    <h4 class="text-2xl font-bold mb-2">Alcatel-Lucent - Cloud Platform CIO</h4>
+                    <p class="text-blue-200 font-medium">January 2011 - July 2013</p>
                 </div>
-                
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-semibold text-primary mb-2">Capgemini (China) - Vice President (2008-2011)</h3>
-                    <p class="text-gray-700">Led Coca-Cola Global Data Unification Project and directed SAIC-GM Industry 4.0 transformation initiative, implementing IoT and AI technologies for enhanced customer experience.</p>
+                <div class="text-accent space-y-4">
+                    <div>
+                        <h5 class="font-semibold text-lg text-primary mb-2">Key Achievements:</h5>
+                        <ul class="space-y-2 pl-4">
+                            <li>• Led digital transformation initiatives for Japanese and Korean telecommunications operators</li>
+                            <li>• Implemented hybrid cloud platforms tailored to industry requirements</li>
+                            <li>• Developed customer-facing digital services improving user experience</li>
+                        </ul>
+                    </div>
                 </div>
-                
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-semibold text-primary mb-2">McKinsey & Company - Partner (2003-2008)</h3>
-                    <p class="text-gray-700">Led IPO and spin-off processes for Fortune 500 companies, developed go-to-market strategies for telecommunications expansion, and created comprehensive digital marketing strategies.</p>
+            </div>
+
+            <!-- Capgemini China -->
+            <div class="border-l-4 border-secondary pl-6 mb-8">
+                <div class="glass-accent rounded-2xl p-6 text-white mb-4">
+                    <h4 class="text-2xl font-bold mb-2">Capgemini (China) - Vice President</h4>
+                    <p class="text-blue-200 font-medium">August 2008 - January 2011</p>
+                </div>
+                <div class="text-accent space-y-4">
+                    <div>
+                        <h5 class="font-semibold text-lg text-primary mb-2">Key Achievements:</h5>
+                        <ul class="space-y-2 pl-4">
+                            <li>• Led Coca-Cola Global Data Unification Project</li>
+                            <li>• Directed SAIC-GM Industry 4.0 transformation initiative</li>
+                            <li>• Developed comprehensive digital transformation strategies for multinational corporations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- McKinsey -->
+            <div class="border-l-4 border-secondary pl-6 mb-8">
+                <div class="glass-accent rounded-2xl p-6 text-white mb-4">
+                    <h4 class="text-2xl font-bold mb-2">McKinsey & Company - Partner</h4>
+                    <p class="text-blue-200 font-medium">March 2003 - July 2008</p>
+                </div>
+                <div class="text-accent space-y-4">
+                    <div>
+                        <h5 class="font-semibold text-lg text-primary mb-2">Key Achievements:</h5>
+                        <ul class="space-y-2 pl-4">
+                            <li>• Led IPO and spin-off processes for Fortune 500 companies</li>
+                            <li>• Developed go-to-market strategies for telecommunications company in Saudi Arabia</li>
+                            <li>• Created comprehensive digital marketing and customer engagement strategies</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Capgemini France -->
+            <div class="border-l-4 border-secondary pl-6 mb-8">
+                <div class="glass-accent rounded-2xl p-6 text-white mb-4">
+                    <h4 class="text-2xl font-bold mb-2">Capgemini Consulting (France) S.A. - Senior Manager</h4>
+                    <p class="text-blue-200 font-medium">October 1997 - January 2003</p>
+                </div>
+                <div class="text-accent space-y-4">
+                    <div>
+                        <h5 class="font-semibold text-lg text-primary mb-2">Key Achievements:</h5>
+                        <ul class="space-y-2 pl-4">
+                            <li>• Successfully delivered several SAP projects in the EMEA region</li>
+                            <li>• Organized cross-regional project teams, taking into account cultural differences, business needs, and regulatory requirements</li>
+                            <li>• Managed complex project implementation across different regions with diverse requirements</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Education & Certifications -->
-        <div class="glass-card p-8 mb-8 print-optimized">
-            <h2 class="section-title">EDUCATION & PROFESSIONAL DEVELOPMENT</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="company-title mb-4">Academic Credentials</h3>
+        <!-- Education -->
+        <div class="glass-card rounded-3xl p-8 mb-8 hover-glass transition-all duration-300">
+            <h3 class="text-3xl font-bold text-primary mb-6 flex items-center gap-3">
+                <i class="fas fa-graduation-cap text-secondary"></i>
+                Education & Professional Development
+            </h3>
+            <div class="section-divider mb-6"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-accent rounded-2xl p-6 text-white">
+                    <h4 class="text-xl font-semibold mb-4">Academic Credentials</h4>
                     <div class="space-y-4">
-                        <div class="bg-gray-50 p-4 rounded-lg">
-                            <h4 class="font-semibold text-primary">Master of Business Administration (MBA)</h4>
-                            <p class="text-gray-700">London Business School (1997-1999)</p>
+                        <div>
+                            <h5 class="font-semibold text-blue-200">London Business School</h5>
+                            <p>Master of Business Administration (MBA)</p>
+                            <p class="text-sm text-blue-300">1997 - 1999</p>
                         </div>
-                        <div class="bg-gray-50 p-4 rounded-lg">
-                            <h4 class="font-semibold text-primary">Bachelor of Science (BSc)</h4>
-                            <p class="text-gray-700">University of Warwick (1993-1997)</p>
+                        <div>
+                            <h5 class="font-semibold text-blue-200">University of Warwick</h5>
+                            <p>Bachelor of Science (BSc)</p>
+                            <p class="text-sm text-blue-300">1993 - 1997</p>
                         </div>
                     </div>
                 </div>
-                
-                <div>
-                    <h3 class="company-title mb-4">Professional Certifications</h3>
-                    <div class="space-y-2 text-gray-700">
-                        <div class="flex items-center"><i class="fas fa-certificate text-primary mr-2"></i>Certified Digital Marketing Professional (CDMP)</div>
-                        <div class="flex items-center"><i class="fas fa-certificate text-primary mr-2"></i>AWS Certified Solutions Architect</div>
-                        <div class="flex items-center"><i class="fas fa-certificate text-primary mr-2"></i>Google Cloud Professional Cloud Architect</div>
-                        <div class="flex items-center"><i class="fas fa-certificate text-primary mr-2"></i>Project Management Professional (PMP)</div>
-                        <div class="flex items-center"><i class="fas fa-certificate text-primary mr-2"></i>Certified Information Systems Security Professional (CISSP)</div>
-                    </div>
+                <div class="glass-accent rounded-2xl p-6 text-white">
+                    <h4 class="text-xl font-semibold mb-4">Professional Certifications</h4>
+                    <ul class="space-y-2 text-blue-100">
+                        <li>• Certified Digital Marketing Professional (CDMP)</li>
+                        <li>• AWS Certified Solutions Architect</li>
+                        <li>• Google Cloud Professional Cloud Architect</li>
+                        <li>• Project Management Professional (PMP)</li>
+                        <li>• Certified Information Systems Security Professional (CISSP)</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
         <!-- Awards & Recognition -->
-        <div class="glass-card p-8 mb-8 print-optimized">
-            <h2 class="section-title">AWARDS & RECOGNITION</h2>
-            
+        <div class="glass-card rounded-3xl p-8 mb-8 hover-glass transition-all duration-300">
+            <h3 class="text-3xl font-bold text-primary mb-6 flex items-center gap-3">
+                <i class="fas fa-trophy text-secondary"></i>
+                Awards & Recognition
+            </h3>
+            <div class="section-divider mb-6"></div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-semibold text-primary mb-2">
-                        <i class="fas fa-trophy mr-2"></i>Multiple Gold Medalist for Digital Transformation
-                    </h3>
-                    <p class="text-gray-700">CMO Club Goldsmith Awards - Excellence in customer experience innovation and marketing technology leadership</p>
+                <div class="space-y-4">
+                    <div class="glass-accent rounded-2xl p-4 text-white">
+                        <h5 class="font-semibold text-blue-200">Multiple Gold Medalist</h5>
+                        <p class="text-sm">Digital Transformation - CMO Club Goldsmith Awards</p>
+                    </div>
+                    <div class="glass-accent rounded-2xl p-4 text-white">
+                        <h5 class="font-semibold text-blue-200">Digital Business Excellence Award</h5>
+                        <p class="text-sm">ZEISS China</p>
+                    </div>
                 </div>
-                
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-semibold text-primary mb-2">
-                        <i class="fas fa-award mr-2"></i>Digital Business Excellence Award
-                    </h3>
-                    <p class="text-gray-700">ZEISS China - Outstanding contribution to e-commerce growth and digital transformation initiatives</p>
-                </div>
-                
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-semibold text-primary mb-2">
-                        <i class="fas fa-medal mr-2"></i>Customer Experience Innovation Award
-                    </h3>
-                    <p class="text-gray-700">Porsche Digital - Revolutionary mobile application development and customer engagement platform</p>
-                </div>
-                
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-semibold text-primary mb-2">
-                        <i class="fas fa-star mr-2"></i>Global Digital Leader Recognition
-                    </h3>
-                    <p class="text-gray-700">Huawei Technologies - Exceptional performance in international market expansion and digital product development</p>
+                <div class="space-y-4">
+                    <div class="glass-accent rounded-2xl p-4 text-white">
+                        <h5 class="font-semibold text-blue-200">Customer Experience Innovation Award</h5>
+                        <p class="text-sm">Porsche Digital</p>
+                    </div>
+                    <div class="glass-accent rounded-2xl p-4 text-white">
+                        <h5 class="font-semibold text-blue-200">Global Digital Leader Recognition</h5>
+                        <p class="text-sm">Huawei Technologies</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Key Achievements Summary -->
-        <div class="glass-card p-8 mb-8 print-optimized">
-            <h2 class="section-title">KEY ACHIEVEMENTS SUMMARY</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="company-title mb-4">Business Impact Metrics</h3>
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                            <span class="text-gray-700">Business Efficiency Improvement</span>
-                            <span class="metric-highlight text-xl font-bold">17.2%</span>
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                            <span class="text-gray-700">Sales Increase</span>
-                            <span class="metric-highlight text-xl font-bold">27%</span>
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                            <span class="text-gray-700">Digital Product Portfolio Value</span>
-                            <span class="metric-highlight text-xl font-bold">$142M+</span>
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                            <span class="text-gray-700">Consumer Digital Products Launched</span>
-                            <span class="metric-highlight text-xl font-bold">150+</span>
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                            <span class="text-gray-700">Marketing ROI Improvement</span>
-                            <span class="metric-highlight text-xl font-bold">43%</span>
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                            <span class="text-gray-700">Customer Retention Enhancement</span>
-                            <span class="metric-highlight text-xl font-bold">45%</span>
-                        </div>
-                    </div>
+        <!-- Key Achievements -->
+        <div class="glass-card rounded-3xl p-8 mb-8 hover-glass transition-all duration-300">
+            <h3 class="text-3xl font-bold text-primary mb-6 flex items-center gap-3">
+                <i class="fas fa-chart-bar text-secondary"></i>
+                Key Achievements Summary
+            </h3>
+            <div class="section-divider mb-6"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-accent rounded-2xl p-6 text-white">
+                    <h4 class="text-xl font-semibold mb-4">Business Impact Metrics</h4>
+                    <ul class="space-y-2 text-blue-100">
+                        <li>• 17.2% business efficiency improvement at Coca-Cola China</li>
+                        <li>• 27% sales increase at Porsche Digital North America</li>
+                        <li>• $142M+ digital product portfolio value at Huawei</li>
+                        <li>• 150+ consumer-facing digital products launched at ZEISS</li>
+                        <li>• 43% marketing ROI improvement through optimization platforms</li>
+                        <li>• 45% customer retention rate enhancement</li>
+                    </ul>
                 </div>
-                
-                <div>
-                    <h3 class="company-title mb-4">Leadership & Team Development</h3>
-                    <div class="space-y-3 text-gray-700">
-                        <div class="flex items-start">
-                            <i class="fas fa-users text-primary mr-2 mt-1"></i>
-                            <span>Led cross-functional teams of <span class="metric-highlight">100+ professionals</span> across digital transformation initiatives</span>
-                        </div>
-                        <div class="flex items-start">
-                            <i class="fas fa-brain text-primary mr-2 mt-1"></i>
-                            <span>Established <span class="metric-highlight">AI Center of Excellence</span> at ZEISS China</span>
-                        </div>
-                        <div class="flex items-start">
-                            <i class="fas fa-graduation-cap text-primary mr-2 mt-1"></i>
-                            <span>Developed comprehensive digital skills training programs</span>
-                        </div>
-                        <div class="flex items-start">
-                            <i class="fas fa-handshake text-primary mr-2 mt-1"></i>
-                            <span>Fostered collaborative culture between technology and business teams</span>
-                        </div>
-                    </div>
+                <div class="glass-accent rounded-2xl p-6 text-white">
+                    <h4 class="text-xl font-semibold mb-4">Leadership & Team Development</h4>
+                    <ul class="space-y-2 text-blue-100">
+                        <li>• Led cross-functional teams of 100+ professionals</li>
+                        <li>• Established AI Center of Excellence at ZEISS China</li>
+                        <li>• Developed comprehensive digital skills training programs</li>
+                        <li>• Fostered collaborative culture between technology and business teams</li>
+                        <li>• Managed multi-million dollar transformation budgets</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
         <!-- Languages & Technical Expertise -->
-        <div class="glass-card p-8 mb-8 print-optimized">
-            <h2 class="section-title">LANGUAGES & TECHNICAL EXPERTISE</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="company-title mb-4">Languages</h3>
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                            <span class="text-gray-700">English</span>
-                            <span class="text-primary font-medium">Native proficiency</span>
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                            <span class="text-gray-700">Mandarin Chinese</span>
-                            <span class="text-primary font-medium">Fluent</span>
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                            <span class="text-gray-700">Cantonese</span>
-                            <span class="text-primary font-medium">Fluent</span>
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                            <span class="text-gray-700">German</span>
-                            <span class="text-primary font-medium">Basic business proficiency</span>
-                        </div>
-                    </div>
+        <div class="glass-card rounded-3xl p-8 mb-8 hover-glass transition-all duration-300">
+            <h3 class="text-3xl font-bold text-primary mb-6 flex items-center gap-3">
+                <i class="fas fa-language text-secondary"></i>
+                Languages & Technical Expertise
+            </h3>
+            <div class="section-divider mb-6"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-accent rounded-2xl p-6 text-white">
+                    <h4 class="text-xl font-semibold mb-4">Languages</h4>
+                    <ul class="space-y-2 text-blue-100">
+                        <li>• English - Native proficiency</li>
+                        <li>• Mandarin Chinese - Fluent</li>
+                        <li>• Cantonese - Fluent</li>
+                        <li>• German - Basic business proficiency</li>
+                    </ul>
                 </div>
-                
-                <div>
-                    <h3 class="company-title mb-4">Technical Specializations</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <h4 class="font-semibold text-primary mb-2">Cloud Platforms</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="skill-tag">AWS</span>
-                                <span class="skill-tag">Azure</span>
-                                <span class="skill-tag">Google Cloud</span>
-                                <span class="skill-tag">Alibaba Cloud</span>
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-primary mb-2">Marketing Technology</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="skill-tag">Salesforce</span>
-                                <span class="skill-tag">HubSpot</span>
-                                <span class="skill-tag">Adobe Experience Cloud</span>
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-primary mb-2">E-commerce</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="skill-tag">Shopify Plus</span>
-                                <span class="skill-tag">Magento</span>
-                                <span class="skill-tag">SAP Commerce</span>
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-primary mb-2">Analytics</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="skill-tag">Google Analytics</span>
-                                <span class="skill-tag">Adobe Analytics</span>
-                                <span class="skill-tag">Tableau</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="glass-accent rounded-2xl p-6 text-white">
+                    <h4 class="text-xl font-semibold mb-4">Technical Specializations</h4>
+                    <ul class="space-y-2 text-blue-100">
+                        <li>• Cloud Platforms: AWS, Azure, Google Cloud, Alibaba Cloud</li>
+                        <li>• Marketing Technology: Salesforce, HubSpot, Adobe Experience Cloud</li>
+                        <li>• E-commerce: Shopify Plus, Magento, SAP Commerce</li>
+                        <li>• Analytics: Google Analytics, Adobe Analytics, Tableau</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
         <!-- Professional Affiliations -->
-        <div class="glass-card p-8 print-optimized">
-            <h2 class="section-title">PROFESSIONAL AFFILIATIONS</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-semibold text-primary mb-2">
-                        <i class="fas fa-building mr-2"></i>Chief Marketing Officer (CMO) Council
-                    </h3>
-                    <p class="text-gray-700">Member</p>
+        <div class="glass-card rounded-3xl p-8 mb-8 hover-glass transition-all duration-300">
+            <h3 class="text-3xl font-bold text-primary mb-6 flex items-center gap-3">
+                <i class="fas fa-network-wired text-secondary"></i>
+                Professional Affiliations
+            </h3>
+            <div class="section-divider mb-6"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-accent rounded-2xl p-4 text-white">
+                    <p class="font-medium">Member - Chief Marketing Officer (CMO) Council</p>
                 </div>
-                
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-semibold text-primary mb-2">
-                        <i class="fas fa-chart-line mr-2"></i>Digital Marketing Association of China
-                    </h3>
-                    <p class="text-gray-700">Board Member</p>
+                <div class="glass-accent rounded-2xl p-4 text-white">
+                    <p class="font-medium">Board Member - Digital Marketing Association of China</p>
                 </div>
-                
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-semibold text-primary mb-2">
-                        <i class="fas fa-university mr-2"></i>London Business School Digital Innovation Lab
-                    </h3>
-                    <p class="text-gray-700">Advisory Board</p>
+                <div class="glass-accent rounded-2xl p-4 text-white">
+                    <p class="font-medium">Advisory Board - London Business School Digital Innovation Lab</p>
                 </div>
-                
-                <div class="bg-gray-50 p-4 rounded-lg">
-                    <h3 class="font-semibold text-primary mb-2">
-                        <i class="fas fa-newspaper mr-2"></i>Harvard Business Review Advisory Council
-                    </h3>
-                    <p class="text-gray-700">Member</p>
+                <div class="glass-accent rounded-2xl p-4 text-white">
+                    <p class="font-medium">Member - Harvard Business Review Advisory Council</p>
+                </div>
+                <div class="glass-accent rounded-2xl p-4 text-white">
+                    <p class="font-medium">Certified Member - Institute of Directors (IoD)</p>
                 </div>
             </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="glass-header rounded-3xl p-6 text-center text-white">
+            <p class="text-lg font-medium">Victor Lee - Senior Executive & Digital Transformation Leader</p>
+            <p class="text-blue-200 mt-2">Delivering measurable business outcomes through strategic digital transformation</p>
         </div>
     </div>
 </body>

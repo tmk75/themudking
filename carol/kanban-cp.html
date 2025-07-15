@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kanban Board - Care Program</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --blue1: #162035;
+      --blue2: #223359;
+      --blue3: #2861b7;
+      --white: #fff;
+      --status-green: #4ade80;
+      --status-yellow: #ffd53a;
+      --status-red: #ff5860;
+      --status-green-bg: #143523;
+      --status-yellow-bg: #353012;
+      --status-red-bg: #35161a;
+      --border: #223355;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, var(--blue1) 0%, var(--blue2) 100%);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+    }
+    .kanban-header {
+      padding: 2rem 0 1rem 0;
+      text-align: center;
+    }
+    .kanban-header h1 {
+      color: var(--blue3);
+      margin-bottom: 0.2em;
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .kanban-header p {
+      color: var(--white);
+      opacity: 0.85;
+      letter-spacing: 0.04em;
+      font-size: 1.08rem;
+      margin-top: 0;
+    }
+    .kanban-board {
+      display: flex;
+      gap: 2rem;
+      padding: 1.5rem 2rem 2.5rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .kanban-column {
+      flex: 1;
+      background: var(--blue2);
+      border-radius: 1.3rem;
+      padding: 1.1rem 1rem 1.6rem 1rem;
+      min-width: 280px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 18px 0 #22335933;
+      border: 1px solid var(--border);
+    }
+    .kanban-column h2 {
+      color: var(--blue3);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 1em;
+      letter-spacing: 0.06em;
+      text-align: center;
+    }
+    .kanban-tasks {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .kanban-card {
+      background: var(--blue1);
+      color: var(--white);
+      border-radius: 0.8rem;
+      padding: 1rem 0.8rem 0.8rem 0.8rem;
+      box-shadow: 0 1px 6px 0 #0004;
+      border-left: 4px solid var(--blue3);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4em;
+      margin-bottom: 0.3em;
+      position: relative;
+    }
+    .kanban-card .task-title {
+      font-size: 1.04rem;
+      font-weight: 600;
+      margin-bottom: 0.3em;
+    }
+    .kanban-card .task-meta {
+      font-size: 0.96em;
+      opacity: 0.7;
+      margin-bottom: 0.3em;
+    }
+    .kanban-card .badge {
+      display: inline-block;
+      border-radius: 0.7em;
+      padding: 0.13em 0.8em;
+      font-size: 0.98em;
+      font-weight: bold;
+      margin-top: 0.25em;
+      margin-right: 0.5em;
+    }
+    .badge-green { background: var(--status-green-bg); color: var(--status-green); border: 1px solid var(--status-green);}
+    .badge-yellow { background: var(--status-yellow-bg); color: var(--status-yellow); border: 1px solid var(--status-yellow);}
+    .badge-red { background: var(--status-red-bg); color: var(--status-red); border: 1px solid var(--status-red);}
+    .badge-blue { background: var(--blue3); color: var(--white); border: 1px solid var(--blue3);}
+    .badge-country { opacity: 0.75; font-size:0.94em; }
+
+    @media (max-width: 1100px) {
+      .kanban-board { flex-direction: column; gap: 1.5rem; padding: 1.5rem 0.7rem;}
+    }
+    @media (max-width: 600px) {
+      .kanban-header h1 { font-size: 1.2rem;}
+      .kanban-column { min-width: 0; padding: 0.6rem 0.4rem 1rem 0.4rem;}
+    }
+  </style>
+</head>
+<body>
+  <div class="kanban-header">
+    <h1>Care Program Kanban Board</h1>
+    <p>Dark blue, status with red/yellow/green · Tied visually to your dashboard</p>
+  </div>
+  <div class="kanban-board">
+    <!-- TO DO COLUMN -->
+    <div class="kanban-column">
+      <h2>To Do</h2>
+      <div class="kanban-tasks">
+        <div class="kanban-card">
+          <div class="task-title">日本购房LTI</div>
+          <div class="task-meta">Due: <b>July 31, 2025</b> &middot; No Accountable</div>
+          <span class="badge badge-red">Critical</span>
+          <span class="badge badge-blue badge-country">China</span>
+        </div>
+      </div>
+    </div>
+    <!-- IN PROGRESS COLUMN -->
+    <div class="kanban-column">
+      <h2>In Progress</h2>
+      <div class="kanban-tasks">
+        <div class="kanban-card">
+          <div class="task-title">Find Nunggal a Successor</div>
+          <div class="task-meta">Due: <b>June 30, 2025</b> &middot; Joanna Zhang</div>
+          <span class="badge badge-yellow">Medium</span>
+          <span class="badge badge-blue badge-country">Indonesia</span>
+          <span class="badge badge-yellow">In Progress</span>
+        </div>
+      </div>
+    </div>
+    <!-- COMPLETE COLUMN -->
+    <div class="kanban-column">
+      <h2>Complete</h2>
+      <div class="kanban-tasks">
+        <div class="kanban-card">
+          <div class="task-title">To help Tommy with Anti -摩擦 solutions</div>
+          <div class="task-meta">Due: <b>July 1, 2025</b> &middot; HR Team (Indonesia)</div>
+          <span class="badge badge-red">Critical</span>
+          <span class="badge badge-blue badge-country">China</span>
+          <span class="badge badge-green">Complete</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

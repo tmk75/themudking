@@ -6,10 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     :root {
-      --red1: #ffebee;
-      --red2: #ffcdd2;
-      --red3: #e57373;
-      --red4: #c62828;
+      --red: #ff5e5e;
+      --orange: #ffb84d;
+      --yellow: #ffcc00;
+      --green: #66cc66;
+      --blue: #3399ff;
       --white: #fff;
       --glass-bg: rgba(255,255,255,0.28);
       --glass-border: rgba(255,255,255,0.38);
@@ -23,7 +24,7 @@
       min-height: 100vh;
       margin: 0;
       font-family: 'SF Pro Display', 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(135deg, var(--red1) 0%, var(--red2) 100%);
+      background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
       display: flex;
       align-items: flex-start;
       justify-content: center;
@@ -48,7 +49,7 @@
       text-align: center;
     }
     .dashboard-header h1 {
-      color: var(--red4);
+      color: var(--blue);
       letter-spacing: 1px;
       margin: 0 0 0.25em 0;
       font-size: 2.3rem;
@@ -56,7 +57,7 @@
       text-shadow: 0 4px 18px rgba(198,40,40,0.09);
     }
     .dashboard-header p {
-      color: var(--red3);
+      color: var(--green);
       font-size: 1.1rem;
       margin: 0;
     }
@@ -66,12 +67,9 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 1.2rem;
     }
+
     .card {
-      background: linear-gradient(120deg, var(--red2) 60%, var(--red1) 100%);
       border-radius: 1.5rem;
-      box-shadow: 0 2px 16px 0 rgba(198,40,40,0.10);
-      border: 1px solid rgba(255,255,255,0.18);
-      backdrop-filter: blur(12px);
       padding: 1.2rem 1rem 1.2rem 1.3rem;
       display: flex;
       flex-direction: column;
@@ -80,25 +78,44 @@
       position: relative;
       overflow: hidden;
     }
+
+    /* Red for critical tasks */
+    .card.red {
+      background: linear-gradient(120deg, var(--red) 60%, var(--orange) 100%);
+    }
+
+    /* Green for completed tasks */
+    .card.green {
+      background: linear-gradient(120deg, var(--green) 60%, var(--yellow) 100%);
+    }
+
+    /* Blue for informational sections */
+    .card.blue {
+      background: linear-gradient(120deg, var(--blue) 60%, var(--green) 100%);
+    }
+
     .card h2 {
-      color: var(--red4);
+      color: var(--white);
       margin: 0 0 0.4em 0;
       font-size: 1.15rem;
       font-weight: 600;
       letter-spacing: 0.2px;
     }
+
     .card .number {
       font-size: 2rem;
-      color: var(--red3);
+      color: var(--white);
       font-weight: bold;
       margin-bottom: 0.2em;
-      text-shadow: 0 4px 24px var(--red1);
+      text-shadow: 0 4px 24px var(--green);
     }
+
     .card .label {
-      color: var(--red4);
+      color: var(--white);
       font-size: 1rem;
       opacity: 0.82;
     }
+
     .card::after {
       content: "";
       position: absolute;
@@ -118,6 +135,7 @@
       gap: 2rem;
       justify-content: space-between;
     }
+
     .breakdown {
       flex: 1;
       min-width: 200px;
@@ -129,17 +147,19 @@
       box-shadow: 0 1px 8px 0 rgba(198,40,40,0.05);
       backdrop-filter: blur(9px);
     }
+
     .breakdown h3 {
-      color: var(--red4);
+      color: var(--blue);
       margin: 0 0 0.6em 0;
       font-size: 1.09rem;
       letter-spacing: 0.1em;
       font-weight: 600;
     }
+
     .breakdown ul {
       margin: 0 0 0.7em 0;
       padding: 0 0 0 1.3em;
-      color: var(--red3);
+      color: var(--yellow);
       font-size: 1.01rem;
       line-height: 1.55;
     }
@@ -153,24 +173,28 @@
       backdrop-filter: blur(8px);
       overflow-x: auto;
     }
+
     .task-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 1rem;
       background: transparent;
     }
+
     .task-table th, .task-table td {
       padding: 0.7em 1.1em;
       border-bottom: 1px solid #ffd6d6;
       text-align: left;
     }
+
     .task-table th {
-      color: var(--red4);
-      background: var(--red1);
+      color: var(--blue);
+      background: var(--yellow);
       font-weight: 700;
     }
+
     .task-table td {
-      color: var(--red3);
+      color: var(--green);
       background: rgba(255,255,255,0.0);
       font-weight: 500;
     }
@@ -180,6 +204,7 @@
       .summary-cards { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
       .breakdowns { flex-direction: column; gap: 1.2rem;}
     }
+
     @media (max-width: 600px) {
       .summary-cards { grid-template-columns: 1fr; }
     }
@@ -189,26 +214,26 @@
   <div class="dashboard">
     <div class="dashboard-header">
       <h1>Care Program Dashboard</h1>
-      <p>Glassmorphism dashboard · 4 reds & detailed breakdowns</p>
+      <p>Glassmorphism dashboard · 5 vibrant colors for task categories</p>
     </div>
 
     <div class="summary-cards">
-      <div class="card">
+      <div class="card red">
         <h2>Total Tasks</h2>
         <div class="number">3</div>
         <div class="label">Tracked</div>
       </div>
-      <div class="card">
+      <div class="card green">
         <h2>Completed Tasks</h2>
         <div class="number">1</div>
         <div class="label">Marked Complete</div>
       </div>
-      <div class="card">
+      <div class="card yellow">
         <h2>In Progress</h2>
         <div class="number">2</div>
         <div class="label">Ongoing</div>
       </div>
-      <div class="card">
+      <div class="card blue">
         <h2>Average Completion</h2>
         <div class="number">29.5%</div>
         <div class="label">Overall Progress</div>
@@ -240,7 +265,7 @@
     </div>
 
     <div class="task-table-container">
-      <h3 style="color:#c62828;margin:0 0 1em 0;font-weight:700;font-size:1.1em;letter-spacing:0.08em;">
+      <h3 style="color:#3399ff;margin:0 0 1em 0;font-weight:700;font-size:1.1em;letter-spacing:0.08em;">
         Sample Task Details
       </h3>
       <table class="task-table">

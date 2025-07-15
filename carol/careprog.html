@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Care Program Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --red1: #ffebee;
+      --red2: #ffcdd2;
+      --red3: #e57373;
+      --red4: #c62828;
+      --white: #fff;
+      --glass-bg: rgba(255,255,255,0.28);
+      --glass-border: rgba(255,255,255,0.38);
+      --glass-shadow: 0 8px 32px 0 rgba(198,40,40,0.20);
+      --radius: 2rem;
+      --padding: 2rem;
+      --blur: 18px;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'SF Pro Display', 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, var(--red1) 0%, var(--red2) 100%);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .dashboard {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: var(--padding);
+      background: var(--glass-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--glass-shadow);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(var(--blur));
+      width: 920px;
+      max-width: 98vw;
+      margin: 2.5rem auto;
+    }
+
+    .dashboard-header {
+      text-align: center;
+    }
+    .dashboard-header h1 {
+      color: var(--red4);
+      letter-spacing: 1px;
+      margin: 0 0 0.25em 0;
+      font-size: 2.3rem;
+      font-weight: 700;
+      text-shadow: 0 4px 18px rgba(198,40,40,0.09);
+    }
+    .dashboard-header p {
+      color: var(--red3);
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+    }
+    .card {
+      background: linear-gradient(120deg, var(--red2) 60%, var(--red1) 100%);
+      border-radius: 1.5rem;
+      box-shadow: 0 2px 16px 0 rgba(198,40,40,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(12px);
+      padding: 1.2rem 1rem 1.2rem 1.3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-height: 120px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card h2 {
+      color: var(--red4);
+      margin: 0 0 0.4em 0;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+    .card .number {
+      font-size: 2rem;
+      color: var(--red3);
+      font-weight: bold;
+      margin-bottom: 0.2em;
+      text-shadow: 0 4px 24px var(--red1);
+    }
+    .card .label {
+      color: var(--red4);
+      font-size: 1rem;
+      opacity: 0.82;
+    }
+    .card::after {
+      content: "";
+      position: absolute;
+      top: 12px; left: 12px;
+      width: 60%;
+      height: 28px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.5) 10%, rgba(255,255,255,0.01) 100%);
+      border-radius: 20px;
+      filter: blur(2px);
+      opacity: 0.28;
+      pointer-events: none;
+    }
+
+    .breakdowns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+    }
+    .breakdown {
+      flex: 1;
+      min-width: 200px;
+      background: rgba(255,255,255,0.20);
+      border-radius: 1.2rem;
+      padding: 1.2rem 1.2rem 0.7rem 1.2rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 1px 8px 0 rgba(198,40,40,0.05);
+      backdrop-filter: blur(9px);
+    }
+    .breakdown h3 {
+      color: var(--red4);
+      margin: 0 0 0.6em 0;
+      font-size: 1.09rem;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
+    .breakdown ul {
+      margin: 0 0 0.7em 0;
+      padding: 0 0 0 1.3em;
+      color: var(--red3);
+      font-size: 1.01rem;
+      line-height: 1.55;
+    }
+
+    .task-table-container {
+      background: rgba(255,255,255,0.22);
+      border-radius: 1.2rem;
+      padding: 1.2rem;
+      box-shadow: 0 1px 8px 0 rgba(198,40,40,0.09);
+      border: 1px solid rgba(255,255,255,0.13);
+      backdrop-filter: blur(8px);
+      overflow-x: auto;
+    }
+    .task-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1rem;
+      background: transparent;
+    }
+    .task-table th, .task-table td {
+      padding: 0.7em 1.1em;
+      border-bottom: 1px solid #ffd6d6;
+      text-align: left;
+    }
+    .task-table th {
+      color: var(--red4);
+      background: var(--red1);
+      font-weight: 700;
+    }
+    .task-table td {
+      color: var(--red3);
+      background: rgba(255,255,255,0.0);
+      font-weight: 500;
+    }
+
+    @media (max-width: 900px) {
+      .dashboard { width: 100%; padding: 0.6rem;}
+      .summary-cards { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+      .breakdowns { flex-direction: column; gap: 1.2rem;}
+    }
+    @media (max-width: 600px) {
+      .summary-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="dashboard-header">
+      <h1>Care Program Dashboard</h1>
+      <p>Glassmorphism dashboard · 4 reds & detailed breakdowns</p>
+    </div>
+
+    <div class="summary-cards">
+      <div class="card">
+        <h2>Total Tasks</h2>
+        <div class="number">3</div>
+        <div class="label">Tracked</div>
+      </div>
+      <div class="card">
+        <h2>Completed Tasks</h2>
+        <div class="number">1</div>
+        <div class="label">Marked Complete</div>
+      </div>
+      <div class="card">
+        <h2>In Progress</h2>
+        <div class="number">2</div>
+        <div class="label">Ongoing</div>
+      </div>
+      <div class="card">
+        <h2>Average Completion</h2>
+        <div class="number">29.5%</div>
+        <div class="label">Overall Progress</div>
+      </div>
+    </div>
+
+    <div class="breakdowns">
+      <div class="breakdown">
+        <h3>By Priority</h3>
+        <ul>
+          <li>Critical: 2</li>
+          <li>Medium: 1</li>
+        </ul>
+      </div>
+      <div class="breakdown">
+        <h3>By Country</h3>
+        <ul>
+          <li>China: 2</li>
+          <li>Indonesia: 1</li>
+        </ul>
+      </div>
+      <div class="breakdown">
+        <h3>By Status</h3>
+        <ul>
+          <li>Complete: 1</li>
+          <li>In Progress: 2</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="task-table-container">
+      <h3 style="color:#c62828;margin:0 0 1em 0;font-weight:700;font-size:1.1em;letter-spacing:0.08em;">
+        Sample Task Details
+      </h3>
+      <table class="task-table">
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Accountable</th>
+            <th>Completion %</th>
+            <th>Country</th>
+            <th>Due Date</th>
+            <th>Priority</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>To help Tommy with Anti -摩擦 solutions</td>
+            <td>HR Team (Indonesia)</td>
+            <td>50.0</td>
+            <td>China</td>
+            <td>July 1, 2025</td>
+            <td>Critical</td>
+            <td>Complete</td>
+          </tr>
+          <tr>
+            <td>Find Nunggal a Successor</td>
+            <td>Joanna Zhang</td>
+            <td>9.0</td>
+            <td>Indonesia</td>
+            <td>June 30, 2025</td>
+            <td>Medium</td>
+            <td>In Progress</td>
+          </tr>
+          <tr>
+            <td>日本购房LTI</td>
+            <td></td>
+            <td></td>
+            <td>China</td>
+            <td>July 31, 2025</td>
+            <td>Critical</td>
+            <td>In Progress</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="color:#e57373;font-size:0.92em;margin-top:0.6em;">
+        (Table shows sample; add more rows for all tasks)
+      </div>
+    </div>
+  </div>
+</body>
+</html>

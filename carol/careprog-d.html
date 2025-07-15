@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Care Program Dashboard (Dark Theme)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --red: #ff6b6b;
+      --red-dark: #ff4242;
+      --orange: #ffa942;
+      --orange-dark: #ff9800;
+      --yellow: #fff86b;
+      --yellow-dark: #e9c600;
+      --green: #3ddc97;
+      --green-dark: #2bbc74;
+      --blue: #49aaff;
+      --blue-dark: #2186c3;
+      --dark-bg: #151c23;
+      --dark-card: #232e39;
+      --dark-table: #18222b;
+      --white: #fff;
+      --light-gray: #eaeaea;
+      --border: #2e3c48;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'SF Pro Display', 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #1a232a 0%, #252a2e 100%);
+      color: var(--light-gray);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .dashboard {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 2rem;
+      background: var(--dark-bg);
+      border-radius: 2rem;
+      box-shadow: 0 8px 32px 0 rgba(33,150,243,0.13);
+      width: 980px;
+      max-width: 99vw;
+      margin: 2.5rem auto;
+      border: 1px solid var(--border);
+    }
+
+    .dashboard-header {
+      text-align: center;
+    }
+    .dashboard-header h1 {
+      color: var(--blue);
+      letter-spacing: 1px;
+      margin: 0 0 0.18em 0;
+      font-size: 2.2rem;
+      font-weight: 700;
+    }
+    .dashboard-header p {
+      color: var(--red);
+      font-size: 1.13rem;
+      margin: 0;
+      letter-spacing: 0.04em;
+    }
+
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.1rem;
+    }
+    .card {
+      border-radius: 1.4rem;
+      box-shadow: 0 2px 16px 0 rgba(33,150,243,0.08);
+      border: 1.5px solid var(--border);
+      padding: 1.1rem 1rem 1.1rem 1.3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-height: 110px;
+      position: relative;
+      overflow: hidden;
+      color: var(--white);
+      font-weight: 600;
+      background: var(--dark-card);
+      transition: box-shadow 0.2s;
+    }
+    .card-red {
+      border-color: var(--red);
+      box-shadow: 0 2px 12px 0 #ff6b6b22;
+    }
+    .card-orange {
+      border-color: var(--orange);
+      box-shadow: 0 2px 12px 0 #ffa94222;
+    }
+    .card-yellow {
+      border-color: var(--yellow);
+      box-shadow: 0 2px 12px 0 #fff86b22;
+      color: var(--yellow);
+    }
+    .card-green {
+      border-color: var(--green);
+      box-shadow: 0 2px 12px 0 #3ddc9722;
+      color: var(--green);
+    }
+    .card-blue {
+      border-color: var(--blue);
+      box-shadow: 0 2px 12px 0 #49aaff22;
+      color: var(--blue);
+    }
+    .card h2 {
+      margin: 0 0 0.34em 0;
+      font-size: 1.10rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: inherit;
+    }
+    .card .number {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 0.1em;
+      color: inherit;
+    }
+    .card .label {
+      font-size: 1.01rem;
+      opacity: 0.86;
+      color: inherit;
+    }
+
+    .breakdowns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.7rem;
+      justify-content: space-between;
+    }
+    .breakdown {
+      flex: 1;
+      min-width: 190px;
+      background: var(--dark-card);
+      border-radius: 1.2rem;
+      padding: 1.1rem 1.2rem 0.7rem 1.1rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 8px 0 #0004;
+    }
+    .breakdown h3 {
+      margin: 0 0 0.53em 0;
+      font-size: 1.01rem;
+      letter-spacing: 0.07em;
+      font-weight: 600;
+      color: var(--blue);
+    }
+    .breakdown ul {
+      margin: 0 0 0.7em 0;
+      padding: 0 0 0 1.4em;
+      color: var(--orange);
+      font-size: 1rem;
+      line-height: 1.52;
+    }
+
+    .task-table-container {
+      background: var(--dark-table);
+      border-radius: 1.1rem;
+      padding: 1.05rem;
+      box-shadow: 0 1px 8px 0 #0004;
+      border: 1px solid var(--border);
+      overflow-x: auto;
+    }
+    .task-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.99rem;
+      background: transparent;
+    }
+    .task-table th, .task-table td {
+      padding: 0.57em 0.85em;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    .task-table th {
+      color: var(--blue);
+      background: #1c2630;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .task-table td {
+      color: var(--orange);
+      background: rgba(0,0,0,0.0);
+      font-weight: 500;
+    }
+
+    /* Table highlight colors for each type */
+    .table-country-china { color: var(--blue); }
+    .table-country-indonesia { color: var(--green); }
+    .table-priority-critical { color: var(--red); }
+    .table-priority-medium { color: var(--orange); }
+    .table-status-complete { color: var(--green); }
+    .table-status-inprogress { color: var(--orange); }
+
+    @media (max-width: 900px) {
+      .dashboard { width: 100%; padding: 0.5rem;}
+      .summary-cards { grid-template-columns: 1fr 1fr 1fr;}
+      .breakdowns { flex-direction: column; gap: 1rem;}
+    }
+    @media (max-width: 600px) {
+      .summary-cards { grid-template-columns: 1fr;}
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="dashboard-header">
+      <h1>Care Program Dashboard</h1>
+      <p>Dark theme · Red, Orange, Yellow, Green, Blue</p>
+    </div>
+
+    <div class="summary-cards">
+      <div class="card card-red">
+        <h2>Total Tasks</h2>
+        <div class="number">3</div>
+        <div class="label">All Items</div>
+      </div>
+      <div class="card card-orange">
+        <h2>In Progress</h2>
+        <div class="number">2</div>
+        <div class="label">Ongoing</div>
+      </div>
+      <div class="card card-yellow">
+        <h2>Average Completion</h2>
+        <div class="number">29.5%</div>
+        <div class="label">Overall</div>
+      </div>
+      <div class="card card-green">
+        <h2>Completed Tasks</h2>
+        <div class="number">1</div>
+        <div class="label">Success</div>
+      </div>
+      <div class="card card-blue">
+        <h2>Unique Countries</h2>
+        <div class="number">2</div>
+        <div class="label">Regions Involved</div>
+      </div>
+    </div>
+
+    <div class="breakdowns">
+      <div class="breakdown">
+        <h3>By Priority</h3>
+        <ul>
+          <li style="color:var(--red);">Critical: 2</li>
+          <li style="color:var(--orange);">Medium: 1</li>
+        </ul>
+      </div>
+      <div class="breakdown">
+        <h3>By Country</h3>
+        <ul>
+          <li style="color:var(--blue);">China: 2</li>
+          <li style="color:var(--green);">Indonesia: 1</li>
+        </ul>
+      </div>
+      <div class="breakdown">
+        <h3>By Status</h3>
+        <ul>
+          <li style="color:var(--green);">Complete: 1</li>
+          <li style="color:var(--orange);">In Progress: 2</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="task-table-container">
+      <h3 style="color:#49aaff;margin:0 0 1em 0;font-weight:700;font-size:1.08em;letter-spacing:0.07em;">
+        Sample Task Details
+      </h3>
+      <table class="task-table">
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Accountable</th>
+            <th>Completion %</th>
+            <th>Country</th>
+            <th>Due Date</th>
+            <th>Priority</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>To help Tommy with Anti -摩擦 solutions</td>
+            <td>HR Team (Indonesia)</td>
+            <td>50.0</td>
+            <td class="table-country-china">China</td>
+            <td>July 1, 2025</td>
+            <td class="table-priority-critical">Critical</td>
+            <td class="table-status-complete">Complete</td>
+          </tr>
+          <tr>
+            <td>Find Nunggal a Successor</td>
+            <td>Joanna Zhang</td>
+            <td>9.0</td>
+            <td class="table-country-indonesia">Indonesia</td>
+            <td>June 30, 2025</td>
+            <td class="table-priority-medium">Medium</td>
+            <td class="table-status-inprogress">In Progress</td>
+          </tr>
+          <tr>
+            <td>日本购房LTI</td>
+            <td></td>
+            <td></td>
+            <td class="table-country-china">China</td>
+            <td>July 31, 2025</td>
+            <td class="table-priority-critical">Critical</td>
+            <td class="table-status-inprogress">In Progress</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="color:#49aaff;font-size:0.92em;margin-top:0.6em;">
+        (Table shows sample; expand for full data)
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prosedur Operasi Driver Indonesia - Indonesian Driver Operations Procedure</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .flag-indonesia {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            opacity: 0.95;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+        }
+        
+        .warning-box h3 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        .warning-box p {
+            color: #856404;
+            font-weight: 500;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .flowchart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 50px;
+        }
+        
+        .process-step {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .process-step.reverse {
+            flex-direction: row-reverse;
+        }
+        
+        .step-visual {
+            flex: 0 0 320px;
+            padding: 30px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .step-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .step-visual:hover::before {
+            left: 100%;
+        }
+        
+        .step-visual:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .step-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .step-title-id {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .step-title-en {
+            font-size: 1.1em;
+            opacity: 0.9;
+            font-style: italic;
+            margin-bottom: 5px;
+        }
+        
+        .step-explanation {
+            flex: 1;
+            padding: 30px;
+            margin: 0 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid;
+            position: relative;
+        }
+        
+        .step-explanation h3 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .step-explanation .description-id {
+            color: #2c3e50;
+            line-height: 1.7;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .step-explanation .description-en {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .step-details {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .detail-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .detail-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .detail-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-icon {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .detail-text {
+            flex: 1;
+        }
+        
+        .detail-text .text-id {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 3px;
+        }
+        
+        .detail-text .text-en {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .responsibilities {
+            background: #e8f5e8;
+            border: 2px solid #27ae60;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .responsibilities h5 {
+            color: #27ae60;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .responsibility-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 5px;
+        }
+        
+        .connector {
+            position: absolute;
+            left: 50%;
+            bottom: -40px;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 40px;
+            background: linear-gradient(to bottom, #e74c3c, #c0392b);
+            border-radius: 2px;
+        }
+        
+        .connector::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid #c0392b;
+        }
+        
+        /* Indonesian Red and White Theme */
+        .mulai { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .pengumpulan { background: linear-gradient(135deg, #ffffff, #ecf0f1); color: #2c3e50 !important; }
+        .pemantauan { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .praberangkat { background: linear-gradient(135deg, #ffffff, #ecf0f1); color: #2c3e50 !important; }
+        .komunikasi { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .pelayanan { background: linear-gradient(135deg, #ffffff, #ecf0f1); color: #2c3e50 !important; }
+        .selesai { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        
+        .mulai .step-explanation { border-left-color: #e74c3c; }
+        .pengumpulan .step-explanation { border-left-color: #34495e; }
+        .pemantauan .step-explanation { border-left-color: #e74c3c; }
+        .praberangkat .step-explanation { border-left-color: #34495e; }
+        .komunikasi .step-explanation { border-left-color: #e74c3c; }
+        .pelayanan .step-explanation { border-left-color: #34495e; }
+        .selesai .step-explanation { border-left-color: #e74c3c; }
+        
+        .summary-section {
+            background: linear-gradient(135deg, #fff5f5, #ffeaea);
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 50px;
+            border: 2px solid #e74c3c;
+        }
+        
+        .summary-section h2 {
+            color: #c0392b;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+        
+        .compliance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .compliance-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-left: 5px solid #e74c3c;
+            transition: transform 0.3s ease;
+        }
+        
+        .compliance-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .compliance-card h4 {
+            color: #c0392b;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .compliance-card .card-text-id {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .compliance-card .card-text-en {
+            color: #666;
+            font-style: italic;
+            font-size: 0.95em;
+        }
+        
+        @media (max-width: 768px) {
+            .process-step {
+                flex-direction: column !important;
+                text-align: center;
+            }
+            
+            .process-step.reverse {
+                flex-direction: column !important;
+            }
+            
+            .step-visual {
+                flex: none;
+                width: 100%;
+                max-width: 300px;
+                margin-bottom: 20px;
+            }
+            
+            .step-explanation {
+                margin: 0;
+                width: 100%;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="flag-indonesia">🇮🇩</div>
+            <h1>Prosedur Operasi Driver Indonesia</h1>
+            <div class="subtitle">Indonesian Driver Operations Procedure</div>
+            <p>Panduan Lengkap untuk Driver Lokal Penjemputan Tamu - Complete Guide for Local Drivers Picking Up Guests</p>
+        </div>
+        
+        <div class="warning-box">
+            <h3>⚠️ PENTING - IMPORTANT NOTICE</h3>
+            <p><strong>Prosedur ini khusus untuk driver lokal Indonesia yang bertugas menjemput tamu.</strong><br>
+            <em>This procedure is specifically for Indonesian local drivers assigned to pick up guests.</em><br>
+        </div>
+        
+        <div class="main-content">
+            <div class="flowchart-container">
+                
+                <!-- Step 1: Start -->
+                <div class="process-step mulai">
+                    <div class="step-visual" onclick="highlightStep(this)">
+                        <span class="step-icon">🚗</span>
+                        <div class="step-title-id">Persiapan Awal</div>
+                        <div class="step-title-en">Initial Preparation</div>
+                        <div class="connector"></div>
+                    </div>
+                    <div class="step-explanation">
+                        <h3>🔧 Tahap Persiapan Driver</h3>
+                        <div class="description-id">Driver lokal harus mempersiapkan kendaraan dan diri sendiri sebelum melakukan penjemputan tamu. Pastikan semua dokumen dan perlengkapan sudah siap.</div>
+                        <div class="description-en">Local drivers must prepare vehicle and themselves before picking up guests. Ensure all documents and equipment are ready.</div>
+                        
+                        <div class="step-details">
+                            <h4>Checklist Persiapan Driver:</h4>
+                            <ul class="detail-list">
+                                <li>
+                                    <span class="detail-icon" style="background: #e74c3c;">📋</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Periksa SIM, STNK, dan dokumen kendaraan</div>
+                                        <div class="text-en">Check driver's license, vehicle registration, and vehicle documents</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="detail-icon" style="background: #27ae60;">🚗</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Cek kondisi kendaraan: ban, rem, bahan bakar, AC</div>
+                                        <div class="text-en">Check vehicle condition: tires, brakes, fuel, AC</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="detail-icon" style="background: #3498db;">📱</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Pastikan HP dalam kondisi baik dan battery penuh</div>
+                                        <div class="text-en">Ensure phone is in good condition and battery is full</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="detail-icon" style="background: #f39c12;">👔</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Berpakaian rapi dan membawa name tag/ID perusahaan</div>
+                                        <div class="text-en">Dress neatly and bring company name tag/ID</div>
+                                    </div>
+                                </li>
+                            </ul>
+                            
+                            <div class="responsibilities">
+                                <h5>👨‍💼 Tanggung Jawab Driver - Driver Responsibilities:</h5>
+                                <div class="responsibility-item">
+                                    <span>🔍</span>
+                                    <div>
+                                        <strong>Pastikan kendaraan bersih dan wangi</strong><br>
+                                        <em>Ensure vehicle is clean and fragrant</em>
+                                    </div>
+                                </div>
+                                <div class="responsibility-item">
+                                    <span>📞</span>
+                                    <div>
+                                        <strong>Konfirmasi jadwal penjemputan dengan koordinator</strong><br>
+                                        <em>Confirm pickup schedule with coordinator</em>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Information Gathering -->
+                <div class="process-step pengumpulan reverse">
+                    <div class="step-visual" onclick="highlightStep(this)">
+                        <span class="step-icon">📋</span>
+                        <div class="step-title-id">Pengumpulan Informasi</div>
+                        <div class="step-title-en">Information Gathering</div>
+                        <div class="connector"></div>
+                    </div>
+                    <div class="step-explanation">
+                        <h3>📊 Pengumpulan Data Penjemputan</h3>
+                        <div class="description-id">Driver harus mengumpulkan semua informasi penting tentang tamu yang akan dijemput, jadwal, lokasi, dan instruksi khusus dari koordinator.</div>
+                        <div class="description-en">Driver must gather all important information about guests to be picked up, schedule, location, and special instructions from coordinator.</div>
+                        
+                        <div class="step-details">
+                            <h4>Informasi yang Harus Dikumpulkan:</h4>
+                            <ul class="detail-list">
+                                <li>
+                                    <span class="detail-icon" style="background: #3498db;">👥</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Nama dan jumlah tamu yang akan dijemput</div>
+                                        <div class="text-en">Name and number of guests to be picked up</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="detail-icon" style="background: #27ae60;">🏢</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Lokasi penjemputan (hotel, bandara, atau alamat)</div>
+                                        <div class="text-en">Pickup location (hotel, airport, or address)</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="detail-icon" style="background: #f39c12;">⏰</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Waktu penjemputan dan estimasi durasi perjalanan</div>
+                                        <div class="text-en">Pickup time and estimated travel duration</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="detail-icon" style="background: #9b59b6;">🎯</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Tujuan akhir dan rute yang harus dilalui</div>
+                                        <div class="text-en">Final destination and route to be taken</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="detail-icon" style="background: #e74c3c;">📞</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Nomor kontak tamu dan koordinator</div>
+                                        <div class="text-en">Guest contact number and coordinator</div>
+                                    </div>
+                                </li>
+                            </ul>
+                            
+                            <div class="responsibilities">
+                                <h5>👨‍💼 Tanggung Jawab Driver - Driver Responsibilities:</h5>
+                                <div class="responsibility-item">
+                                    <span>📝</span>
+                                    <div>
+                                        <strong>Catat semua informasi di buku catatan</strong><br>
+                                        <em>Record all information in logbook</em>
+                                    </div>
+                                </div>
+                                <div class="responsibility-item">
+                                    <span>❓</span>
+                                    <div>
+                                        <strong>Tanyakan jika ada informasi yang kurang jelas</strong><br>
+                                        <em>Ask if any information is unclear</em>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Route Monitoring -->
+                <div class="process-step pemantauan">
+                    <div class="step-visual" onclick="highlightStep(this)">
+                        <span class="step-icon">🗺️</span>
+                        <div class="step-title-id">Pemantauan Rute</div>
+                        <div class="step-title-en">Route Monitoring</div>
+                        <div class="connector"></div>
+                    </div>
+                    <div class="step-explanation">
+                        <h3>🛣️ Pemantauan Kondisi Jalan dan Traffic</h3>
+                        <div class="description-id">Driver harus memantau kondisi lalu lintas, cuaca, dan mencari rute terbaik menuju lokasi penjemputan untuk memastikan tiba tepat waktu.</div>
+                        <div class="description-en">Driver must monitor traffic conditions, weather, and find the best route to pickup location to ensure on-time arrival.</div>
+                        
+                        <div class="step-details">
+                            <h4>Yang Harus Dipantau Secara Berkelanjutan:</h4>
+                            <ul class="detail-list">
+                                <li>
+                                    <span class="detail-icon" style="background: #e74c3c;">🚦</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Kondisi lalu lintas dan kemacetan di rute utama</div>
+                                        <div class="text-en">Traffic conditions and congestion on main routes</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="detail-icon" style="background: #27ae60;">🌧️</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Kondisi cuaca yang dapat mempengaruhi perjalanan</div>
+                                        <div class="text-en">Weather conditions that may affect travel</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="detail-icon" style="background: #3498db;">🚧</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Pekerjaan jalan atau penutupan rute alternatif</div>
+                                        <div class="text-en">Road work or closure of alternative routes</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="detail-icon" style="background: #f39c12;">⏱️</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Waktu keberangkatan optimal untuk tiba tepat waktu</div>
+                                        <div class="text-en">Optimal departure time to arrive on schedule</div>
+                                    </div>
+                                </li>
+                            </ul>
+                            
+                            <div class="responsibilities">
+                                <h5>👨‍💼 Tanggung Jawab Driver - Driver Responsibilities:</h5>
+                                <div class="responsibility-item">
+                                    <span>📱</span>
+                                    <div>
+                                        <strong>Gunakan aplikasi maps untuk cek traffic</strong><br>
+                                        <em>Use maps application to check traffic</em>
+                                    </div>
+                                </div>
+                                <div class="responsibility-item">
+                                    <span>📞</span>
+                                    <div>
+                                        <strong>Hubungi koordinator jika ada keterlambatan</strong><br>
+                                        <em>Contact coordinator if there are delays</em>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Pre-Departure Check -->
+                <div class="process-step praberangkat reverse">
+                    <div class="step-visual" onclick="highlightStep(this)">
+                        <span class="step-icon">✅</span>
+                        <div class="step-title-id">Pemeriksaan Pra-Berangkat</div>
+                        <div class="step-title-en">Pre-Departure Check</div>
+                        <div class="connector"></div>
+                    </div>
+                    <div class="step-explanation">
+                        <h3>🔍 Inspeksi Akhir Sebelum Berangkat</h3>
+                        <div class="description-id">Sebelum berangkat ke lokasi penjemputan, driver harus melakukan pemeriksaan akhir kendaraan, perlengkapan, dan memastikan semua persiapan sudah sempurna.</div>
+                        <div class="description-en">Before departing to pickup location, driver must conduct final vehicle inspection, equipment check, and ensure all preparations are perfect.</div>
+                        
+                        <div class="step-details">
+                            <h4>Pemeriksaan Wajib Sebelum Berangkat:</h4>
+                            <ul class="detail-list">
+                                <li>
+                                    <span class="detail-icon" style="background: #34495e;">🔧</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Cek akhir mesin, lampu, klakson, dan wiper</div>
+                                        <div class="text-en">Final check of engine, lights, horn, and wipers</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="detail-icon" style="background: #27ae60;">🧹</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Pastikan interior bersih dan tidak ada bau</div>
+                                        <div class="text-en">Ensure interior is clean and odor-free</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="detail-icon" style="background: #3498db;">💧</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Sediakan air minum, tissue, dan hand sanitizer</div>
+                                        <div class="text-en">Provide drinking water, tissues, and hand sanitizer</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="detail-icon" style="background: #f39c12;">📱</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Pastikan charger HP dan GPS berfungsi dengan baik</div>
+                                        <div class="text-en">Ensure phone charger and GPS are functioning properly</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="detail-icon" style="background: #9b59b6;">🎵</span>
+                                    <div class="detail-text">
+                                        <div class="text-id">Tes sistem audio dan set musik yang sesuai</div>
+                                        <div class="text-en">Test audio system and set appropriate music</div>
+                                    </div>
+                                </li>
+                            </ul>
+                            
+                            <div class="responsibilities">
+                                <h5>👨‍💼 Tanggung Jawab Driver - Driver Responsibilities:</h5>
+                                <div class="responsibility-item">
+                                    <span>📝</span>
+                                    <div>
+                                        <strong>Isi checklist kesiapan kendaraan</strong><br>
+                                        <em>Complete vehicle readiness checklist</em>
+                                    </div>
+                                </div>
+                                <div class="responsibility-item">
+                                    <span>⏰</span>
+                                    <div>
+                                        <strong>Berangkat 15 menit lebih awal dari jadwal</strong><br>
+                                        <em>Depart 15 minutes earlier than schedule</em>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 5: Communication System -->
+                <div class="process-step komunikasi">
+                    <div class="step-visual" onclick="highlightStep(this)">
+                        <span class="step-icon">📞</span>
+                        <div class="step-title-id">Sistem Komunikasi</div>
+                        <div class="step-title-en">Communication System</div>
+                        <div class="connector"></div>
+                    </div>
+                    <div class="step-explanation">
+                        <h3>📱 Protokol Komunikasi Selama Operasi</h3>
+                        <div class="description-id">Driver harus menjaga komunikasi yang baik dengan koordinator, tamu, dan pihak terkait selama proses penjemputan untuk memastikan kelancaran operasi

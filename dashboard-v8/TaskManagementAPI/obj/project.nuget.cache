@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ooIXbOK+/fs=",
+  "dgSpecHash": "RROlBoZMdCc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\pcvle\\Desktop\\public\\TaskManagementAPI\\TaskManagementAPI.csproj",
+  "projectFilePath": "D:\\10 Developments\\V8 Dashboards\\themudking\\dashboard-v8\\TaskManagementAPI\\TaskManagementAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pcvle\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\pcvle\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",

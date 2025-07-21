@@ -2938,11 +2938,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pcvle\\Desktop\\public\\taskmanagementapi\\TaskManagementAPI.csproj",
+      "projectUniqueName": "D:\\10 Developments\\V8 Dashboards\\themudking\\dashboard-v8\\TaskManagementAPI\\TaskManagementAPI.csproj",
       "projectName": "TaskManagementAPI",
-      "projectPath": "C:\\Users\\pcvle\\Desktop\\public\\taskmanagementapi\\TaskManagementAPI.csproj",
+      "projectPath": "D:\\10 Developments\\V8 Dashboards\\themudking\\dashboard-v8\\TaskManagementAPI\\TaskManagementAPI.csproj",
       "packagesPath": "C:\\Users\\pcvle\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pcvle\\Desktop\\public\\taskmanagementapi\\obj\\",
+      "outputPath": "D:\\10 Developments\\V8 Dashboards\\themudking\\dashboard-v8\\TaskManagementAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\pcvle\\AppData\\Roaming\\NuGet\\NuGet.Config"

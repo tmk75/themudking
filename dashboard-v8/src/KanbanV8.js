@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Legend } from 'recharts';
 import { Plus, Edit2, Trash2, Calendar, User, Clock, TrendingUp, BarChart3, Target, Users, UserCheck, Eye, MessageCircle } from 'lucide-react';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// 确保API路径正确
+const API_BASE_URL = `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api`;
 
 const KanbanV8 = () => {
   const [tasks, setTasks] = useState([]);

@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APP Interview Analysis - RACI Dashboard & BI Report</title>
     <style>
+        :root {
+            /* Blue Shades */
+            --blue-dark: #0d47a1;
+            --blue-medium: #1976d2;
+            --blue-light: #42a5f5;
+            
+            /* White Shades */
+            --white-pure: #ffffff;
+            --white-off: #fafafa;
+            --white-light: #f5f5f5;
+            
+            /* Supporting Colors */
+            --accent-red: #d32f2f;
+            --accent-orange: #f57c00;
+            --accent-green: #388e3c;
+            --text-dark: #263238;
+            --text-medium: #455a64;
+            --text-light: #78909c;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,7 +33,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 50%, #66bb6a 100%);
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-medium) 50%, var(--blue-light) 100%);
             min-height: 100vh;
             padding: 10px;
             line-height: 1.6;
@@ -22,17 +42,17 @@
         .dashboard-container {
             max-width: 1400px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.98);
+            background: var(--white-pure);
             border-radius: 15px;
             backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 30px rgba(13, 71, 161, 0.2);
             overflow: hidden;
-            border: 1px solid rgba(46, 125, 50, 0.1);
+            border: 1px solid rgba(66, 165, 245, 0.1);
         }
 
         .dashboard-header {
-            background: linear-gradient(135deg, #1b5e20, #2e7d32, #388e3c);
-            color: white;
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-medium));
+            color: var(--white-pure);
             padding: 20px;
             text-align: center;
             position: relative;
@@ -67,8 +87,8 @@
 
         .tab-container {
             display: flex;
-            background: #f1f8e9;
-            border-bottom: 1px solid #c8e6c9;
+            background: var(--white-light);
+            border-bottom: 1px solid var(--blue-light);
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
@@ -77,16 +97,16 @@
             flex: 1;
             min-width: 140px;
             padding: 12px 8px;
-            background: #e8f5e8;
+            background: var(--white-off);
             border: none;
             cursor: pointer;
             font-size: 0.9em;
             font-weight: 500;
             transition: all 0.3s ease;
-            border-right: 1px solid #c8e6c9;
+            border-right: 1px solid var(--blue-light);
             white-space: nowrap;
             text-align: center;
-            color: #2e7d32;
+            color: var(--blue-dark);
         }
 
         .tab:last-child {
@@ -94,20 +114,21 @@
         }
 
         .tab.active {
-            background: white;
-            color: #1b5e20;
-            border-bottom: 3px solid #4caf50;
+            background: var(--white-pure);
+            color: var(--blue-dark);
+            border-bottom: 3px solid var(--blue-medium);
             font-weight: 600;
         }
 
         .tab:hover, .tab:focus {
-            background: #f1f8e9;
+            background: var(--white-light);
             outline: none;
         }
 
         .tab-content {
             display: none;
             padding: 15px;
+            background: var(--white-off);
         }
 
         .tab-content.active {
@@ -116,7 +137,7 @@
 
         .section-title {
             margin-bottom: 20px;
-            color: #1b5e20;
+            color: var(--blue-dark);
             font-size: 1.5em;
             font-weight: 600;
         }
@@ -127,20 +148,20 @@
             margin-bottom: 20px;
             -webkit-overflow-scrolling: touch;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.1);
+            box-shadow: 0 5px 15px rgba(13, 71, 161, 0.1);
         }
 
         .raci-table {
             width: 100%;
             min-width: 800px;
             border-collapse: collapse;
-            background: white;
+            background: var(--white-pure);
             font-size: 0.8em;
         }
 
         .raci-table th {
-            background: linear-gradient(135deg, #2e7d32, #4caf50);
-            color: white;
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-medium));
+            color: var(--white-pure);
             padding: 12px 6px;
             text-align: center;
             font-weight: 600;
@@ -153,19 +174,19 @@
         .raci-table td {
             padding: 10px 6px;
             text-align: center;
-            border-bottom: 1px solid #e8f5e8;
+            border-bottom: 1px solid var(--white-light);
             font-size: 0.8em;
         }
 
         .raci-table tr:hover {
-            background: #f1f8e9;
+            background: var(--white-off);
         }
 
         .process-name {
             text-align: left !important;
             font-weight: 600;
-            background: #f1f8e9 !important;
-            color: #1b5e20;
+            background: var(--white-light) !important;
+            color: var(--blue-dark);
             position: sticky;
             left: 0;
             z-index: 5;
@@ -183,13 +204,13 @@
             justify-content: center;
             font-weight: bold;
             font-size: 0.7em;
-            color: white;
+            color: var(--white-pure);
         }
 
-        .raci-r { background: #d32f2f; }
-        .raci-a { background: #f57c00; }
-        .raci-c { background: #1976d2; }
-        .raci-i { background: #388e3c; }
+        .raci-r { background: var(--accent-red); }
+        .raci-a { background: var(--accent-orange); }
+        .raci-c { background: var(--blue-medium); }
+        .raci-i { background: var(--accent-green); }
 
         /* Metrics Grid */
         .metrics-grid {
@@ -200,17 +221,17 @@
         }
 
         .metric-card {
-            background: white;
+            background: var(--white-pure);
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.1);
+            box-shadow: 0 5px 15px rgba(13, 71, 161, 0.1);
             transition: transform 0.3s ease;
-            border-left: 4px solid #4caf50;
+            border-left: 4px solid var(--blue-medium);
         }
 
         .metric-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(46, 125, 50, 0.15);
+            box-shadow: 0 8px 25px rgba(13, 71, 161, 0.15);
         }
 
         .metric-header {
@@ -233,18 +254,18 @@
         .metric-title {
             font-size: 1em;
             font-weight: 600;
-            color: #1b5e20;
+            color: var(--blue-dark);
         }
 
         .metric-value {
             font-size: 2em;
             font-weight: 700;
-            color: #2e7d32;
+            color: var(--blue-medium);
             margin-bottom: 8px;
         }
 
         .metric-description {
-            color: #558b2f;
+            color: var(--text-medium);
             font-size: 0.85em;
         }
 
@@ -256,17 +277,17 @@
         }
 
         .issue-card {
-            background: white;
+            background: var(--white-pure);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.1);
-            border-left: 4px solid #f57c00;
+            box-shadow: 0 5px 15px rgba(13, 71, 161, 0.1);
+            border-left: 4px solid var(--blue-light);
         }
 
         .issue-header {
             padding: 15px;
-            background: linear-gradient(135deg, #d32f2f, #f44336);
-            color: white;
+            background: linear-gradient(135deg, var(--accent-red), #f44336);
+            color: var(--white-pure);
         }
 
         .issue-title {
@@ -285,7 +306,7 @@
         }
 
         .issue-description {
-            color: #1b5e20;
+            color: var(--text-dark);
             line-height: 1.5;
             margin-bottom: 12px;
             font-size: 0.9em;
@@ -299,24 +320,36 @@
             font-weight: 600;
         }
 
-        .status-high { background: #ffcdd2; color: #d32f2f; border: 1px solid #f44336; }
-        .status-medium { background: #fff3e0; color: #f57c00; border: 1px solid #ff9800; }
-        .status-low { background: #e8f5e8; color: #388e3c; border: 1px solid #4caf50; }
+        .status-high { 
+            background: rgba(211, 47, 47, 0.1); 
+            color: var(--accent-red); 
+            border: 1px solid var(--accent-red); 
+        }
+        .status-medium { 
+            background: rgba(245, 124, 0, 0.1); 
+            color: var(--accent-orange); 
+            border: 1px solid var(--accent-orange); 
+        }
+        .status-low { 
+            background: rgba(56, 142, 60, 0.1); 
+            color: var(--accent-green); 
+            border: 1px solid var(--accent-green); 
+        }
 
         /* Chart Container */
         .chart-container {
-            background: white;
+            background: var(--white-pure);
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.1);
+            box-shadow: 0 5px 15px rgba(13, 71, 161, 0.1);
             margin-bottom: 15px;
-            border-left: 4px solid #2e7d32;
+            border-left: 4px solid var(--blue-dark);
         }
 
         .chart-title {
             font-size: 1.2em;
             font-weight: 600;
-            color: #1b5e20;
+            color: var(--blue-dark);
             margin-bottom: 15px;
             text-align: center;
         }
@@ -348,12 +381,12 @@
             font-size: 0.8em;
             font-weight: 600;
             text-align: center;
-            color: #1b5e20;
+            color: var(--blue-dark);
         }
 
         .bar-value {
             font-size: 0.7em;
-            color: #558b2f;
+            color: var(--text-medium);
             text-align: center;
         }
 
@@ -371,7 +404,7 @@
             align-items: center;
             gap: 6px;
             font-size: 0.85em;
-            color: #1b5e20;
+            color: var(--blue-dark);
         }
 
         .legend-color {
@@ -514,7 +547,7 @@
         /* Print styles */
         @media print {
             body {
-                background: white;
+                background: var(--white-pure);
                 padding: 0;
             }
             
@@ -539,7 +572,7 @@
 
         /* Focus styles for keyboard navigation */
         .tab:focus-visible {
-            outline: 2px solid #4caf50;
+            outline: 2px solid var(--blue-medium);
             outline-offset: 2px;
         }
 
@@ -575,12 +608,12 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* APP Brand specific colors for chart elements */
-        .chart-production { background: linear-gradient(to top, #2e7d32, #4caf50); }
-        .chart-hr { background: linear-gradient(to top, #1976d2, #42a5f5); }
-        .chart-strategy { background: linear-gradient(to top, #f57c00, #ffb74d); }
-        .chart-supply { background: linear-gradient(to top, #388e3c, #66bb6a); }
-        .chart-others { background: linear-gradient(to top, #558b2f, #8bc34a); }
+        /* Chart specific blue gradients */
+        .chart-production { background: linear-gradient(to top, var(--blue-dark), var(--blue-medium)); }
+        .chart-hr { background: linear-gradient(to top, var(--blue-medium), var(--blue-light)); }
+        .chart-strategy { background: linear-gradient(to top, var(--blue-light), #64b5f6); }
+        .chart-supply { background: linear-gradient(to top, var(--blue-medium), #42a5f5); }
+        .chart-others { background: linear-gradient(to top, var(--blue-dark), var(--blue-light)); }
     </style>
 </head>
 <body>
@@ -759,7 +792,7 @@
             <div class="metrics-grid">
                 <div class="metric-card">
                     <div class="metric-header">
-                        <div class="metric-icon" style="background: linear-gradient(135deg, #2e7d32, #4caf50);">👥</div>
+                        <div class="metric-icon" style="background: linear-gradient(135deg, var(--blue-dark), var(--blue-medium)); color: var(--white-pure);">👥</div>
                         <div class="metric-title">Total Interviewees</div>
                     </div>
                     <div class="metric-value">13</div>
@@ -768,7 +801,7 @@
 
                 <div class="metric-card">
                     <div class="metric-header">
-                        <div class="metric-icon" style="background: linear-gradient(135deg, #d32f2f, #f44336);">⚠️</div>
+                        <div class="metric-icon" style="background: linear-gradient(135deg, var(--accent-red), #f44336); color: var(--white-pure);">⚠️</div>
                         <div class="metric-title">Critical Issues</div>
                     </div>
                     <div class="metric-value">8</div>
@@ -777,7 +810,7 @@
 
                 <div class="metric-card">
                     <div class="metric-header">
-                        <div class="metric-icon" style="background: linear-gradient(135deg, #f57c00, #ff9800);">📈</div>
+                        <div class="metric-icon" style="background: linear-gradient(135deg, var(--blue-medium), var(--blue-light)); color: var(--white-pure);">📈</div>
                         <div class="metric-title">Active Projects</div>
                     </div>
                     <div class="metric-value">5</div>
@@ -786,7 +819,7 @@
 
                 <div class="metric-card">
                     <div class="metric-header">
-                        <div class="metric-icon" style="background: linear-gradient(135deg, #388e3c, #66bb6a);">🎓</div>
+                        <div class="metric-icon" style="background: linear-gradient(135deg, var(--accent-green), #66bb6a); color: var(--white-pure);">🎓</div>
                         <div class="metric-title">Training Requests</div>
                     </div>
                     <div class="metric-value">7</div>
@@ -795,7 +828,7 @@
 
                 <div class="metric-card">
                     <div class="metric-header">
-                        <div class="metric-icon" style="background: linear-gradient(135deg, #1976d2, #42a5f5);">💰</div>
+                        <div class="metric-icon" style="background: linear-gradient(135deg, var(--blue-light), #64b5f6); color: var(--white-pure);">💰</div>
                         <div class="metric-title">Compensation Issues</div>
                     </div>
                     <div class="metric-value">4</div>
@@ -804,7 +837,7 @@
 
                 <div class="metric-card">
                     <div class="metric-header">
-                        <div class="metric-icon" style="background: linear-gradient(135deg, #558b2f, #8bc34a);">⏱️</div>
+                        <div class="metric-icon" style="background: linear-gradient(135deg, var(--blue-medium), var(--blue-dark)); color: var(--white-pure);">⏱️</div>
                         <div class="metric-title">Avg. Tenure</div>
                     </div>
                     <div class="metric-value">8.2</div>

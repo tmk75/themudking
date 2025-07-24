@@ -6,6 +6,7 @@ C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\p
 C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\publish\TaskManagementAPI.deps.json
 C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\publish\TaskManagementAPI.runtimeconfig.json
 C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\publish\TaskManagementAPI.pdb
+C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\publish\BCrypt.Net-Next.dll
 C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\publish\Humanizer.dll
 C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\publish\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\publish\Microsoft.Bcl.AsyncInterfaces.dll

@@ -631,7 +631,7 @@ const KanbanV8 = () => {
                 <UserSelect
                   value={formData.assignee}
                   onChange={(value) => setFormData({ ...formData, assignee: value })}
-                  placeholder="Select Responsible"
+                  placeholder="Select Assignee"
                 />
               </div>
             </div>
@@ -768,7 +768,7 @@ const KanbanV8 = () => {
                         }
                       });
                     }}
-                    placeholder="选择负责人"
+                    placeholder="Select Responsible"
                   />
                 </div>
                 
@@ -875,7 +875,6 @@ const KanbanV8 = () => {
                 <div className="flex items-center gap-4 bg-white/10 px-4 py-2 rounded-xl backdrop-blur-sm">
                   <div className="text-right">
                     <div className="text-white font-medium">{currentUser.name}</div>
-                    <div className="text-white/70 text-sm">{currentUser.username}</div>
                   </div>
                   <button
                     onClick={logout}

@@ -47,12 +47,12 @@ namespace TaskManagementAPI.Data
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.HasIndex(e => new { e.UserId, e.GroupId }).IsUnique();
                 
-                entity.HasOne<User>()
+                entity.HasOne(ugm => ugm.User)
                     .WithMany(u => u.GroupMemberships)
                     .HasForeignKey(ugm => ugm.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
                 
-                entity.HasOne<UserGroup>()
+                entity.HasOne(ugm => ugm.UserGroup)
                     .WithMany(g => g.UserMemberships)
                     .HasForeignKey(ugm => ugm.GroupId)
                     .OnDelete(DeleteBehavior.Cascade);

@@ -188,3 +188,100 @@ export const deleteUser = async (id) => {
     throw error;
   }
 };
+
+// 用户组管理 API
+
+// 获取用户组
+export const fetchGroups = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/groups`);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching groups:', error);
+    throw error;
+  }
+};
+
+// 获取单个用户组
+export const fetchGroup = async (id) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/groups/${id}`);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(`Error fetching group ${id}:`, error);
+    throw error;
+  }
+};
+
+// 创建用户组
+export const createGroup = async (groupData) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/groups`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(groupData)
+    });
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error creating group:', error);
+    throw error;
+  }
+};
+
+// 更新用户组
+export const updateGroup = async (id, groupData) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/groups/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(groupData)
+    });
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    return true;
+  } catch (error) {
+    console.error(`Error updating group ${id}:`, error);
+    throw error;
+  }
+};
+
+// 删除用户组
+export const deleteGroup = async (id) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/groups/${id}`, {
+      method: 'DELETE'
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || `Error: ${response.status}`);
+    }
+    return true;
+  } catch (error) {
+    console.error(`Error deleting group ${id}:`, error);
+    throw error;
+  }
+};
+
+// 获取用户组成员
+export const fetchGroupUsers = async (id) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/groups/${id}/users`);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(`Error fetching group ${id} users:`, error);
+    throw error;
+  }
+};

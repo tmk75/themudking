@@ -318,3 +318,4 @@ C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\o
 C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\obj\Release\net8.0\TaskManagementAPI.pdb
 C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\obj\Release\net8.0\TaskManagementAPI.genruntimeconfig.cache
 C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\obj\Release\net8.0\ref\TaskManagementAPI.dll
+C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\bin\Release\net8.0\BCrypt.Net-Next.dll

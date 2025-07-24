@@ -4,6 +4,7 @@ import KanbanDashboard from './KanbanDashboard';
 import KanbanV8 from './KanbanV8';
 import Login from './Login';
 import UserManagement from './UserManagement';
+import GroupManagement from './GroupManagement';
 
 // 创建用户上下文
 export const UserContext = createContext(null);
@@ -132,6 +133,11 @@ const App = () => {
           <Route path="/users" element={
             <ProtectedRoute>
               <UserManagement />
+            </ProtectedRoute>
+          } />
+          <Route path="/groups" element={
+            <ProtectedRoute>
+              <GroupManagement />
             </ProtectedRoute>
           } />
         </Routes>

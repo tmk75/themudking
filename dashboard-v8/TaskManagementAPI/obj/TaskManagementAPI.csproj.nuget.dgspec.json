@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\TaskManagementAPI\\TaskManagementAPI.csproj": {}
+    "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\taskmanagementapi\\TaskManagementAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\TaskManagementAPI\\TaskManagementAPI.csproj": {
+    "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\taskmanagementapi\\TaskManagementAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\TaskManagementAPI\\TaskManagementAPI.csproj",
+        "projectUniqueName": "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\taskmanagementapi\\TaskManagementAPI.csproj",
         "projectName": "TaskManagementAPI",
-        "projectPath": "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\TaskManagementAPI\\TaskManagementAPI.csproj",
+        "projectPath": "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\taskmanagementapi\\TaskManagementAPI.csproj",
         "packagesPath": "C:\\Users\\ywx10\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\TaskManagementAPI\\obj\\",
+        "outputPath": "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\taskmanagementapi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -45,6 +45,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "Microsoft.AspNetCore.Cors": {
               "target": "Package",
               "version": "[2.2.0, )"

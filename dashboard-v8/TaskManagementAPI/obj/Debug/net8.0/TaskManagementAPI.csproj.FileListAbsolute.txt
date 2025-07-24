@@ -216,3 +216,4 @@ C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\b
 C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\bin\Debug\net8.0\publish\appsettings.Production.json
 C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\bin\Debug\net8.0\publish\TaskManagementAPI.deps.json
 C:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\taskmanagementapi\bin\Debug\net8.0\publish\TaskManagementAPI.runtimeconfig.json
+c:\Users\ywx10\Desktop\项目\victor\themudking\dashboard-v8\TaskManagementAPI\bin\Debug\net8.0\BCrypt.Net-Next.dll

@@ -1,22 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, X } from 'lucide-react';
-import { fetchUsers, createUser, updateUser, deleteUser } from './utils/api';
+import { Plus, Edit2, Trash2, X, Search } from 'lucide-react';
+import { fetchUsers, createUser, updateUser, deleteUser, fetchGroups } from './utils/api';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
-  const [showAddUser, setShowAddUser] = useState(false);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTermState] = useState('');
+  
+  const setSearchTerm = (value) => {
+    console.log('setSearchTerm called with:', value);
+    console.trace('Call stack:');
+    setSearchTermState(value);
+  };
+  
+  // 调试searchTerm变化
+  useEffect(() => {
+    console.log('searchTerm changed to:', searchTerm);
+  }, [searchTerm]);
+  const [groups, setGroups] = useState([]);
 
-  // Fetch users using API
   const loadUsers = async () => {
     try {
       setLoading(true);
-      const data = await fetchUsers();
-      setUsers(data);
+      const [usersData, groupsData] = await Promise.all([
+        fetchUsers(),
+        fetchGroups()
+      ]);
+      console.log('Loaded users data:', usersData);
+      console.log('Loaded groups data:', groupsData);
+      setUsers(usersData);
+      setFilteredUsers([...usersData]);
+      setGroups(groupsData);
     } catch (error) {
-      console.error('Error fetching users:', error);
-      alert('Failed to load users. Please try again later.');
+      console.error('Error loading data:', error);
     } finally {
       setLoading(false);
     }
@@ -26,172 +45,147 @@ const UserManagement = () => {
     loadUsers();
   }, []);
 
-  // Create user using API
+  useEffect(() => {
+    const filtered = users.filter(user =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.username.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredUsers(filtered);
+  }, [searchTerm, users]);
+
   const handleCreateUser = async (userData) => {
     try {
-      const newUser = await createUser(userData);
-      setUsers([...users, newUser]);
-      setShowAddUser(false);
-      alert('User created successfully!');
+      await createUser(userData);
+      await loadUsers();
+      setShowModal(false);
     } catch (error) {
       console.error('Error creating user:', error);
-      alert('Failed to create user. Please try again.');
+      alert('Failed to create user');
     }
   };
 
-  // Update user using API
   const handleUpdateUser = async (userData) => {
     try {
-      await updateUser(userData.id, userData);
-      setUsers(users.map(user => user.id === userData.id ? userData : user));
+      const userId = editingUser?.id;
+      if (!userId) {
+        throw new Error('No user ID found for update');
+      }
+      const { id, ...updateData } = userData;
+      await updateUser(userId, updateData);
+      await loadUsers();
+      setShowModal(false);
       setEditingUser(null);
-      alert('User updated successfully!');
     } catch (error) {
       console.error('Error updating user:', error);
-      alert('Failed to update user. Please try again.');
+      alert('Failed to update user');
     }
   };
 
-  // Delete user using API
   const handleDeleteUser = async (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
         await deleteUser(userId);
-        setUsers(users.filter(user => user.id !== userId));
-        alert('User deleted successfully!');
+        await loadUsers();
       } catch (error) {
         console.error('Error deleting user:', error);
-        alert('Failed to delete user. Please try again.');
+        alert('Failed to delete user');
       }
     }
   };
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
   const UserModal = ({ user, onSave, onClose }) => {
-    const [formData, setFormData] = useState(user || {
-      name: '',
-      email: '',
+    const [formData, setFormData] = useState({
+      name: user?.name || '',
+      username: user?.username || '',
+      email: user?.email || '',
       password: '',
-      groups: []
+      groups: user?.groups || []
     });
-    const [newGroup, setNewGroup] = useState('');
-    const [availableGroups] = useState(['Development', 'Design', 'QA', 'Management', 'Marketing', 'Support']);
+    const [selectedGroups, setSelectedGroups] = useState(user?.groups || []);
 
     const handleSave = () => {
-      if (formData.name && formData.email) {
-        onSave(formData);
-      }
-    };
-
-    const addGroup = () => {
-      if (newGroup && !formData.groups.includes(newGroup)) {
-        setFormData({
+      if (formData.name && formData.username && formData.email && (user || formData.password)) {
+        onSave({
           ...formData,
-          groups: [...formData.groups, newGroup]
+          groups: selectedGroups
         });
-        setNewGroup('');
       }
     };
 
-    const removeGroup = (groupToRemove) => {
-      setFormData({
-        ...formData,
-        groups: formData.groups.filter(group => group !== groupToRemove)
-      });
+    const toggleGroup = (groupName) => {
+      setSelectedGroups(prev => 
+        prev.includes(groupName)
+          ? prev.filter(g => g !== groupName)
+          : [...prev, groupName]
+      );
     };
 
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white dark:bg-slate-800 rounded-lg p-6 w-full max-w-md border border-slate-200 dark:border-slate-700">
+        <div className="bg-white dark:bg-slate-800 rounded-lg p-6 w-full max-w-md">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold text-slate-800 dark:text-white">
-              {user ? 'Edit User' : 'Add New User'}
+              {user ? 'Edit User' : 'Add User'}
             </h2>
-            <button
-              onClick={onClose}
-              className="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-white"
-            >
+            <button onClick={onClose} className="text-slate-500 hover:text-slate-700">
               <X size={20} />
             </button>
           </div>
           
+          <form onSubmit={(e) => { e.preventDefault(); handleSave(); }}>
           <div className="space-y-4">
+            <input
+              id="modal-name-input"
+              name="modalName"
+              type="text"
+              placeholder="Name"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              id="modal-username-input"
+              name="modalUsername"
+              type="text"
+              placeholder="Username"
+              value={formData.username}
+              onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              disabled={!!user}
+            />
+            <input
+              id="modal-email-input"
+              name="modalEmail"
+              type="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              id="modal-password-input"
+              name="modalPassword"
+              type="password"
+              placeholder={user ? "New Password (optional)" : "Password"}
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                Name
-              </label>
-              <input
-                type="text"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                Password {user ? '(Leave blank to keep current)' : ''}
-              </label>
-              <input
-                type="password"
-                value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
-                required={!user}
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                Groups
-              </label>
-              <div className="flex gap-2 mb-2">
-                <select
-                  value={newGroup}
-                  onChange={(e) => setNewGroup(e.target.value)}
-                  className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
-                >
-                  <option value="">Select Group</option>
-                  {availableGroups.map(group => (
-                    <option key={group} value={group}>{group}</option>
-                  ))}
-                </select>
-                <button
-                  type="button"
-                  onClick={addGroup}
-                  className="px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                >
-                  Add
-                </button>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {formData.groups.map(group => (
-                  <span key={group} className="flex items-center gap-1 px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-md text-sm">
-                    {group}
-                    <button
-                      type="button"
-                      onClick={() => removeGroup(group)}
-                      className="text-blue-600 dark:text-blue-300 hover:text-red-500 dark:hover:text-red-400"
-                    >
-                      &times;
-                    </button>
-                  </span>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Groups</label>
+              <div className="space-y-2 max-h-32 overflow-y-auto border rounded-md p-2">
+                {groups.map(group => (
+                  <label key={group.id} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={selectedGroups.includes(group.name)}
+                      onChange={() => toggleGroup(group.name)}
+                      className="rounded"
+                    />
+                    <span className="text-sm">{group.name}</span>
+                  </label>
                 ))}
               </div>
             </div>
@@ -199,183 +193,154 @@ const UserManagement = () => {
 
           <div className="flex justify-end gap-3 mt-6">
             <button
-              type="button"
               onClick={onClose}
-              className="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+              className="px-4 py-2 border rounded-md text-slate-700 hover:bg-slate-100"
             >
               Cancel
             </button>
             <button
-              type="button"
-              onClick={handleSave}
+              type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
             >
-              {user ? 'Update User' : 'Create User'}
+              {user ? 'Update' : 'Create'}
             </button>
           </div>
-        </div>
-      </div>
-    );
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                Groups
-              </label>
-              <div className="flex gap-2 mb-2">
-                <select
-                  value={newGroup}
-                  onChange={(e) => setNewGroup(e.target.value)}
-                  className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
-                >
-                  <option value="">Select a group</option>
-                  {availableGroups.map(group => (
-                    <option key={group} value={group}>{group}</option>
-                  ))}
-                </select>
-                <button
-                  type="button"
-                  onClick={addGroup}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-                >
-                  Add
-                </button>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {formData.groups && formData.groups.map((group, index) => (
-                  <span key={index} className="flex items-center gap-1 px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-md text-sm">
-                    {group}
-                    <button
-                      type="button"
-                      onClick={() => removeGroup(group)}
-                      className="text-blue-600 dark:text-blue-400 hover:text-red-500 dark:hover:text-red-400"
-                    >
-                      <X size={14} />
-                    </button>
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex justify-end gap-2 pt-4">
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-4 py-2 text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 rounded-md hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleSave}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-              >
-                Save User
-              </button>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
     );
   };
 
-  return (
-    <div className="min-h-screen bg-slate-100 dark:bg-slate-900">
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">User Management</h1>
-          <button
-            onClick={() => setShowAddUser(true)}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors flex items-center gap-2"
-          >
-            <Plus size={16} />
-            Add User
-          </button>
-        </div>
+  if (loading) {
+    return <div className="p-6 text-center">Loading...</div>;
+  }
 
-        {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+  return (
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <div className="flex items-center gap-4">
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">User Management</h1>
+          <div className="flex gap-2">
+            <a
+              href="/groups"
+              className="px-3 py-1 bg-blue-100 text-blue-800 rounded-md hover:bg-blue-200 text-sm"
+            >
+              用户组管理
+            </a>
+            <a
+              href="/"
+              className="px-3 py-1 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 text-sm"
+            >
+              返回看板
+            </a>
           </div>
-        ) : (
-          <div className="bg-white dark:bg-slate-800 rounded-lg shadow overflow-hidden">
-          <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
-            <thead className="bg-slate-50 dark:bg-slate-700">
-              <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
-                  Name
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
-                  Email
-                </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
-                  Groups
-                </th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-slate-500 dark:text-slate-300 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
-              {users.map(user => (
-                <tr key={user.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-white">
-                    {user.name}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                    {user.email}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                    <div className="flex flex-wrap gap-1">
-                      {user.groups && user.groups.map((group, index) => (
-                        <span key={index} className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-md text-xs">
-                          {group}
-                        </span>
-                      ))}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex justify-end gap-2">
-                      <button
-                        onClick={() => setEditingUser(user)}
-                        className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-200"
-                      >
-                        <Edit2 size={16} />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteUser(user.id)}
-                        className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-200"
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {users.length === 0 && !loading && (
-            <div className="px-6 py-4 text-center text-slate-500 dark:text-slate-400">
-              No users found. Add a new user to get started.
-            </div>
-          )}
         </div>
-        )}
+        <button
+          onClick={() => setShowModal(true)}
+          className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          <Plus size={20} />
+          Add User
+        </button>
       </div>
 
-      {showAddUser && (
-        <UserModal
-          user={null}
-          onSave={handleCreateUser}
-          onClose={() => setShowAddUser(false)}
-        />
-      )}
+      <div className="mb-4">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
+          <input
+            id="user-search-input"
+            name="userSearch"
+            type="text"
+            placeholder="Search users..."
+            value={searchTerm || ''}
+            onChange={(e) => {
+              console.log('Search input onChange triggered with:', e.target.value);
+              setSearchTerm(e.target.value);
+            }}
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
+            className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      </div>
 
-      {editingUser && (
+      <div className="bg-white dark:bg-slate-800 rounded-lg shadow">
+        <table className="w-full">
+          <thead className="bg-slate-50 dark:bg-slate-700">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Name</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Username</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Email</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Groups</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Status</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-200">
+            {filteredUsers.map((user) => (
+              <tr key={user.id}>
+                <td className="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">
+                  {user.name}
+                </td>
+                <td className="px-6 py-4 text-sm text-slate-500">{user.username}</td>
+                <td className="px-6 py-4 text-sm text-slate-500">{user.email}</td>
+                <td className="px-6 py-4 text-sm text-slate-500">
+                  <div className="flex flex-wrap gap-1">
+                    {user.groups && user.groups.length > 0 ? (
+                      user.groups.map((group, index) => (
+                        <span key={index} className="px-2 py-1 bg-blue-100 text-blue-800 rounded-md text-xs">
+                          {group}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-slate-400">None</span>
+                    )}
+                  </div>
+                </td>
+                <td className="px-6 py-4 text-sm">
+                  <span className={`px-2 py-1 rounded-full text-xs ${
+                    user.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                  }`}>
+                    {user.isActive ? 'Active' : 'Inactive'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 text-sm">
+                  <div className="flex gap-2">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setEditingUser(user);
+                        setShowModal(true);
+                      }}
+                      className="text-blue-600 hover:text-blue-900"
+                    >
+                      <Edit2 size={16} />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteUser(user.id)}
+                      className="text-red-600 hover:text-red-900"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {showModal && (
         <UserModal
           user={editingUser}
-          onSave={handleUpdateUser}
-          onClose={() => setEditingUser(null)}
+          onSave={editingUser ? handleUpdateUser : handleCreateUser}
+          onClose={() => {
+            setShowModal(false);
+            setEditingUser(null);
+          }}
         />
       )}
     </div>

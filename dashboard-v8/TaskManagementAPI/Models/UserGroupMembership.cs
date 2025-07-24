@@ -12,5 +12,9 @@ namespace TaskManagementAPI.Models
         public int GroupId { get; set; }
         
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        
+        // Navigation properties
+        public virtual User User { get; set; } = null!;
+        public virtual UserGroup UserGroup { get; set; } = null!;
     }
 }

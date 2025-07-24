@@ -127,7 +127,7 @@ export const MultiUserSelect = ({ value = '', onChange, placeholder = "Select Us
           disabled={!currentValue}
           className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          添加
+          Add
         </button>
       </div>
 

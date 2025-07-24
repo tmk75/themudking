@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "EBouaQSNxuzWhMJVoECdx3QuYls+OL6zrDQKZzsvzQ641N2gIJ2xwGbAt6CG4z7E5xSPqG856VwUpPo8or4KFQ==",
+  "dgSpecHash": "Lp0fisY9xk3/UwkiAmuq3FF0ahSJ7hmLXUeoZNmxdls8r8EPSxdzYFIQwskeqH1guucwDBK5CO3NJCB5O0shXQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\TaskManagementAPI\\TaskManagementAPI.csproj",
+  "projectFilePath": "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\taskmanagementapi\\TaskManagementAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ywx10\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\ywx10\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\ywx10\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",
     "C:\\Users\\ywx10\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",

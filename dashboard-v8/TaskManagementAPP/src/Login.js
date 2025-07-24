@@ -14,12 +14,15 @@ const Login = ({ onLogin }) => {
     try {
       console.log('Login attempt with:', { username, password });
       
+      // 清理旧的localStorage数据
+      localStorage.removeItem('currentUser');
+      
       // 使用模拟数据登录，因为后端可能没有实现登录 API
       // 在实际项目中，应该使用后端 API
       const mockUserData = {
         id: 1,
         username: username,
-        name: 'Test User',
+        name: username,
         email: `${username}@example.com`,
         groups: ['Development', 'Management']
       };

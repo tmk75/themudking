@@ -24,6 +24,7 @@ namespace TaskManagementAPI.Models
         public string Priority { get; set; } = "medium";
         
         [MaxLength(100)]
+        [DropdownSelection] // 标记为下拉选择
         public string Assignee { get; set; } = string.Empty;
         
         public DateTime? DueDate { get; set; }
@@ -39,5 +40,28 @@ namespace TaskManagementAPI.Models
         
         [Column(TypeName = "json")]
         public string RaciData { get; set; } = "{}";
+        
+        // 添加与数据库表中的 GroupId 列对应的属性
+        [Column("GroupId")]
+        public int? GroupId { get; set; }
+        
+        // 添加导航属性
+        [ForeignKey("GroupId")]
+        public virtual UserGroup? UserGroup { get; set; }
+        
+        // 添加 RACI 相关字段，标记为下拉选择
+        [MaxLength(100)]
+        [DropdownSelection] // 标记为下拉选择
+        public string? Responsible { get; set; }
+        
+        [MaxLength(100)]
+        [DropdownSelection] // 标记为下拉选择
+        public string? Accountable { get; set; }
+        
+        [DropdownSelection] // 标记为下拉选择
+        public string? Consulted { get; set; }
+        
+        [DropdownSelection] // 标记为下拉选择
+        public string? Informed { get; set; }
     }
 }

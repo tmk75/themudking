@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRD Template - Agile PRD Wiki</title>
+    <meta name="description" content="Complete Agile Product Requirement Document template with all sections and guidance.">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="nav-brand">
+                <h1 class="brand-title">Agile PRD Wiki</h1>
+                <span class="brand-subtitle">Product Requirement Documents for Digital Solutions</span>
+            </div>
+            
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="getting-started.html" class="nav-link">Getting Started</a>
+                <a href="prd-template.html" class="nav-link active">PRD Template</a>
+                <a href="best-practices.html" class="nav-link">Best Practices</a>
+                <a href="research.html" class="nav-link">Research</a>
+                <a href="resources.html" class="nav-link">Resources</a>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="breadcrumb-separator">→</span>
+                <span class="breadcrumb-current">PRD Template</span>
+            </nav>
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Agile PRD Template</h1>
+                <p class="page-description">
+                    Complete Product Requirement Document template designed for Agile methodology 
+                    with feature-focused scope and collaborative creation framework.
+                </p>
+                <div class="hero-actions">
+                    <button onclick="downloadTemplate()" class="btn btn-primary">Download Template</button>
+                    <button onclick="printPage()" class="btn btn-secondary">Print Template</button>
+                </div>
+            </div>
+
+            <!-- Content Layout -->
+            <div class="content-layout">
+                <!-- Sidebar TOC -->
+                <aside class="sidebar">
+                    <div class="toc-container">
+                        <h3 class="toc-title">Template Sections</h3>
+                        <nav class="toc">
+                            <a href="#document-purpose" class="toc-link">Document Purpose</a>
+                            <a href="#executive-summary" class="toc-link">Executive Summary</a>
+                            <a href="#project-overview" class="toc-link">Project Overview</a>
+                            <a href="#problem-statement" class="toc-link">Problem Statement</a>
+                            <a href="#target-users" class="toc-link">Target Users</a>
+                            <a href="#feature-definition" class="toc-link">Feature Definition</a>
+                            <a href="#user-stories" class="toc-link">User Stories</a>
+                            <a href="#technical-requirements" class="toc-link">Technical Requirements</a>
+                            <a href="#design-ux" class="toc-link">Design & UX</a>
+                            <a href="#success-metrics" class="toc-link">Success Metrics</a>
+                            <a href="#implementation-plan" class="toc-link">Implementation Plan</a>
+                            <a href="#risk-assessment" class="toc-link">Risk Assessment</a>
+                            <a href="#stakeholder-alignment" class="toc-link">Stakeholder Alignment</a>
+                        </nav>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <div class="content">
+                    <!-- Template Header -->
+                    <section class="content-section">
+                        <div class="template-header">
+                            <h1>Product Requirement Document (PRD)</h1>
+                            <h2>Agile Methodology Integration Template</h2>
+                            
+                            <div class="template-meta">
+                                <div class="meta-item">
+                                    <strong>Document Version:</strong> 1.0
+                                </div>
+                                <div class="meta-item">
+                                    <strong>Created by:</strong> [Your Name]
+                                </div>
+                                <div class="meta-item">
+                                    <strong>Date:</strong> [Current Date]
+                                </div>
+                                <div class="meta-item">
+                                    <strong>Template Type:</strong> Feature-Focused Agile PRD
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Document Purpose -->
+                    <section id="document-purpose" class="content-section">
+                        <h2 class="section-heading">Document Purpose & Agile Integration</h2>
+                        
+                        <p>This Product Requirement Document (PRD) template is specifically designed for digital solutions developed using Agile methodology. Unlike traditional PRDs that attempt to capture entire product requirements upfront, this template focuses on <strong>feature-level documentation</strong> that supports iterative development and continuous collaboration between product, design, and engineering teams.</p>
+
+                        <div class="info-card">
+                            <div class="info-icon">🎯</div>
+                            <div class="info-content">
+                                <h4>Key Agile Principles Integrated</h4>
+                                <ul>
+                                    <li><strong>Feature-focused scope</strong> rather than product-wide documentation</li>
+                                    <li><strong>Collaborative refinement</strong> instead of requirements handover</li>
+                                    <li><strong>Iterative development</strong> support with sprint-ready user stories</li>
+                                    <li><strong>Continuous feedback</strong> mechanisms built into the process</li>
+                                    <li><strong>Flexible documentation</strong> that evolves with the product</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="usage-guidelines">
+                            <h4>How to Use This Template</h4>
+                            <div class="guidelines-grid">
+                                <div class="guideline-item">
+                                    <div class="guideline-icon">📄</div>
+                                    <div class="guideline-content">
+                                        <h5>One PRD per Feature/Epic</h5>
+                                        <p>Keep scope manageable and focused on individual features</p>
+                                    </div>
+                                </div>
+                                <div class="guideline-item">
+                                    <div class="guideline-icon">🤝</div>
+                                    <div class="guideline-content">
+                                        <h5>Collaborative Creation</h5>
+                                        <p>Involve the entire product triad (PM, Designer, Engineer)</p>
+                                    </div>
+                                </div>
+                                <div class="guideline-item">
+                                    <div class="guideline-icon">🔄</div>
+                                    <div class="guideline-content">
+                                        <h5>Living Document</h5>
+                                        <p>Update regularly based on learnings and feedback</p>
+                                    </div>
+                                </div>
+                                <div class="guideline-item">
+                                    <div class="guideline-icon">⚡</div>
+                                    <div class="guideline-content">
+                                        <h5>Sprint Integration</h5>
+                                        <p>Structure content to support sprint planning</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Executive Summary -->
+                    <section id="executive-summary" class="content-section">
+                        <h2 class="section-heading">1. Executive Summary</h2>
+                        
+                        <div class="template-section">
+                            <h4>Purpose</h4>
+                            <p>Provide a concise overview that enables stakeholders to quickly understand the feature's value proposition, scope, and expected impact.</p>
+                            
+                            <h4>Framework</h4>
+                            <div class="template-form">
+                                <div class="form-group">
+                                    <label><strong>Feature Name:</strong></label>
+                                    <input type="text" placeholder="Clear, descriptive name" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Problem Being Solved:</strong></label>
+                                    <input type="text" placeholder="One-sentence problem statement" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Target Users:</strong></label>
+                                    <input type="text" placeholder="Primary user personas affected" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Business Impact:</strong></label>
+                                    <input type="text" placeholder="Expected business value/metrics" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Development Effort:</strong></label>
+                                    <input type="text" placeholder="High-level effort estimate" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Timeline:</strong></label>
+                                    <input type="text" placeholder="Target delivery timeframe" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label><strong>Success Criteria:</strong></label>
+                                    <input type="text" placeholder="Key metrics for success" class="form-input">
+                                </div>
+                            </div>
+                            
+                            <div class="info-card">
+                                <div class="info-icon">💡</div>
+                                <div class="info-content">
+                                    <h4>Agile Integration Notes</h4>
+                                    <ul>
+                                        <li>Keep this section to 2-3 paragraphs maximum</li>
+                                        <li>Focus on the "why" and "what" rather than "how"</li>
+                                        <li>Update this section as the feature evolves through sprints</li>
+                                        <li>Use this for stakeholder communication and alignment</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Project Overview -->
+                    <section id="project-overview" class="content-section">
+                        <h2 class="section-heading">2. Project Overview</h2>
+                        
+                        <div class="template-section">
+                            <h4>2.1 Project Specifics (Atlassian Framework)</h4>
+                            
+                            <div class="project-table">
+                                <table>
+                                    <tr>
+                                        <td><strong>Participants</strong></td>
+                                        <td>
+                                            Product Owner: [Name]<br>
+                                            Scrum Master: [Name]<br>
+                                            Development Team: [Names]<br>
+                                            Designer: [Name]<br>
+                                            Key Stakeholders: [Names]
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Status</strong></td>
+                                        <td>[On target / At risk / Delayed / Deferred]</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Target Release</strong></td>
+                                        <td>[Sprint/Release number and date]</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Epic/Initiative</strong></td>
+                                        <td>[Parent epic this feature belongs to]</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <h4>2.2 Strategic Fit</h4>
+                            
+                            <div class="form-group">
+                                <label><strong>Business Objectives Alignment:</strong></label>
+                                <textarea placeholder="How this feature supports company OKRs/goals" class="form-textarea"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><strong>Background Context:</strong></label>
+                                <textarea placeholder="Why are we building this now? What led to this decision?" class="form-textarea"></textarea>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- User Stories Section -->
+                    <section id="user-stories" class="content-section">
+                        <h2 class="section-heading">6. User Stories & Acceptance Criteria</h2>
+                        
+                        <div class="temp
+(Content truncated due to size limit. Use line ranges to read in chunks)

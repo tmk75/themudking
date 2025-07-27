@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agile Product Requirement Document Wiki</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #37352f;
+            background-color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .sidebar {
+            width: 280px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 24px 16px;
+            background-color: #fbfbfa;
+            border-right: 1px solid #e9e9e7;
+            z-index: 1000;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            padding: 40px 60px;
+            max-width: 1000px;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: #37352f;
+            text-decoration: none;
+            margin-bottom: 4px;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        
+        .nav-link:hover {
+            background-color: #f1f1ef;
+            text-decoration: none;
+            color: #37352f;
+        }
+        
+        .nav-link.active {
+            background-color: #eeeeed;
+            font-weight: 500;
+        }
+        
+        .section-title {
+            font-weight: 600;
+            margin-top: 48px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e9e9e7;
+        }
+        
+        .callout {
+            background-color: #f7f6f3;
+            border-left: 4px solid #e9e9e7;
+            padding: 20px;
+            margin: 24px 0;
+            border-radius: 6px;
+        }
+        
+        .callout.info {
+            border-left-color: #2f80ed;
+            background-color: #f4f9ff;
+        }
+        
+        .callout.warning {
+            border-left-color: #ff9d00;
+            background-color: #fff8ee;
+        }
+        
+        .callout.success {
+            border-left-color: #0ca678;
+            background-color: #f0fff4;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            border: 1px solid #e9e9e7;
+            padding: 12px 16px;
+            text-align: left;
+            vertical-align: top;
+        }
+        
+        th {
+            background-color: #f7f6f3;
+            font-weight: 600;
+        }
+        
+        code {
+            background-color: #f7f6f3;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background-color: #f7f6f3;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 24px 0;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+        
+        .card {
+            border: 1px solid #e9e9e7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 24px 0;
+            background-color: #ffffff;
+        }
+        
+        .card-header {
+            font-weight: 600;
+            font-size: 16px;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #e9e9e7;
+            color: #2563eb;
+        }
+        
+        .toggle-content {
+            margin-top: 12px;
+            display: none;
+        }
+        
+        .toggle-content.show {
+            display: block;
+        }
+        
+        .toggle-button {
+            background: none;
+            border: none;
+            font-weight: 500;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            width: 100%;
+            text-align: left;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        
+        .toggle-button:hover {
+            background-color: #f9fafb;
+        }
+        
+        .toggle-icon {
+            margin-right: 12px;
+            transition: transform 0.3s ease;
+            color: #6b7280;
+        }
+        
+        .toggle-icon.rotated {
+            transform: rotate(90deg);
+        }
+        
+        .nav-section {
+            margin-bottom: 24px;
+        }
+        
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            margin-left: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1001;
+                background: #2563eb;
+                color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+        
+        .scroll-spy-active {
+            background-color: #dbeafe !important;
+            border-left: 3px solid #2563eb;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <div class="mb-8">
+            <h1 class="text-lg font-bold mb-2">Agile PRD Wiki</h1>
+            <p class="text-sm text-gray-500">A comprehensive guide for digital solution development</p>
+        </div>
+        
+        <div class="nav-section">
+            <a href="#overview" class="nav-link active" onclick="setActiveLink(this)">📚 Overview</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Main Sections</div>
+            <a href="#introduction" class="nav-link" onclick="setActiveLink(this)">🔍 Introduction to Agile PRDs</a>
+            <a href="#template" class="nav-link" onclick="setActiveLink(this)">📝 Agile PRD Template</a>
+            <a href="#implementation" class="nav-link" onclick="setActiveLink(this)">🚀 Implementation Guide</a>
+            <a href="#best-practices" class="nav-link" onclick="setActiveLink(this)">✅ Best Practices</a>
+            <a href="#research" class="nav-link" onclick="setActiveLink(this)">🔬 Research Foundation</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Template Sections</div>
+            <a href="#executive-summary" class="nav-link" onclick="setActiveLink(this)">Executive Summary</a>
+            <a href="#project-overview" class="nav-link" onclick="setActiveLink(this)">Project Overview</a>
+            <a href="#problem-statement" class="nav-link" onclick="setActiveLink(this)">Problem Statement</a>
+            <a href="#target-users" class="nav-link" onclick="setActiveLink(this)">Target Users & Personas</a>
+            <a href="#feature-definition" class="nav-link" onclick="setActiveLink(this)">Feature Definition</a>
+            <a href="#user-stories" class="nav-link" onclick="setActiveLink(this)">User Stories</a>
+            <a href="#design-ux" class="nav-link" onclick="setActiveLink(this)">Design & UX</a>
+            <a href="#technical-requirements" class="nav-link" onclick="setActiveLink(this)">Technical Requirements</a>
+            <a href="#success-metrics" class="nav-link" onclick="setActiveLink(this)">Success Metrics</a>
+            <a href="#implementation-plan" class="nav-link" onclick="setActiveLink(this)">Implementation Plan</a>
+            <a href="#risk-assessment" class="nav-link" onclick="setActiveLink(this)">Risk Assessment</a>
+            <a href="#stakeholder-alignment" class="nav-link" onclick="setActiveLink(this)">Stakeholder Alignment</a>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div id="overview">
+            <h1 class="text-4xl font-bold mb-6">Agile Product Requirement Document Wiki</h1>
+            <p class="text-xl mb-8 text-gray-600">A comprehensive resource for implementing Agile Product Requirement Documents in digital solution development</p>
+            
+            <div class="callout info">
+                <p class="font-semibold mb-2">📌 Package Version: 1.0</p>
+                <p>Created by: Victor Lee</p>
+                <p>Date: July 27, 2025</p>
+            </div>
+            
+            <div class="mt-12 mb-16">
+                <h2 class="text-3xl font-semibold mb-6">Key Innovations</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card">
+                        <div class="card-header">Feature-Level Focus</div>
+                        <p>Unlike traditional PRDs that attempt to document entire products, this approach focuses on individual features or epics that can be completed within 2-6 sprints. This scope aligns with how Agile teams actually work and makes documentation more manageable and actionable.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Collaborative Ownership</div>
+                        <p>The template is designed for collaborative creation by the entire product triad (Product Manager, Designer, Engineer) rather than being solely owned by product managers. This approach ensures technical feasibility and user experience considerations are integrated from the beginning.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Living Documentation</div>
+                        <p>The framework treats PRDs as living documents that evolve throughout development rather than static contracts. Built-in mechanisms support iterative refinement based on sprint learnings and user feedback.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Sprint Integration</div>
+                        <p>Every element of the template is designed to support sprint planning, execution, and review processes. User stories are sprint-ready, acceptance criteria support demo preparation, and success metrics provide sprint-level feedback.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="introduction" class="section-title">
+            <h2 class="text-3xl">Introduction to Agile PRDs</h2>
+        </div>
+        
+        <p class="mb-6 text-lg">The landscape of product development has fundamentally shifted over the past two decades, moving from waterfall methodologies that emphasized comprehensive upfront planning to agile approaches that prioritize iterative development, continuous feedback, and adaptive planning. This transformation has created a significant challenge for product managers who still need to document requirements and align stakeholders, but must do so in a way that supports rather than hinders agile development practices.</p>
+        
+        <div class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('evolution')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>The Evolution from Traditional to Agile PRDs</span>
+            </button>
+            <div id="evolution" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">The Traditional PRD Model</h3>
+                    <p class="mb-6">Traditional PRDs emerged from the waterfall software development methodology that dominated the industry from the 1970s through the early 2000s. In this model, product development followed a linear sequence: requirements gathering, system design, implementation, testing, and deployment. The PRD served as the primary artifact for the requirements gathering phase, attempting to capture all necessary information about what the product should do before any development work began.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-4">The Agile Disruption</h3>
+                    <p class="mb-6">The emergence of agile methodologies in the late 1990s and early 2000s fundamentally challenged the assumptions underlying traditional PRDs. The Agile Manifesto's emphasis on "individuals and interactions over processes and documentation" and "responding to change over following a plan" directly contradicted the traditional PRD approach of comprehensive upfront documentation and formal approval processes.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-4">Modern Agile PRD Synthesis</h3>
+                    <p class="mb-4">The Agile PRD approach presented in this guide represents a synthesis of the best elements of traditional PRDs with the insights gained from agile development practices and the Feature Document evolution. This synthesis recognizes that documentation remains important for stakeholder alignment, team coordination, and knowledge preservation, but reimagines how that documentation is created, structured, and maintained.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('principles')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>Core Principles of Agile PRDs</span>
+            </button>
+            <div id="principles" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <p class="mb-6">The foundation of an effective Agile PRD rests on several key principles that distinguish it from traditional approaches:</p>
+                    
+                    <div class="card">
+                        <div class="card-header">Feature-Focused Scope</div>
+                        <p>Unlike traditional PRDs that attempt to document entire products or large product areas, Agile PRDs focus on individual features or epics that can be developed within a reasonable timeframe, typically spanning 2-6 sprints. This focused scope makes the document more manageable, reduces complexity, and aligns with how agile teams actually work.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Collaborative Creation and Maintenance</div>
+                        <p>Traditional PRDs were often created by product managers in isolation and then presented to development teams as requirements to be implemented. Agile PRDs, by contrast, are created collaboratively by the entire product triad—product manager, designer, and engineering lead—and are continuously refined based on learnings from each sprint.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Living Documentation</div>
+                        <p>While traditional PRDs were often treated as static documents that were "locked down" once approved, Agile PRDs are designed to evolve throughout the development process. As teams learn more about user needs, technical constraints, and market conditions, the PRD is updated to reflect this new understanding.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Sprint Integration</div>
+                        <p>Every element of an Agile PRD is designed to support sprint planning, execution, and review processes. User stories are written to be sprint-ready, acceptance criteria are defined to support sprint demos, and success metrics are structured to provide feedback that can inform subsequent sprint planning.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="template" class="section-title">
+            <h2 class="text-3xl">Agile PRD Template</h2>
+        </div>
+        
+        <p class="mb-6 text-lg">The Agile PRD template is specifically designed for digital solutions developed using Agile methodology. Unlike traditional PRDs that attempt to capture entire product requirements upfront, this template focuses on feature-level documentation that supports iterative development and continuous collaboration between product, design, and engineering teams.</p>
+        
+        <div class="callout info mb-10">
+            <p class="font-semibold mb-4">How to Use This Template</p>
+            <ol class="list-decimal ml-6 space-y-2">
+                <li><strong>One PRD per feature/epic</strong> - Keep scope manageable and focused</li>
+                <li><strong>Collaborative creation</strong> - Involve the entire product triad (PM, Designer, Engineer)</li>
+                <li><strong>Living document</strong> - Update regularly based on learnings and feedback</li>
+                <li><strong>Sprint integration</strong> - Structure content to support sprint planning</li>
+                <li><strong>Stakeholder alignment</strong> - Use for ongoing communication, not just initial approval</li>
+            </ol>
+        </div>
+        
+        <div id="executive-summary" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('exec-summary')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>1. Executive Summary</span>
+            </button>
+            <div id="exec-summary" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">Purpose</h3>
+                    <p class="mb-6">Provide a concise overview that enables stakeholders to quickly understand the feature's value proposition, scope, and expected impact.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-4">Framework</h3>
+                    <pre class="text-sm">
+**Feature Name:** [Clear, descriptive name]
+**Problem Being Solved:** [One-sentence problem statement]
+**Target Users:** [Primary user personas affected]
+**Business Impact:** [Expected business value/metrics]
+**Development Effort:** [High-level effort estimate]
+**Timeline:** [Target delivery timeframe]
+**Success Criteria:** [Key metrics for success]</pre>
+                    
+                    <div class="card">
+                        <div class="card-header">Example Executive Summary</div>
+                        <pre class="text-sm">
+**Feature Name**: One-Click Guest Checkout
+
+**Problem Being Solved**: Mobile users abandon checkout at a 73% rate when required to create accounts, costing an estimated $2.3M annually in lost revenue and reducing customer lifetime value through poor first-impression experiences.
+
+**Target Users**: Mobile-first shoppers (62% of traffic) and first-time customers (34% of checkout attempts) who prioritize speed and convenience over account creation benefits.
+
+**Business Impact**: Projected 15-20% increase in mobile conversion rates, contributing $400K quarterly revenue while improving customer acquisition efficiency and organic referral rates.
+
+**Development Effort**: 6-8 weeks across 3-4 sprints, requiring integration with payment processing, order management, and customer communication systems.
+
+**Timeline**: Target delivery in Q2 2025, with MVP testing beginning Sprint 23 and full rollout in Sprint 26.
+
+**Success Criteria**: Mobile conversion rate improvement >15%, customer satisfaction score >4.2/5, and technical performance maintaining <2 second checkout completion times.</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="project-overview" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('proj-overview')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>2. Project Overview</span>
+            </button>
+            <div id="proj-overview" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">Purpose</h3>
+                    <p class="mb-6">Transform abstract feature concepts into concrete development initiatives with clear ownership, timelines, and strategic alignment. This section serves as the operational foundation for sprint planning and stakeholder communication.</p>
+                    
+                    <div class="card">
+                        <div class="card-header">Project Specifics</div>
+                        <table>
+                            <tr>
+                                <th>Element</th>
+                                <th>Details</th>
+                            </tr>
+                            <tr>
+                                <td>Product Owner</td>
+                                <td>[Name and role - decision authority for scope/priority]</td>
+                            </tr>
+                            <tr>
+                                <td>Scrum Master</td>
+                                <td>[Name and role - process facilitation, impediment removal]</td>
+                            </tr>
+                            <tr>
+                                <td>Tech Lead</td>
+                                <td>[Name and role - technical architecture, complexity estimation]</td>
+                            </tr>
+                            <tr>
+                                <td>UX Designer</td>
+                                <td>[Name and role - user experience, interaction design]</td>
+                            </tr>
+                            <tr>
+                                <td>QA Lead</td>
+                                <td>[Name and role - quality assurance, acceptance testing]</td>
+                            </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td>[On target / At risk / Delayed / Deferred]</td>
+                            </tr>
+                            <tr>
+                                <td>Target Release</td>
+                                <td>[Sprint/Release number and date]</td>
+                            </tr>
+                            <tr>
+                                <td>Parent Epic</td>
+                                <td>[Parent epic this feature belongs to]</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Strategic Fit</div>
+                        <p class="font-semibold mb-3">Business Objectives Alignment:</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li>How this feature supports company OKRs/goals</li>
+                            <li>Connection to product roadmap</li>
+                            <li>Strategic importance and priority</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-3">Background Context:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li>Why are we building this now?</li>
+                            <li>What led to this decision?</li>
+                            <li>How does this fit into the broader product vision?</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="callout info">
+                        <p class="font-semibold mb-3">Agile Integration Notes</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>Link to relevant epics and initiatives in your backlog management tool</li>
+                            <li>Update status regularly during sprint reviews</li>
+                            <li>Use this section for sprint planning context</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="problem-statement" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('prob-statement')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>3. Problem Statement & Opportunity</span>
+            </button>
+            <div id="prob-statement" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">Purpose</h3>
+                    <p class="mb-6">Provide the analytical foundation for feature development, transforming user pain points and business challenges into clear, actionable development targets. This section should be grounded in data, validated through research, and structured to support both initial development decisions and ongoing iteration.</p>
+                    
+                    <div class="card">
+                        <div class="card-header">Problem Definition</div>
+                        <p class="font-semibold mb-2">Current State:</p>
+                        <p class="mb-4">[Describe the current situation, pain points, and limitations]</p>
+                        
+                        <p class="font-semibold mb-2">Desired State:</p>
+                        <p class="mb-4">[Describe the ideal future state after implementing this feature]</p>
+                        
+                        <p class="font-semibold mb-2">Gap Analysis:</p>
+                        <p class="mb-4">[What's preventing users from achieving their goals today?]</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Opportunity Sizing</div>
+                        <table>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Current State</th>
+                                <th>Target State</th>
+                                <th>Expected Impact</th>
+                            </tr>
+                            <tr>
+                                <td>User Conversion Rate</td>
+                                <td>[Current value]</td>
+                                <td>[Target value]</td>
+                                <td>[% improvement expected]</td>
+                            </tr>
+                            <tr>
+                                <td>Business Revenue</td>
+                                <td>[Current value]</td>
+                                <td>[Target value]</td>
+                                <td>[$ impact expected]</td>
+                            </tr>
+                            <tr>
+                                <td>User Satisfaction</td>
+                                <td>[Current rating]</td>
+                                <td>[Target rating]</td>
+                                <td>[Rating improvement]</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Example Problem Statement</div>
+                        <p class="font-semibold mb-2">Current State Analysis:</p>
+                        <p class="mb-4">Mobile checkout completion rates have declined 12% over the past six months, from 31% to 27%, while desktop rates have remained stable at 45%. User research with 47 mobile users identified account creation as the primary friction point, with 68% of participants expressing frustration with "having to fill out forms on small screens" and 54% indicating they would prefer to "buy now and create an account later."</p>
+                        
+                        <p class="font-semibold mb-2">Desired State Vision:</p>
+                        <p class="mb-4">Mobile users can complete purchases without mandatory account creation, while still being encouraged to create accounts post-purchase through value-driven messaging and simplified registration flows. Target mobile conversion rates of 35-40% align with industry benchmarks for optimized mobile commerce experiences.</p>
+                        
+                        <p class="font-semibold mb-2">Opportunity Sizing:</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>Conservative scenario (10% conversion improvement): $150K additional quarterly revenue</li>
+                            <li>Realistic scenario (15% conversion improvement): $400K additional quarterly revenue</li>
+                            <li>Optimistic scenario (25% conversion improvement): $650K additional quarterly revenue</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="target-users" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('users-personas')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>4. Target Users & Personas</span>
+            </button>
+            <div id="users-personas" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">Purpose</h3>
+                    <p class="mb-6">Transform abstract user research into concrete, actionable insights that guide development decisions throughout the feature lifecycle. Effective persona development goes beyond demographic information to capture behavioral patterns, motivational drivers, and contextual factors that influence how users interact with digital solutions.</p>
+                    
+                    <div class="card">
+                        <div class="card-header">Primary Persona Template</div>
+                        <pre class="text-sm">
+**Persona Name:** [Descriptive name that team can remember]
+
+**Demographics:** [Age range, role, experience level, location]
+**Goals:** [What they're trying to achieve with your product]
+**Pain Points:** [Current frustrations and challenges they face]
+**Behaviors:** [How they currently work/interact with similar products]
+**Motivations:** [What drives their decisions and choices]
+**Technology Comfort:** [Technical proficiency level and device preferences]
+**Context of Use:** [When, where, and why they use the product]
+
+**Key Quote:** "[Representative quote that captures their mindset]"</pre>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Example: Mobile-First Shopper (Maya)</div>
+                        <p class="font-semibold mb-2">Behavioral Characteristics:</p>
+                        <p class="mb-4">Maya uses her smartphone for 80% of online activities, including research, comparison shopping, and purchases. She values speed and convenience over comprehensive information, preferring to make quick decisions based on key factors rather than extensive research. She shops frequently during commute times, lunch breaks, and evening downtime, often in environments with distractions or time constraints.</p>
+                        
+                        <p class="font-semibold mb-2">Goals and Motivations:</p>
+                        <p class="mb-4">Maya wants to complete purchases quickly without compromising on product quality or value. She's motivated by convenience, competitive pricing, and social proof from reviews and recommendations. She values brands that respect her time and make mobile interactions effortless.</p>
+                        
+                        <p class="font-semibold mb-2">Pain Points and Frustrations:</p>
+                        <p class="mb-4">Maya becomes frustrated with lengthy forms, mandatory account creation, and checkout processes that require switching between apps or devices. She abandons purchases when faced with unexpected costs, complex navigation, or technical issues that interrupt her flow.</p>
+                        
+                        <p class="font-semibold mb-2">Key Quote:</p>
+                        <p class="italic">"I just want to buy it and go. If it takes more than two minutes or I have to remember another password, I'm out."</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">User Journey Mapping</div>
+                        <p class="font-semibold mb-3">Current Journey:</p>
+                        <ol class="list-decimal ml-6 mb-6 space-y-2">
+                            <li><strong>Product Discovery</strong> (Mobile, 30 seconds): Finds product through social media or search, feels excited about potential purchase</li>
+                            <li><strong>Product Evaluation</strong> (Mobile, 2 minutes): Reviews images, price, and key reviews, builds confidence in purchase decision</li>
+                            <li><strong>Checkout Initiation</strong> (Mobile, 30 seconds): Adds to cart and begins checkout, maintains purchase momentum</li>
+                            <li><strong>Account Creation Barrier</strong> (Mobile, 3-5 minutes): Encounters mandatory registration form, experiences frustration and time pressure</li>
+                            <li><strong>Abandonment</strong> (Mobile, immediate): Leaves site due to complexity, plans to "come back later" but rarely does</li>
+                        </ol>
+                        
+                        <p class="font-semibold mb-3">Future Journey with Guest Checkout:</p>
+                        <ol class="list-decimal ml-6 space-y-2">
+                            <li><strong>Product Discovery</strong> (Mobile, 30 seconds): Same as current journey</li>
+                            <li><strong>Product Evaluation</strong> (Mobile, 2 minutes): Same as current journey</li>
+                            <li><strong>Streamlined Checkout</strong> (Mobile, 90 seconds): Completes purchase with minimal information, maintains momentum and satisfaction</li>
+                            <li><strong>Post-Purchase Engagement</strong> (Email/Mobile, 24-48 hours): Receives order confirmation and optional account creation invitation</li>
+                            <li><strong>Account Creation</strong> (Mobile, 2 minutes): Creates account post-purchase when motivated by order tracking benefits</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="feature-definition" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('feature-scope')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>5. Feature Definition & Scope</span>
+            </button>
+            <div id="feature-scope" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">Purpose</h3>
+                    <p class="mb-6">Serve as the contract between stakeholders about what will and will not be included in the current development effort. Effective scope definition balances comprehensiveness with clarity, ensuring that all team members and stakeholders have a shared understanding of deliverables while maintaining flexibility for iteration and learning.</p>
+                    
+                    <div class="card">
+                        <div class="card-header">Feature Overview</div>
+                        <p class="mb-2"><strong>Feature Name:</strong> [Clear, descriptive name]</p>
+                        <p class="mb-2"><strong>Feature Type:</strong> [New feature / Enhancement / Bug fix / Technical debt]</p>
+                        <p class="mb-4"><strong>Parent Epic:</strong> [Parent epic this belongs to]</p>
+                        
+                        <p class="font-semibold mb-2">High-Level Description:</p>
+                        <p class="mb-4">[2-3 sentences describing what this feature does and why it's valuable]</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Scope Definition</div>
+                        <p class="font-semibold mb-3">In Scope:</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li>Specific functionality included</li>
+                            <li>User flows covered</li>
+                            <li>Platforms/devices supported</li>
+                            <li>Integration points and data flows</li>
+                            <li>Performance and security requirements</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-3">Out of Scope (for this iteration):</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li>Functionality explicitly excluded</li>
+                            <li>Future considerations</li>
+                            <li>Related features for later releases</li>
+                            <li>Advanced features that can be added later</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-3">Dependencies:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li>Technical dependencies on other systems</li>
+                            <li>Dependencies on other features or teams</li>
+                            <li>External integrations required</li>
+                            <li>Legal or compliance reviews needed</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Example Feature Definition</div>
+                        <p><strong>Feature Name:</strong> One-Click Guest Checkout</p>
+                        <p><strong>Feature Type:</strong> New functionality enhancement</p>
+                        <p><strong>Parent Epic:</strong> Mobile Commerce Optimization Initiative</p>
+                        
+                        <p class="font-semibold mt-4 mb-2">High-Level Description:</p>
+                        <p class="mb-4">Enable mobile users to complete purchases without creating accounts by collecting only essential information (shipping, billing, payment) and offering optional account creation post-purchase with clear value proposition and simplified registration process.</p>
+                        
+                        <p class="font-semibold mb-2">In Scope for Initial Release:</p>
+                        <ul class="list-disc ml-6 mb-4 space-y-1">
+                            <li>Guest checkout flow for mobile web and mobile app</li>
+                            <li>Essential information collection (name, email, shipping address, payment method)</li>
+                            <li>Order confirmation and tracking without account requirement</li>
+                            <li>Post-purchase account creation invitation with order history integration</li>
+                            <li>Integration with existing payment processing and order management systems</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-2">Explicitly Out of Scope:</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>Desktop guest checkout (planned for Phase 2 based on mobile results)</li>
+                            <li>Social media login integration (separate epic in Q2 roadmap)</li>
+                            <li>Advanced personalization features for guest users</li>
+                            <li>Integration with loyalty program or advanced marketing automation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="user-stories" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('user-stories-template')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>6. User Stories & Acceptance Criteria</span>
+            </button>
+            <div id="user-stories-template" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">Purpose</h3>
+                    <p class="mb-6">Transform feature requirements into sprint-ready user stories with clear acceptance criteria that support collaborative development and testing.</p>
+                    
+                    <h3 class="text-xl font-semibold mb-4">User Story Template</h3>
+                    <div class="card">
+                        <div class="card-header">User Story Format</div>
+                        <pre class="text-sm">
+**Story ID:** [Unique identifier, e.g., US-001]
+**Story Title:** [Descriptive title]
+**Priority:** [High/Medium/Low or MoSCoW rating]
+**Story Points:** [Effort estimate: 1, 2, 3, 5, 8, 13]
+**Sprint:** [Target sprint number]
+
+**User Story:**
+As a [persona/user type],
+I want to [goal/desire],
+So that [benefit/value].
+
+**Acceptance Criteria:**
+Given [context/precondition],
+When [action/trigger],
+Then [expected outcome].
+
+**Definition of Done:**
+- [ ] [Specific completion criteria]
+- [ ] [Testing requirements]
+- [ ] [Documentation updates]
+- [ ] [Performance standards met]
+
+**Dependencies:**
+- [Other stories that must be completed first]
+- [External dependencies or integrations]
+
+**Notes/Assumptions:**
+- [Additional context or clarifications]
+- [Technical considerations]</pre>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Example: Guest Checkout User Story</div>
+                        <pre class="text-sm">
+**Story ID:** US-001
+**Story Title:** Basic Guest Checkout Flow
+**Priority:** High
+**Story Points:** 8
+**Sprint:** Sprint 23
+
+**User Story:**
+As a mobile-first shopper (Maya),
+I want to complete my purchase without creating an account,
+So that I can buy quickly during my limited time windows.
+
+**Acceptance Criteria:**
+Given I have items in my cart,
+When I choose "Guest Checkout" option,
+Then I can complete purchase with only essential information (name, email, shipping, payment).
+
+Given I complete guest checkout,
+When my order is processed,
+Then I receive confirmation email with order tracking information.
+
+**Definition of Done:**
+- [ ] Guest checkout option visible on cart page
+- [ ] Streamlined form collecting only required fields
+- [ ] Payment processing integration working
+- [ ] Order confirmation email sent
+- [ ] Mobile responsive design implemented
+- [ ] Analytics tracking implemented
+- [ ] Performance <2 second load time maintained
+
+**Dependencies:**
+- Payment processor API updates (US-000)
+- Order management system modifications
+
+**Notes:**
+- Must maintain current security standards
+- Legal review required for guest data handling</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="design-ux" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('design-ux-template')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>7. Design & UX Requirements</span>
+            </button>
+            <div id="design-ux-template" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">Purpose</h3>
+                    <p class="mb-6">Define user experience requirements, design principles, and interface specifications that ensure consistent, accessible, and effective user interactions throughout the feature development process.</p>
+                    
+                    <div class="card">
+                        <div class="card-header">Core Design Principles</div>
+                        <p class="font-semibold mb-3">User-Centered Design:</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li><strong>Clarity:</strong> Interface elements clearly communicate their purpose and function</li>
+                            <li><strong>Consistency:</strong> Design patterns align with existing product standards</li>
+                            <li><strong>Efficiency:</strong> User flows minimize steps and cognitive load</li>
+                            <li><strong>Accessibility:</strong> WCAG 2.1 AA compliance for inclusive design</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-3">Brand Alignment:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>Visual Identity:</strong> Color palette, typography, iconography consistent with brand</li>
+                            <li><strong>Tone of Voice:</strong> Messaging and copy reflect brand personality</li>
+                            <li><strong>Brand Values:</strong> Design decisions support brand positioning</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">User Experience Flow</div>
+                        <table>
+                            <tr>
+                                <th>Step</th>
+                                <th>User Action</th>
+                                <th>System Response</th>
+                                <th>Design Requirements</th>
+                                <th>Success Criteria</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>View cart contents</td>
+                                <td>Display items and checkout options</td>
+                                <td>Clear CTA, guest option prominent</td>
+                                <td>95% of users find guest checkout option</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Select guest checkout</td>
+                                <td>Load streamlined form</td>
+                                <td>Progressive disclosure, minimal fields</td>
+                                <td>Form completion rate >80%</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Enter information</td>
+                                <td>Real-time validation and assistance</td>
+                                <td>Inline validation, clear error messages</td>
+                                <td>Form abandonment rate <15%</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Complete payment</td>
+                                <td>Process order and show confirmation</td>
+                                <td>Loading states, success messaging</td>
+                                <td>Payment completion rate >95%</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Mobile-First Design Specifications</div>
+                        <p class="font-semibold mb-3">Responsive Breakpoints:</p>
+                        <table class="mb-6">
+                            <tr>
+                                <th>Device Type</th>
+                                <th>Screen Width</th>
+                                <th>Layout Considerations</th>
+                                <th>Interaction Patterns</th>
+                            </tr>
+                            <tr>
+                                <td>Mobile</td>
+                                <td>320px - 768px</td>
+                                <td>Single column, stacked elements</td>
+                                <td>Touch targets min 44px, thumb-friendly</td>
+                            </tr>
+                            <tr>
+                                <td>Tablet</td>
+                                <td>768px - 1024px</td>
+                                <td>Two-column layout where appropriate</td>
+                                <td>Mixed touch and pointer interactions</td>
+                            </tr>
+                            <tr>
+                                <td>Desktop</td>
+                                <td>1024px+</td>
+                                <td>Multi-column, sidebar integration</td>
+                                <td>Mouse and keyboard optimization</td>
+                            </tr>
+                        </table>
+                        
+                        <p class="font-semibold mb-3">Form Design Standards:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>Field Layout:</strong> Single column for mobile, logical grouping</li>
+                            <li><strong>Input Types:</strong> Appropriate keyboard types (email, tel, number)</li>
+                            <li><strong>Validation:</strong> Real-time feedback, clear error messaging</li>
+                            <li><strong>Progress Indication:</strong> Clear steps, current position</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Visual Design System</div>
+                        <p class="font-semibold mb-3">Color Palette:</p>
+                        <table class="mb-6">
+                            <tr>
+                                <th>Usage</th>
+                                <th>Color</th>
+                                <th>Hex Code</th>
+                                <th>Accessibility Notes</th>
+                            </tr>
+                            <tr>
+                                <td>Primary CTA</td>
+                                <td>Brand Blue</td>
+                                <td>#0066CC</td>
+                                <td>AA contrast on white background</td>
+                            </tr>
+                            <tr>
+                                <td>Success States</td>
+                                <td>Success Green</td>
+                                <td>#008000</td>
+                                <td>AAA contrast for text</td>
+                            </tr>
+                            <tr>
+                                <td>Error States</td>
+                                <td>Alert Red</td>
+                                <td>#CC0000</td>
+                                <td>High contrast, clear visibility</td>
+                            </tr>
+                            <tr>
+                                <td>Neutral Text</td>
+                                <td>Charcoal Gray</td>
+                                <td>#333333</td>
+                                <td>High readability on light backgrounds</td>
+                            </tr>
+                        </table>
+                        
+                        <p class="font-semibold mb-3">Typography Scale:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>Headings:</strong> Inter font family, weights 600-700, sizes 24px-32px</li>
+                            <li><strong>Body Text:</strong> Inter font family, weight 400, size 16px mobile/18px desktop</li>
+                            <li><strong>Small Text:</strong> Inter font family, weight 400, size 14px, limited use</li>
+                            <li><strong>Button Text:</strong> Inter font family, weight 500, size 16px minimum</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Accessibility Requirements</div>
+                        <p class="font-semibold mb-3">WCAG 2.1 AA Compliance:</p>
+                        
+                        <p class="font-semibold mb-2">Keyboard Navigation:</p>
+                        <ul class="list-disc ml-6 mb-4 space-y-1">
+                            <li><strong>Tab Order:</strong> Logical flow through interactive elements</li>
+                            <li><strong>Focus Indicators:</strong> Visible focus states for all interactive elements</li>
+                            <li><strong>Skip Links:</strong> Navigation shortcuts for screen readers</li>
+                            <li><strong>Escape Routes:</strong> Clear way to exit modal dialogs and complex flows</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-2">Screen Reader Support:</p>
+                        <ul class="list-disc ml-6 mb-4 space-y-1">
+                            <li><strong>Semantic HTML:</strong> Proper heading hierarchy, form labels, landmarks</li>
+                            <li><strong>ARIA Labels:</strong> Descriptive labels for complex interactions</li>
+                            <li><strong>Live Regions:</strong> Announcements for dynamic content changes</li>
+                            <li><strong>Alternative Text:</strong> Descriptive alt text for all informative images</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-2">Visual Accessibility:</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li><strong>Color Contrast:</strong> Minimum 4.5:1 ratio for normal text, 3:1 for large text</li>
+                            <li><strong>Color Independence:</strong> Information not conveyed by color alone</li>
+                            <li><strong>Text Scaling:</strong> Readable at 200% zoom without horizontal scrolling</li>
+                            <li><strong>Motion Sensitivity:</strong> Respect reduced motion preferences</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="callout info">
+                        <p class="font-semibold mb-3">Agile Design Integration</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li><strong>Design Sprint Alignment:</strong> Design deliverables ready for development sprints</li>
+                            <li><strong>Iterative Refinement:</strong> Design improvements based on user feedback and analytics</li>
+                            <li><strong>Design System Updates:</strong> New components added to shared design system</li>
+                            <li><strong>Cross-functional Collaboration:</strong> Regular design reviews with engineering team</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="technical-requirements" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('tech-requirements')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>8. Technical Requirements</span>
+            </button>
+            <div id="tech-requirements" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">Purpose</h3>
+                    <p class="mb-6">Define technical specifications, constraints, and integration requirements that guide development decisions while maintaining flexibility for iterative implementation.</p>
+                    
+                    <div class="card">
+                        <div class="card-header">System Architecture Overview</div>
+                        <p class="font-semibold mb-3">System Components:</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li><strong>Frontend:</strong> React Native for mobile app, React.js for web interface</li>
+                            <li><strong>Backend:</strong> Node.js API with Express framework, microservices architecture</li>
+                            <li><strong>Database:</strong> PostgreSQL for transactional data, Redis for session management</li>
+                            <li><strong>Integration:</strong> Stripe for payments, SendGrid for email, AWS S3 for assets</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Performance Requirements</div>
+                        <table>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Target</th>
+                                <th>Measurement Method</th>
+                                <th>Monitoring</th>
+                            </tr>
+                            <tr>
+                                <td>Page Load Time</td>
+                                <td>&lt;2 seconds</td>
+                                <td>Lighthouse, WebPageTest</td>
+                                <td>Real User Monitoring</td>
+                            </tr>
+                            <tr>
+                                <td>API Response Time</td>
+                                <td>&lt;500ms (95th percentile)</td>
+                                <td>Application performance monitoring</td>
+                                <td>New Relic, DataDog</td>
+                            </tr>
+                            <tr>
+                                <td>Concurrent Users</td>
+                                <td>10,000 simultaneous</td>
+                                <td>Load testing</td>
+                                <td>Infrastructure monitoring</td>
+                            </tr>
+                            <tr>
+                                <td>Availability</td>
+                                <td>99.9% uptime</td>
+                                <td>Uptime monitoring</td>
+                                <td>Pingdom, StatusPage</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="success-metrics" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('success-metrics-template')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>9. Success Metrics & KPIs</span>
+            </button>
+            <div id="success-metrics-template" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">Purpose</h3>
+                    <p class="mb-6">Define measurable success criteria that enable data-driven decision making, continuous optimization, and clear demonstration of feature value to stakeholders throughout the development and post-launch phases.</p>
+                    
+                    <div class="card">
+                        <div class="card-header">Primary Success Metrics</div>
+                        <table>
+                            <tr>
+                                <th>Metric Category</th>
+                                <th>Specific Metric</th>
+                                <th>Current Baseline</th>
+                                <th>Target Goal</th>
+                                <th>Timeline</th>
+                            </tr>
+                            <tr>
+                                <td>Conversion</td>
+                                <td>Mobile checkout completion rate</td>
+                                <td>27%</td>
+                                <td>35% (+15%)</td>
+                                <td>30 days post-launch</td>
+                            </tr>
+                            <tr>
+                                <td>User Experience</td>
+                                <td>Checkout flow abandonment rate</td>
+                                <td>73%</td>
+                                <td>55% (-25%)</td>
+                                <td>14 days post-launch</td>
+                            </tr>
+                            <tr>
+                                <td>Business Impact</td>
+                                <td>Monthly mobile revenue</td>
+                                <td>$1.2M</td>
+                                <td>$1.38M (+15%)</td>
+                                <td>60 days post-launch</td>
+                            </tr>
+                            <tr>
+                                <td>Customer Satisfaction</td>
+                                <td>Checkout experience rating</td>
+                                <td>3.2/5</td>
+                                <td>4.2/5 (+31%)</td>
+                                <td>45 days post-launch</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="callout success">
+                        <p class="font-semibold mb-3">Success Measurement Schedule</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>Week 1-2:</strong> Technical validation - System performance, error rates</li>
+                            <li><strong>Week 3-4:</strong> User adoption - Feature usage, flow completion</li>
+                            <li><strong>Month 2:</strong> Conversion impact - Checkout completion, revenue</li>
+                            <li><strong>Month 3:</strong> Long-term value - Customer satisfaction, retention</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="implementation-plan" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('implementation-plan-template')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>10. Implementation Plan & Timeline</span>
+            </button>
+            <div id="implementation-plan-template" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">Purpose</h3>
+                    <p class="mb-6">Provide a structured roadmap for feature development that aligns with Agile principles, supports sprint planning, and enables effective resource allocation and milestone tracking.</p>
+                    
+                    <div class="card">
+                        <div class="card-header">Development Phases</div>
+                        <p class="font-semibold mb-3">Phase 1: Foundation & Core MVP (Sprints 22-23)</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li><strong>Goal:</strong> Establish basic guest checkout functionality</li>
+                            <li><strong>Deliverables:</strong> Core user flow, payment integration, basic UI</li>
+                            <li><strong>Success Criteria:</strong> Functional guest checkout on mobile</li>
+                            <li><strong>Risk Mitigation:</strong> Technical spikes for payment integration</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-3">Phase 2: Enhancement & Optimization (Sprints 24-25)</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li><strong>Goal:</strong> Improve user experience and add supporting features</li>
+                            <li><strong>Deliverables:</strong> UX improvements, account creation flow, analytics</li>
+                            <li><strong>Success Criteria:</strong> 10% conversion improvement, positive user feedback</li>
+                            <li><strong>Risk Mitigation:</strong> A/B testing for major UX changes</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-3">Phase 3: Launch & Refinement (Sprint 26)</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>Goal:</strong> Full production launch and initial optimization</li>
+                            <li><strong>Deliverables:</strong> Feature flag removal, performance optimization, support training</li>
+                            <li><strong>Success Criteria:</strong> 15% conversion improvement, stable performance</li>
+                            <li><strong>Risk Mitigation:</strong> Gradual rollout with monitoring</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Sprint Breakdown</div>
+                        <table>
+                            <tr>
+                                <th>Sprint</th>
+                                <th>Focus Area</th>
+                                <th>Key User Stories</th>
+                                <th>Story Points</th>
+                                <th>Sprint Goal</th>
+                            </tr>
+                            <tr>
+                                <td>Sprint 22</td>
+                                <td>Foundation</td>
+                                <td>US-001: Basic guest checkout flow<br>US-004: Payment integration</td>
+                                <td>18</td>
+                                <td>Core checkout functionality working</td>
+                            </tr>
+                            <tr>
+                                <td>Sprint 23</td>
+                                <td>Core Features</td>
+                                <td>US-002: Account creation flow<br>US-003: Order tracking</td>
+                                <td>16</td>
+                                <td>Complete MVP feature set</td>
+                            </tr>
+                            <tr>
+                                <td>Sprint 24</td>
+                                <td>Enhancement</td>
+                                <td>US-005: UX improvements<br>US-006: Analytics integration</td>
+                                <td>14</td>
+                                <td>Optimized user experience</td>
+                            </tr>
+                            <tr>
+                                <td>Sprint 25</td>
+                                <td>Polish & Testing</td>
+                                <td>US-007: Performance optimization<br>US-008: Error handling</td>
+                                <td>12</td>
+                                <td>Production-ready feature</td>
+                            </tr>
+                            <tr>
+                                <td>Sprint 26</td>
+                                <td>Launch</td>
+                                <td>US-009: Feature flag removal<br>US-010: Monitoring setup</td>
+                                <td>8</td>
+                                <td>Successful production launch</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Dependencies & Critical Path</div>
+                        <p class="font-semibold mb-3">External Dependencies:</p>
+                        <table class="mb-6">
+                            <tr>
+                                <th>Dependency</th>
+                                <th>Owner</th>
+                                <th>Required By</th>
+                                <th>Status</th>
+                                <th>Risk Level</th>
+                            </tr>
+                            <tr>
+                                <td>Payment processor API updates</td>
+                                <td>Engineering Team</td>
+                                <td>Sprint 22 Start</td>
+                                <td>In Progress</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>Legal review of guest data handling</td>
+                                <td>Legal Team</td>
+                                <td>Sprint 22 End</td>
+                                <td>Pending</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td>Order management system updates</td>
+                                <td>Platform Team</td>
+                                <td>Sprint 23 Start</td>
+                                <td>Not Started</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>Customer service training</td>
+                                <td>Support Team</td>
+                                <td>Sprint 26 Start</td>
+                                <td>Scheduled</td>
+                                <td>Low</td>
+                            </tr>
+                        </table>
+                        
+                        <p class="font-semibold mb-3">Contingency Plans:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>Payment Integration Delays:</strong> Implement basic payment first, advanced features later</li>
+                            <li><strong>Legal Review Issues:</strong> Implement stricter data handling, re-review quickly</li>
+                            <li><strong>Performance Problems:</strong> Gradual rollout with percentage-based feature flags</li>
+                            <li><strong>UX Testing Failures:</strong> Have alternative designs ready for quick implementation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Resource Allocation</div>
+                        <table class="mb-6">
+                            <tr>
+                                <th>Role</th>
+                                <th>Team Member</th>
+                                <th>Allocation %</th>
+                                <th>Key Responsibilities</th>
+                                <th>Backup Resource</th>
+                            </tr>
+                            <tr>
+                                <td>Product Owner</td>
+                                <td>Sarah Chen</td>
+                                <td>60%</td>
+                                <td>Requirements, stakeholder communication</td>
+                                <td>Alex Kumar (Product)</td>
+                            </tr>
+                            <tr>
+                                <td>Frontend Engineer</td>
+                                <td>Jennifer Kim</td>
+                                <td>80%</td>
+                                <td>User interface, mobile optimization</td>
+                                <td>David Park (Frontend)</td>
+                            </tr>
+                            <tr>
+                                <td>Backend Engineer</td>
+                                <td>Marcus Rodriguez</td>
+                                <td>70%</td>
+                                <td>API development, integrations</td>
+                                <td>Lisa Wong (Backend)</td>
+                            </tr>
+                            <tr>
+                                <td>UX Designer</td>
+                                <td>Alex Thompson</td>
+                                <td>50%</td>
+                                <td>User experience, design systems</td>
+                                <td>Jamie Liu (Design)</td>
+                            </tr>
+                            <tr>
+                                <td>QA Engineer</td>
+                                <td>David Park</td>
+                                <td>60%</td>
+                                <td>Testing, quality assurance</td>
+                                <td>Taylor Johnson (QA)</td>
+                            </tr>
+                        </table>
+                        
+                        <p class="font-semibold mb-3">Sprint Capacity Calculations:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>Total Team Capacity:</strong> 32 story points per sprint</li>
+                            <li><strong>Feature Allocation:</strong> 70% (22 points) dedicated to guest checkout</li>
+                            <li><strong>Buffer Allocation:</strong> 30% (10 points) for bugs, tech debt, other priorities</li>
+                            <li><strong>Velocity Tracking:</strong> Monitor actual vs. planned capacity each sprint</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Launch Strategy</div>
+                        <p class="font-semibold mb-3">Phased Rollout Plan:</p>
+                        <table class="mb-6">
+                            <tr>
+                                <th>Phase</th>
+                                <th>Timeline</th>
+                                <th>Audience</th>
+                                <th>Success Criteria</th>
+                                <th>Rollback Plan</th>
+                            </tr>
+                            <tr>
+                                <td>Internal Testing</td>
+                                <td>Sprint 25 (Week 1)</td>
+                                <td>Company employees</td>
+                                <td>Zero critical bugs</td>
+                                <td>Feature flag disable</td>
+                            </tr>
+                            <tr>
+                                <td>Beta Release</td>
+                                <td>Sprint 25 (Week 2)</td>
+                                <td>5% of mobile users</td>
+                                <td>5% conversion improvement</td>
+                                <td>Reduce to 1% or disable</td>
+                            </tr>
+                            <tr>
+                                <td>Limited Launch</td>
+                                <td>Sprint 26 (Week 1)</td>
+                                <td>25% of mobile users</td>
+                                <td>10% conversion improvement</td>
+                                <td>Rollback to beta percentage</td>
+                            </tr>
+                            <tr>
+                                <td>Full Launch</td>
+                                <td>Sprint 26 (Week 2)</td>
+                                <td>100% of mobile users</td>
+                                <td>15% conversion improvement</td>
+                                <td>Gradual reduction if issues</td>
+                            </tr>
+                        </table>
+                        
+                        <p class="font-semibold mb-3">Launch Readiness Checklist:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>Technical:</strong> All tests passing, performance validated, monitoring active</li>
+                            <li><strong>Business:</strong> Success metrics baseline established, tracking implemented</li>
+                            <li><strong>Support:</strong> Customer service trained, documentation updated</li>
+                            <li><strong>Stakeholder:</strong> Leadership approval, communication plan executed</li>
+                            <li><strong>Risk Management:</strong> Rollback procedures tested, incident response ready</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="callout info">
+                        <p class="font-semibold mb-3">Agile Implementation Best Practices</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li><strong>Sprint Flexibility:</strong> Adjust sprint scope based on learnings and feedback</li>
+                            <li><strong>Continuous Integration:</strong> Deploy incremental improvements throughout development</li>
+                            <li><strong>User Feedback:</strong> Incorporate user testing results into each sprint</li>
+                            <li><strong>Cross-functional Collaboration:</strong> Daily standup participation from all disciplines</li>
+                            <li><strong>Risk Mitigation:</strong> Address high-risk items early in development cycle</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="risk-assessment" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('risk-assessment-template')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>11. Risk Assessment & Mitigation</span>
+            </button>
+            <div id="risk-assessment-template" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">Purpose</h3>
+                    <p class="mb-6">Identify, assess, and plan mitigation strategies for potential risks that could impact feature success, timeline, or business objectives.</p>
+                    
+                    <div class="card">
+                        <div class="card-header">Technical Risks</div>
+                        <table>
+                            <tr>
+                                <th>Risk</th>
+                                <th>Impact</th>
+                                <th>Probability</th>
+                                <th>Score</th>
+                                <th>Mitigation Strategy</th>
+                            </tr>
+                            <tr>
+                                <td>Payment processor integration delays</td>
+                                <td>High (4)</td>
+                                <td>Medium (2)</td>
+                                <td>8</td>
+                                <td>Early spike work, backup processor identified</td>
+                            </tr>
+                            <tr>
+                                <td>Performance degradation on mobile</td>
+                                <td>High (4)</td>
+                                <td>Low (1)</td>
+                                <td>4</td>
+                                <td>Load testing in Sprint 24, optimization ready</td>
+                            </tr>
+                            <tr>
+                                <td>Security vulnerabilities in guest flow</td>
+                                <td>Critical (4)</td>
+                                <td>Low (1)</td>
+                                <td>4</td>
+                                <td>Security review in Sprint 23, pen testing</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="callout warning">
+                        <p class="font-semibold mb-3">High-Priority Risk Actions</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>Sprint 22 Start:</strong> Complete payment processor integration spike</li>
+                            <li><strong>Sprint 23 Mid:</strong> Conduct security review of guest data handling</li>
+                            <li><strong>Sprint 24 Start:</strong> Begin performance testing with realistic load</li>
+                            <li><strong>Sprint 25 Start:</strong> Execute user acceptance testing with target personas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="stakeholder-alignment" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('stakeholder-alignment-template')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>12. Stakeholder Alignment & Communication</span>
+            </button>
+            <div id="stakeholder-alignment-template" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">Purpose</h3>
+                    <p class="mb-6">Establish clear communication channels, decision-making processes, and alignment mechanisms that keep all stakeholders informed, engaged, and supportive throughout the feature development lifecycle.</p>
+                    
+                    <div class="card">
+                        <div class="card-header">Stakeholder Analysis Matrix</div>
+                        <table>
+                            <tr>
+                                <th>Stakeholder</th>
+                                <th>Role/Department</th>
+                                <th>Interest Level</th>
+                                <th>Influence Level</th>
+                                <th>Primary Concerns</th>
+                                <th>Communication Approach</th>
+                            </tr>
+                            <tr>
+                                <td>Sarah Chen</td>
+                                <td>VP Product</td>
+                                <td>High</td>
+                                <td>High</td>
+                                <td>Business impact, roadmap alignment</td>
+                                <td>Weekly 1:1s, sprint reviews</td>
+                            </tr>
+                            <tr>
+                                <td>Michael Torres</td>
+                                <td>CTO</td>
+                                <td>Medium</td>
+                                <td>High</td>
+                                <td>Technical architecture, scalability</td>
+                                <td>Bi-weekly technical reviews</td>
+                            </tr>
+                            <tr>
+                                <td>Jennifer Liu</td>
+                                <td>VP Marketing</td>
+                                <td>High</td>
+                                <td>Medium</td>
+                                <td>Launch timing, competitive positioning</td>
+                                <td>Monthly updates, launch coordination</td>
+                            </tr>
+                            <tr>
+                                <td>David Kim</td>
+                                <td>Customer Success Manager</td>
+                                <td>Medium</td>
+                                <td>Medium</td>
+                                <td>Customer impact, support training</td>
+                                <td>Feature demos, training sessions</td>
+                            </tr>
+                            <tr>
+                                <td>Alex Rodriguez</td>
+                                <td>Legal Counsel</td>
+                                <td>Medium</td>
+                                <td>High</td>
+                                <td>Compliance, data privacy</td>
+                                <td>Formal reviews, documentation</td>
+                            </tr>
+                            <tr>
+                                <td>Lisa Wang</td>
+                                <td>Finance Director</td>
+                                <td>Medium</td>
+                                <td>Low</td>
+                                <td>Revenue impact, ROI</td>
+                                <td>Monthly business reports</td>
+                            </tr>
+                        </table>
+                        
+                        <p class="font-semibold mb-3 mt-6">Stakeholder Influence vs. Interest Matrix:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>High Influence, High Interest:</strong> Manage closely (VP Product, CTO)</li>
+                            <li><strong>High Influence, Low Interest:</strong> Keep satisfied (Legal, Platform Team)</li>
+                            <li><strong>Low Influence, High Interest:</strong> Keep informed (Marketing, Customer Success)</li>
+                            <li><strong>Low Influence, Low Interest:</strong> Monitor (Finance, HR)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Communication Framework</div>
+                        <p class="font-semibold mb-3">Regular Communication Cadence:</p>
+                        <table class="mb-6">
+                            <tr>
+                                <th>Communication Type</th>
+                                <th>Frequency</th>
+                                <th>Audience</th>
+                                <th>Format</th>
+                                <th>Content Focus</th>
+                                <th>Owner</th>
+                            </tr>
+                            <tr>
+                                <td>Sprint Reviews</td>
+                                <td>Every 2 weeks</td>
+                                <td>Core team + key stakeholders</td>
+                                <td>Live demo + Q&A</td>
+                                <td>Progress, blockers, next steps</td>
+                                <td>Product Owner</td>
+                            </tr>
+                            <tr>
+                                <td>Stakeholder Updates</td>
+                                <td>Weekly</td>
+                                <td>Leadership team</td>
+                                <td>Email summary</td>
+                                <td>Status, risks, decisions needed</td>
+                                <td>Product Owner</td>
+                            </tr>
+                            <tr>
+                                <td>Technical Reviews</td>
+                                <td>Bi-weekly</td>
+                                <td>Engineering leadership</td>
+                                <td>Technical walkthrough</td>
+                                <td>Architecture, performance, security</td>
+                                <td>Tech Lead</td>
+                            </tr>
+                            <tr>
+                                <td>Business Reviews</td>
+                                <td>Monthly</td>
+                                <td>Executive team</td>
+                                <td>Business metrics presentation</td>
+                                <td>ROI, market impact, strategic fit</td>
+                                <td>VP Product</td>
+                            </tr>
+                        </table>
+                        
+                        <p class="font-semibold mb-3">Milestone Communications:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>Sprint 22 Completion:</strong> Core functionality demo to stakeholders</li>
+                            <li><strong>Sprint 24 Mid-point:</strong> User testing results and UX validation</li>
+                            <li><strong>Sprint 25 Completion:</strong> Launch readiness review with all stakeholders</li>
+                            <li><strong>Sprint 26 Launch:</strong> Launch announcement and initial metrics report</li>
+                            <li><strong>30 Days Post-Launch:</strong> Success metrics review and next phase planning</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Decision-Making Framework</div>
+                        <p class="font-semibold mb-3">RACI Matrix for Key Decisions:</p>
+                        <table class="mb-6">
+                            <tr>
+                                <th>Decision Type</th>
+                                <th>Responsible</th>
+                                <th>Accountable</th>
+                                <th>Consulted</th>
+                                <th>Informed</th>
+                            </tr>
+                            <tr>
+                                <td>Feature scope changes</td>
+                                <td>Product Owner</td>
+                                <td>VP Product</td>
+                                <td>Tech Lead, UX Designer</td>
+                                <td>Stakeholders, Development Team</td>
+                            </tr>
+                            <tr>
+                                <td>Technical architecture decisions</td>
+                                <td>Tech Lead</td>
+                                <td>CTO</td>
+                                <td>Senior Engineers, Security</td>
+                                <td>Product Owner, Team</td>
+                            </tr>
+                            <tr>
+                                <td>UX/Design changes</td>
+                                <td>UX Designer</td>
+                                <td>Design Director</td>
+                                <td>Product Owner, Users</td>
+                                <td>Development Team</td>
+                            </tr>
+                            <tr>
+                                <td>Launch timing</td>
+                                <td>VP Product</td>
+                                <td>Executive Team</td>
+                                <td>Marketing, Engineering</td>
+                                <td>All stakeholders</td>
+                            </tr>
+                            <tr>
+                                <td>Risk mitigation actions</td>
+                                <td>Risk Owner</td>
+                                <td>Project Manager</td>
+                                <td>Affected teams</td>
+                                <td>Stakeholders</td>
+                            </tr>
+                        </table>
+                        
+                        <p class="font-semibold mb-3">Decision Escalation Process:</p>
+                        <ol class="list-decimal ml-6 space-y-2">
+                            <li><strong>Team Level:</strong> Daily decisions handled within scrum team</li>
+                            <li><strong>Product Level:</strong> Feature-related decisions escalated to Product Owner</li>
+                            <li><strong>Technical Level:</strong> Architecture decisions escalated to Tech Lead/CTO</li>
+                            <li><strong>Business Level:</strong> Strategic decisions escalated to VP Product</li>
+                            <li><strong>Executive Level:</strong> Major scope/timeline changes to Executive Team</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Change Management & Training</div>
+                        <p class="font-semibold mb-3">Change Impact Assessment:</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li><strong>Customer Support:</strong> New processes for guest order assistance</li>
+                            <li><strong>Marketing:</strong> Updated messaging and competitive positioning</li>
+                            <li><strong>Analytics:</strong> New tracking and reporting requirements</li>
+                            <li><strong>Finance:</strong> Revenue attribution and tax implications</li>
+                            <li><strong>Legal:</strong> Terms of service updates for guest transactions</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-3">Training & Enablement Plan:</p>
+                        <table class="mb-6">
+                            <tr>
+                                <th>Team</th>
+                                <th>Training Content</th>
+                                <th>Format</th>
+                                <th>Timeline</th>
+                                <th>Success Criteria</th>
+                            </tr>
+                            <tr>
+                                <td>Customer Support</td>
+                                <td>Guest order management, troubleshooting</td>
+                                <td>Interactive workshops</td>
+                                <td>Sprint 25</td>
+                                <td>100% team certification</td>
+                            </tr>
+                            <tr>
+                                <td>Marketing</td>
+                                <td>Feature benefits, positioning</td>
+                                <td>Presentation + Q&A</td>
+                                <td>Sprint 26</td>
+                                <td>Launch materials ready</td>
+                            </tr>
+                            <tr>
+                                <td>Sales</td>
+                                <td>Customer benefit communication</td>
+                                <td>Sales enablement session</td>
+                                <td>Sprint 26</td>
+                                <td>Consistent messaging adoption</td>
+                            </tr>
+                            <tr>
+                                <td>Analytics</td>
+                                <td>New metrics and dashboard usage</td>
+                                <td>Technical walkthrough</td>
+                                <td>Sprint 25</td>
+                                <td>Accurate reporting capability</td>
+                            </tr>
+                        </table>
+                        
+                        <p class="font-semibold mb-3">Resistance Management:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>Proactive Communication:</strong> Address concerns before they become resistance</li>
+                            <li><strong>Benefit Emphasis:</strong> Clearly articulate value proposition for each stakeholder group</li>
+                            <li><strong>Involvement Strategy:</strong> Include skeptics in feedback and validation processes</li>
+                            <li><strong>Quick Wins:</strong> Demonstrate early success to build momentum and support</li>
+                            <li><strong>Continuous Support:</strong> Provide ongoing assistance during transition period</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="callout success">
+                        <p class="font-semibold mb-3">Alignment Success Metrics</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li><strong>Stakeholder Satisfaction:</strong> >4.0/5 rating on communication effectiveness</li>
+                            <li><strong>Decision Speed:</strong> Average 48-hour turnaround on escalated decisions</li>
+                            <li><strong>Meeting Efficiency:</strong> >80% of stakeholders rate meetings as valuable</li>
+                            <li><strong>Change Adoption:</strong> >90% of affected teams successfully implement new processes</li>
+                            <li><strong>Feedback Integration:</strong> >75% of high-priority feedback incorporated within 2 sprints</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="implementation" class="section-title">
+            <h2 class="text-3xl">Implementation Guide</h2>
+        </div>
+        
+        <p class="mb-8 text-lg">Successfully implementing Agile PRD practices requires a thoughtful approach that considers team readiness, organizational culture, and existing development processes.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="card">
+                <div class="card-header">Phase 1: Team Preparation</div>
+                <ol class="list-decimal ml-6 space-y-3">
+                    <li>Review the comprehensive guide to understand Agile PRD principles</li>
+                    <li>Assess current documentation practices and identify improvement opportunities</li>
+                    <li>Select appropriate tools for collaborative creation and sprint integration</li>
+                    <li>Train team members on collaborative PRD creation processes</li>
+                </ol>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">Phase 2: Pilot Implementation</div>
+                <ol class="list-decimal ml-6 space-y-3">
+                    <li>Select a medium-complexity feature for initial Agile PRD implementation</li>
+                    <li>Use the template to create your first feature-focused PRD collaboratively</li>
+                    <li>Integrate the PRD with sprint planning and execution processes</li>
+                    <li>Collect feedback from team members and stakeholders</li>
+                </ol>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">Phase 3: Process Refinement</div>
+                <ol class="list-decimal ml-6 space-y-3">
+                    <li>Analyze lessons learned from pilot implementation</li>
+                    <li>Customize the template to fit your team's specific needs and context</li>
+                    <li>Establish regular PRD review and update processes</li>
+                    <li>Create team-specific guidelines and best practices</li>
+                </ol>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">Phase 4: Organizational Scaling</div>
+                <ol class="list-decimal ml-6 space-y-3">
+                    <li>Share successful practices with other product teams</li>
+                    <li>Develop internal training materials based on your experience</li>
+                    <li>Establish organizational standards for Agile PRD implementation</li>
+                    <li>Create metrics and feedback mechanisms for continuous improvement</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div id="best-practices" class="section-title">
+            <h2 class="text-3xl">Best Practices</h2>
+        </div>
+        
+        <div class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('collaborative')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>Collaborative Creation and Ownership</span>
+            </button>
+            <div id="collaborative" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <p class="mb-6">The transition from product manager-owned documentation to collaborative team ownership represents one of the most significant changes in Agile PRD implementation.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="card">
+                            <div class="card-header">Establishing Workflows</div>
+                            <p>Product managers initiate with user research and business context, but involve designers and engineers in refining user stories, technical requirements, and success metrics from the earliest stages.</p>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">Decision Authority</div>
+                            <p>Product managers retain authority over scope and business requirements, designers lead UX decisions, and engineers guide technical implementation approaches.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="research" class="section-title">
+            <h2 class="text-3xl">Research Foundation</h2>
+        </div>
+        
+        <p class="mb-8 text-lg">The Agile PRD approach is built on extensive research into industry best practices and real-world implementation experiences from leading organizations.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="card">
+                <div class="card-header">Atlassian's Approach</div>
+                <p class="mb-4">Emphasizes shared understanding between product owner, designer, and development team. Focuses on higher-level requirements while leaving implementation details to the development team.</p>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li>Collaborative customer visits</li>
+                    <li>User story mapping exercises</li>
+                    <li>Visual mockups as requirements</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">Delibr's Feature Documents</div>
+                <p class="mb-4">Advocates for feature-focused documents instead of product-wide PRDs. Emphasizes collaborative creation over requirements handover.</p>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li>Single feature scope</li>
+                    <li>Value vs. feasibility discussions</li>
+                    <li>Ongoing collaboration model</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="mt-20 pt-8 border-t-2 border-gray-200">
+            <p class="text-center text-gray-500 text-lg">Agile Product Requirement Document Wiki • Created by Victor Lee • July 27, 2025</p>
+        </div>
+    </div>
+    
+    <script>
+        function toggleContent(id) {
+            const content = document.getElementById(id);
+            const button = content.previousElementSibling;
+            const icon = button.querySelector('.toggle-icon i');
+            
+            if (content.classList.contains('show')) {
+                content.classList.remove('show');
+                icon.parentElement.classList.remove('rotated');
+            } else {
+                content.classList.add('show');
+                icon.parentElement.classList.add('rotated');
+            }
+        }
+        
+        function setActiveLink(element) {
+            // Remove active class from all links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Add active class to clicked link
+            element.classList.add('active');
+            
+            // Close mobile menu if open
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('mobile-open')) {
+                sidebar.classList.remove('mobile-open');
+            }
+        }
+        
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('mobile-open');
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
+                sidebar.classList.remove('mobile-open');
+            }
+        });
+        
+        // Auto-highlight active section in navigation
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('[id]');
+            const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('scroll-spy-active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('scroll-spy-active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

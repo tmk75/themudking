@@ -1,26 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "D:\\10 Developments\\V8 Dashboards\\themudking\\dashboard-v8\\TaskManagementAPI\\TaskManagementAPI.csproj": {}
+    "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\taskmanagementapi\\TaskManagementAPI.csproj": {}
   },
   "projects": {
-    "D:\\10 Developments\\V8 Dashboards\\themudking\\dashboard-v8\\TaskManagementAPI\\TaskManagementAPI.csproj": {
+    "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\taskmanagementapi\\TaskManagementAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\10 Developments\\V8 Dashboards\\themudking\\dashboard-v8\\TaskManagementAPI\\TaskManagementAPI.csproj",
+        "projectUniqueName": "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\taskmanagementapi\\TaskManagementAPI.csproj",
         "projectName": "TaskManagementAPI",
-        "projectPath": "D:\\10 Developments\\V8 Dashboards\\themudking\\dashboard-v8\\TaskManagementAPI\\TaskManagementAPI.csproj",
-        "packagesPath": "C:\\Users\\pcvle\\.nuget\\packages\\",
-        "outputPath": "D:\\10 Developments\\V8 Dashboards\\themudking\\dashboard-v8\\TaskManagementAPI\\obj\\",
+        "projectPath": "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\taskmanagementapi\\TaskManagementAPI.csproj",
+        "packagesPath": "C:\\Users\\ywx10\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ywx10\\Desktop\\项目\\victor\\themudking\\dashboard-v8\\taskmanagementapi\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\pcvle\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\ywx10\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {}
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://packages.aliyun.com/6736297aa28e69b1a16299a4/nuget/microservice/index.json": {}
         },
         "frameworks": {
           "net8.0": {
@@ -32,17 +39,16 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "Microsoft.AspNetCore.Cors": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -87,7 +93,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.412/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

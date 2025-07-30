@@ -18,17 +18,41 @@ namespace TaskManagementAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserGroup>>> GetGroups()
+        public async Task<ActionResult<IEnumerable<object>>> GetGroups()
         {
-            return await _context.UserGroups.ToListAsync();
+            var groups = await _context.UserGroups
+                .Select(g => new {
+                    g.Id,
+                    g.Name,
+                    g.Description,
+                    g.CreatedAt,
+                    g.UpdatedAt,
+                    UserCount = _context.UserGroupMemberships.Count(um => um.GroupId == g.Id),
+                    TaskCount = _context.Tasks.Count(t => t.GroupId == g.Id)
+                })
+                .ToListAsync();
+            
+            return Ok(groups);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserGroup>> GetGroup(int id)
+        public async Task<ActionResult<object>> GetGroup(int id)
         {
-            var group = await _context.UserGroups.FindAsync(id);
+            var group = await _context.UserGroups
+                .Where(g => g.Id == id)
+                .Select(g => new {
+                    g.Id,
+                    g.Name,
+                    g.Description,
+                    g.CreatedAt,
+                    g.UpdatedAt,
+                    UserCount = _context.UserGroupMemberships.Count(um => um.GroupId == g.Id),
+                    TaskCount = _context.Tasks.Count(t => t.GroupId == g.Id)
+                })
+                .FirstOrDefaultAsync();
+            
             if (group == null) return NotFound();
-            return group;
+            return Ok(group);
         }
 
         [HttpPost]
@@ -44,7 +68,12 @@ namespace TaskManagementAPI.Controllers
         {
             if (id != group.Id) return BadRequest();
             
-            _context.Entry(group).State = EntityState.Modified;
+            var existingGroup = await _context.UserGroups.FindAsync(id);
+            if (existingGroup == null) return NotFound();
+            
+            existingGroup.Name = group.Name;
+            existingGroup.Description = group.Description;
+            existingGroup.UpdatedAt = DateTime.UtcNow;
             
             try
             {
@@ -65,6 +94,20 @@ namespace TaskManagementAPI.Controllers
             var group = await _context.UserGroups.FindAsync(id);
             if (group == null) return NotFound();
             
+            // 检查是否有关联的任务
+            var taskCount = await _context.Tasks.CountAsync(t => t.GroupId == id);
+            if (taskCount > 0)
+            {
+                return BadRequest(new { message = "无法删除用户组，该用户组下还有任务" });
+            }
+            
+            // 删除用户组成员关系
+            var memberships = await _context.UserGroupMemberships
+                .Where(um => um.GroupId == id)
+                .ToListAsync();
+            _context.UserGroupMemberships.RemoveRange(memberships);
+            
+            // 删除用户组
             _context.UserGroups.Remove(group);
             await _context.SaveChangesAsync();
             

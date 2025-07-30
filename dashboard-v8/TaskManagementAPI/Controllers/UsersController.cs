@@ -1,15 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using TaskManagementAPI.Data;
-using TaskManagementAPI.Models;
 using TaskManagementAPI.DTOs;
+using TaskManagementAPI.Models;
+using BCrypt.Net;
 
 namespace TaskManagementAPI.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly TaskDbContext _context;
@@ -22,40 +24,41 @@ namespace TaskManagementAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
-            var users = await _context.Users
-                .Where(u => u.IsActive)
-                .Select(u => new UserDto
-                {
-                    Id = u.Id,
-                    Name = u.Name,
-                    Username = u.Username,
-                    Email = u.Email,
-                    IsActive = u.IsActive,
-                    Groups = _context.UserGroupMemberships
-                        .Where(ugm => ugm.UserId == u.Id)
-                        .Join(_context.UserGroups,
-                            ugm => ugm.GroupId,
-                            ug => ug.Id,
-                            (ugm, ug) => ug.Name)
-                        .ToList()
-                })
-                .ToListAsync();
+            var users = await _context.Users.ToListAsync();
+            var userDtos = new List<UserDto>();
 
-            return Ok(users);
+            foreach (var user in users)
+            {
+                var groups = await _context.UserGroupMemberships
+                    .Where(ugm => ugm.UserId == user.Id)
+                    .Join(_context.UserGroups, ugm => ugm.GroupId, g => g.Id, (ugm, g) => g.Name)
+                    .ToListAsync();
+
+                userDtos.Add(new UserDto
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Username = user.Username,
+                    Email = user.Email,
+                    IsActive = user.IsActive,
+                    Groups = groups
+                });
+            }
+
+            return Ok(userDtos);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null || !user.IsActive) return NotFound();
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
-            var userGroups = await _context.UserGroupMemberships
-                .Where(ugm => ugm.UserId == user.Id)
-                .Join(_context.UserGroups,
-                    ugm => ugm.GroupId,
-                    ug => ug.Id,
-                    (ugm, ug) => ug.Name)
+            if (user == null)
+                return NotFound();
+
+            var groups = await _context.UserGroupMemberships
+                .Where(ugm => ugm.UserId == id)
+                .Join(_context.UserGroups, ugm => ugm.GroupId, g => g.Id, (ugm, g) => g.Name)
                 .ToListAsync();
 
             var userDto = new UserDto
@@ -65,7 +68,7 @@ namespace TaskManagementAPI.Controllers
                 Username = user.Username,
                 Email = user.Email,
                 IsActive = user.IsActive,
-                Groups = userGroups
+                Groups = groups
             };
 
             return Ok(userDto);
@@ -74,137 +77,99 @@ namespace TaskManagementAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto createUserDto)
         {
-            // 验证请求
-            if (string.IsNullOrEmpty(createUserDto.Name) || 
-                string.IsNullOrEmpty(createUserDto.Username) || 
-                string.IsNullOrEmpty(createUserDto.Email) || 
-                string.IsNullOrEmpty(createUserDto.Password))
-            {
-                return BadRequest("All fields are required");
-            }
-
-            // 检查用户名和邮箱是否已存在
             if (await _context.Users.AnyAsync(u => u.Username == createUserDto.Username))
-            {
-                return Conflict("Username already exists");
-            }
+                return BadRequest("Username already exists");
 
             if (await _context.Users.AnyAsync(u => u.Email == createUserDto.Email))
-            {
-                return Conflict("Email already exists");
-            }
+                return BadRequest("Email already exists");
 
-            // 创建新用户
             var user = new User
             {
                 Name = createUserDto.Name,
                 Username = createUserDto.Username,
                 Email = createUserDto.Email,
-                PasswordHash = GetMd5Hash(createUserDto.Password),
-                IsActive = true,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(createUserDto.Password),
                 CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                UpdatedAt = DateTime.UtcNow,
+                IsActive = true
             };
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            // 添加用户组关联
             if (createUserDto.Groups != null && createUserDto.Groups.Any())
             {
-                foreach (var groupName in createUserDto.Groups)
+                var groups = await _context.UserGroups
+                    .Where(g => createUserDto.Groups.Contains(g.Name))
+                    .ToListAsync();
+
+                foreach (var group in groups)
                 {
-                    var group = await _context.UserGroups.FirstOrDefaultAsync(g => g.Name == groupName);
-                    if (group != null)
+                    _context.UserGroupMemberships.Add(new UserGroupMembership
                     {
-                        _context.UserGroupMemberships.Add(new UserGroupMembership
-                        {
-                            UserId = user.Id,
-                            GroupId = group.Id,
-                            CreatedAt = DateTime.UtcNow
-                        });
-                    }
+                        UserId = user.Id,
+                        GroupId = group.Id
+                    });
                 }
                 await _context.SaveChangesAsync();
             }
 
-            // 获取用户所属的组
-            var userGroups = await _context.UserGroupMemberships
-                .Where(ugm => ugm.UserId == user.Id)
-                .Join(_context.UserGroups,
-                    ugm => ugm.GroupId,
-                    ug => ug.Id,
-                    (ugm, ug) => ug.Name)
-                .ToListAsync();
-
-            // 创建用户DTO
-            var userDto = new UserDto
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, new UserDto
             {
                 Id = user.Id,
                 Name = user.Name,
                 Username = user.Username,
                 Email = user.Email,
                 IsActive = user.IsActive,
-                Groups = userGroups
-            };
-
-            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, userDto);
+                Groups = createUserDto.Groups ?? new List<string>()
+            });
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UpdateUserDto updateUserDto)
         {
-            if (id != updateUserDto.Id) return BadRequest();
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
-            var user = await _context.Users.FindAsync(id);
-            if (user == null || !user.IsActive) return NotFound();
+            if (user == null)
+                return NotFound();
 
-            // 更新用户信息
-            user.Name = updateUserDto.Name ?? user.Name;
-            user.Email = updateUserDto.Email ?? user.Email;
-            user.UpdatedAt = DateTime.UtcNow;
+            if (!string.IsNullOrEmpty(updateUserDto.Name))
+                user.Name = updateUserDto.Name;
 
-            // 如果提供了新密码，则更新密码
-            if (!string.IsNullOrEmpty(updateUserDto.Password))
+            if (!string.IsNullOrEmpty(updateUserDto.Email))
             {
-                user.PasswordHash = GetMd5Hash(updateUserDto.Password);
+                if (await _context.Users.AnyAsync(u => u.Email == updateUserDto.Email && u.Id != id))
+                    return BadRequest("Email already exists");
+                user.Email = updateUserDto.Email;
             }
 
-            // 更新用户组关联
+            if (!string.IsNullOrEmpty(updateUserDto.Password))
+                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(updateUserDto.Password);
+
+            user.UpdatedAt = DateTime.UtcNow;
+
             if (updateUserDto.Groups != null)
             {
-                // 删除现有的组关联
                 var existingMemberships = await _context.UserGroupMemberships
-                    .Where(ugm => ugm.UserId == user.Id)
+                    .Where(ugm => ugm.UserId == id)
                     .ToListAsync();
                 _context.UserGroupMemberships.RemoveRange(existingMemberships);
+                
+                var groups = await _context.UserGroups
+                    .Where(g => updateUserDto.Groups.Contains(g.Name))
+                    .ToListAsync();
 
-                // 添加新的组关联
-                foreach (var groupName in updateUserDto.Groups)
+                foreach (var group in groups)
                 {
-                    var group = await _context.UserGroups.FirstOrDefaultAsync(g => g.Name == groupName);
-                    if (group != null)
+                    _context.UserGroupMemberships.Add(new UserGroupMembership
                     {
-                        _context.UserGroupMemberships.Add(new UserGroupMembership
-                        {
-                            UserId = user.Id,
-                            GroupId = group.Id,
-                            CreatedAt = DateTime.UtcNow
-                        });
-                    }
+                        UserId = user.Id,
+                        GroupId = group.Id
+                    });
                 }
             }
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id)) return NotFound();
-                throw;
-            }
-
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
@@ -212,37 +177,37 @@ namespace TaskManagementAPI.Controllers
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
-            if (user == null) return NotFound();
+            if (user == null)
+                return NotFound();
 
-            // 软删除：将用户标记为非活动
-            user.IsActive = false;
-            user.UpdatedAt = DateTime.UtcNow;
+            // 删除用户组关联
+            var memberships = await _context.UserGroupMemberships
+                .Where(ugm => ugm.UserId == id)
+                .ToListAsync();
+            _context.UserGroupMemberships.RemoveRange(memberships);
 
+            // 物理删除用户
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        [HttpGet("selection")]
+        public async Task<ActionResult<IEnumerable<UserSelectionDto>>> GetUsersForSelection()
         {
-            return _context.Users.Any(e => e.Id == id);
-        }
-
-        // 辅助方法：计算MD5哈希值
-        private string GetMd5Hash(string input)
-        {
-            using (MD5 md5 = MD5.Create())
-            {
-                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
+            var users = await _context.Users
+                .Where(u => u.IsActive)
+                .Select(u => new UserSelectionDto
                 {
-                    sb.Append(hashBytes[i].ToString("x2"));
-                }
-                return sb.ToString();
-            }
+                    Username = u.Username,
+                    Name = u.Name,
+                    Email = u.Email
+                })
+                .OrderBy(u => u.Name)
+                .ToListAsync();
+
+            return Ok(users);
         }
     }
 }

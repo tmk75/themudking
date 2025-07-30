@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>敏捷产品需求文档知识库</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            color: #37352f;
+            background-color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .sidebar {
+            width: 280px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 24px 16px;
+            background-color: #fbfbfa;
+            border-right: 1px solid #e9e9e7;
+            z-index: 1000;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            padding: 40px 60px;
+            max-width: 1000px;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: #37352f;
+            text-decoration: none;
+            margin-bottom: 4px;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        
+        .nav-link:hover {
+            background-color: #f1f1ef;
+            text-decoration: none;
+            color: #37352f;
+        }
+        
+        .nav-link.active {
+            background-color: #eeeeed;
+            font-weight: 500;
+        }
+        
+        .section-title {
+            font-weight: 600;
+            margin-top: 48px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e9e9e7;
+        }
+        
+        .callout {
+            background-color: #f7f6f3;
+            border-left: 4px solid #e9e9e7;
+            padding: 20px;
+            margin: 24px 0;
+            border-radius: 6px;
+        }
+        
+        .callout.info {
+            border-left-color: #2f80ed;
+            background-color: #f4f9ff;
+        }
+        
+        .callout.warning {
+            border-left-color: #ff9d00;
+            background-color: #fff8ee;
+        }
+        
+        .callout.success {
+            border-left-color: #0ca678;
+            background-color: #f0fff4;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            border: 1px solid #e9e9e7;
+            padding: 12px 16px;
+            text-align: left;
+            vertical-align: top;
+        }
+        
+        th {
+            background-color: #f7f6f3;
+            font-weight: 600;
+        }
+        
+        code {
+            background-color: #f7f6f3;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background-color: #f7f6f3;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 24px 0;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+        
+        .card {
+            border: 1px solid #e9e9e7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 24px 0;
+            background-color: #ffffff;
+        }
+        
+        .card-header {
+            font-weight: 600;
+            font-size: 16px;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #e9e9e7;
+            color: #2563eb;
+        }
+        
+        .toggle-content {
+            margin-top: 12px;
+            display: none;
+        }
+        
+        .toggle-content.show {
+            display: block;
+        }
+        
+        .toggle-button {
+            background: none;
+            border: none;
+            font-weight: 500;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            width: 100%;
+            text-align: left;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        
+        .toggle-button:hover {
+            background-color: #f9fafb;
+        }
+        
+        .toggle-icon {
+            margin-right: 12px;
+            transition: transform 0.3s ease;
+            color: #6b7280;
+        }
+        
+        .toggle-icon.rotated {
+            transform: rotate(90deg);
+        }
+        
+        .nav-section {
+            margin-bottom: 24px;
+        }
+        
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            margin-left: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1001;
+                background: #2563eb;
+                color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+        
+        .scroll-spy-active {
+            background-color: #dbeafe !important;
+            border-left: 3px solid #2563eb;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <div class="mb-8">
+            <h1 class="text-lg font-bold mb-2">敏捷PRD知识库</h1>
+            <p class="text-sm text-gray-500">数字化解决方案开发的综合指南</p>
+        </div>
+        
+        <div class="nav-section">
+            <a href="#overview" class="nav-link active" onclick="setActiveLink(this)">📚 概览</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">主要章节</div>
+            <a href="#introduction" class="nav-link" onclick="setActiveLink(this)">🔍 敏捷PRD介绍</a>
+            <a href="#template" class="nav-link" onclick="setActiveLink(this)">📝 敏捷PRD模板</a>
+            <a href="#implementation" class="nav-link" onclick="setActiveLink(this)">🚀 实施指南</a>
+            <a href="#best-practices" class="nav-link" onclick="setActiveLink(this)">✅ 最佳实践</a>
+            <a href="#research" class="nav-link" onclick="setActiveLink(this)">🔬 研究基础</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">模板章节</div>
+            <a href="#executive-summary" class="nav-link" onclick="setActiveLink(this)">执行摘要</a>
+            <a href="#project-overview" class="nav-link" onclick="setActiveLink(this)">项目概览</a>
+            <a href="#problem-statement" class="nav-link" onclick="setActiveLink(this)">问题陈述</a>
+            <a href="#target-users" class="nav-link" onclick="setActiveLink(this)">目标用户与角色</a>
+            <a href="#feature-definition" class="nav-link" onclick="setActiveLink(this)">功能定义</a>
+            <a href="#user-stories" class="nav-link" onclick="setActiveLink(this)">用户故事</a>
+            <a href="#design-ux" class="nav-link" onclick="setActiveLink(this)">设计与用户体验</a>
+            <a href="#technical-requirements" class="nav-link" onclick="setActiveLink(this)">技术需求</a>
+            <a href="#success-metrics" class="nav-link" onclick="setActiveLink(this)">成功指标</a>
+            <a href="#implementation-plan" class="nav-link" onclick="setActiveLink(this)">实施计划</a>
+            <a href="#risk-assessment" class="nav-link" onclick="setActiveLink(this)">风险评估</a>
+            <a href="#stakeholder-alignment" class="nav-link" onclick="setActiveLink(this)">利益相关方协调</a>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div id="overview">
+            <h1 class="text-4xl font-bold mb-6">敏捷产品需求文档知识库</h1>
+            <p class="text-xl mb-8 text-gray-600">在数字化解决方案开发中实施敏捷产品需求文档的综合资源</p>
+            
+            <div class="callout info">
+                <p class="font-semibold mb-2">📌 版本: 1.0</p>
+                <p>创建者: Victor Lee</p>
+                <p>日期: 2025年7月27日</p>
+            </div>
+            
+            <div class="mt-12 mb-16">
+                <h2 class="text-3xl font-semibold mb-6">核心创新</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card">
+                        <div class="card-header">功能级别聚焦</div>
+                        <p>与试图记录整个产品的传统PRD不同，这种方法专注于可在2-6个Sprint内完成的单个功能或史诗。这种范围与敏捷团队的实际工作方式相符，使文档更加易于管理和可操作。</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">协作式所有权</div>
+                        <p>该模板专为整个产品三角团队（产品经理、设计师、工程师）协作创建而设计，而不是仅由产品经理拥有。这种方法确保从一开始就整合技术可行性和用户体验考虑。</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">活文档</div>
+                        <p>该框架将PRD视为在整个开发过程中不断演进的活文档，而非静态合同。内置机制支持基于Sprint学习和用户反馈的迭代优化。</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Sprint集成</div>
+                        <p>模板的每个元素都旨在支持Sprint规划、执行和回顾流程。用户故事为Sprint准备就绪，验收标准支持演示准备，成功指标提供Sprint级别的反馈。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="introduction" class="section-title">
+            <h2 class="text-3xl">敏捷PRD介绍</h2>
+        </div>
+        
+        <p class="mb-6 text-lg">在过去二十年中，产品开发的格局发生了根本性转变，从强调全面前期规划的瀑布方法转向优先考虑迭代开发、持续反馈和适应性规划的敏捷方法。这种转变为产品经理创造了重大挑战，他们仍需要记录需求并协调利益相关方，但必须以支持而非阻碍敏捷开发实践的方式进行。</p>
+        
+        <div class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('evolution')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>从传统PRD到敏捷PRD的演进</span>
+            </button>
+            <div id="evolution" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">传统PRD模型</h3>
+                    <p class="mb-6">传统PRD源于从1970年代到2000年代初主导行业的瀑布软件开发方法论。在这种模型中，产品开发遵循线性序列：需求收集、系统设计、实现、测试和部署。PRD作为需求收集阶段的主要文档，试图在任何开发工作开始之前捕获产品应该做什么的所有必要信息。</p>
+                    
+                    <h3 class="text-xl font-semibold mb-4">敏捷颠覆</h3>
+                    <p class="mb-6">1990年代末和2000年代初敏捷方法论的出现从根本上挑战了传统PRD的基础假设。敏捷宣言强调"个体和互动胜过流程和工具"以及"响应变化胜过遵循计划"，这直接与传统PRD的全面前期文档和正式审批流程方法相矛盾。</p>
+                    
+                    <h3 class="text-xl font-semibold mb-4">现代敏捷PRD综合</h3>
+                    <p class="mb-4">本指南中呈现的敏捷PRD方法代表了传统PRD最佳元素与从敏捷开发实践和功能文档演进中获得洞察的综合。这种综合认识到文档对于利益相关方协调、团队协调和知识保存仍然重要，但重新构想了文档的创建、结构和维护方式。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('principles')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>敏捷PRD的核心原则</span>
+            </button>
+            <div id="principles" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <p class="mb-6">有效敏捷PRD的基础建立在几个关键原则上，这些原则使其区别于传统方法：</p>
+                    
+                    <div class="card">
+                        <div class="card-header">功能导向范围</div>
+                        <p>与试图记录整个产品或大型产品区域的传统PRD不同，敏捷PRD专注于可在合理时间框架内开发的单个功能或史诗，通常跨越2-6个Sprint。这种专注的范围使文档更易管理，降低复杂性，并与敏捷团队的实际工作方式保持一致。</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">协作创建和维护</div>
+                        <p>传统PRD通常由产品经理独立创建，然后作为要实现的需求呈现给开发团队。相比之下，敏捷PRD由整个产品三角团队——产品经理、设计师和工程负责人——协作创建，并根据每个Sprint的学习持续优化。</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">活文档</div>
+                        <p>虽然传统PRD通常被视为一旦批准就"锁定"的静态文档，但敏捷PRD设计为在整个开发过程中演进。随着团队了解更多关于用户需求、技术约束和市场条件的信息，PRD会更新以反映这种新的理解。</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Sprint集成</div>
+                        <p>敏捷PRD的每个元素都旨在支持Sprint规划、执行和回顾流程。用户故事编写为Sprint就绪，验收标准定义为支持Sprint演示，成功指标结构化以提供可以指导后续Sprint规划的反馈。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="template" class="section-title">
+            <h2 class="text-3xl">敏捷PRD模板</h2>
+        </div>
+        
+        <p class="mb-6 text-lg">敏捷PRD模板专门为使用敏捷方法论开发的数字解决方案而设计。与试图在前期捕获整个产品需求的传统PRD不同，此模板专注于支持迭代开发和产品、设计、工程团队之间持续协作的功能级文档。</p>
+        
+        <div class="callout info mb-10">
+            <p class="font-semibold mb-4">如何使用此模板</p>
+            <ol class="list-decimal ml-6 space-y-2">
+                <li><strong>每个功能/史诗一个PRD</strong> - 保持范围可管理和专注</li>
+                <li><strong>协作创建</strong> - 涉及整个产品三角团队（PM、设计师、工程师）</li>
+                <li><strong>活文档</strong> - 根据学习和反馈定期更新</li>
+                <li><strong>Sprint集成</strong> - 结构化内容以支持Sprint规划</li>
+                <li><strong>利益相关方协调</strong> - 用于持续沟通，而非仅仅初始审批</li>
+            </ol>
+        </div>
+        
+        <div id="executive-summary" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('exec-summary')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>1. 执行摘要</span>
+            </button>
+            <div id="exec-summary" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">目的</h3>
+                    <p class="mb-6">提供简洁的概览，使利益相关方能够快速理解功能的价值主张、范围和预期影响。</p>
+                    
+                    <h3 class="text-xl font-semibold mb-4">框架</h3>
+                    <pre class="text-sm">
+**功能名称:** [清晰、描述性的名称]
+**解决的问题:** [一句话问题陈述]
+**目标用户:** [受影响的主要用户角色]
+**业务影响:** [预期的业务价值/指标]
+**开发工作量:** [高级工作量估计]
+**时间线:** [目标交付时间框架]
+**成功标准:** [成功的关键指标]</pre>
+                    
+                    <div class="card">
+                        <div class="card-header">执行摘要示例</div>
+                        <pre class="text-sm">
+**功能名称**: 一键访客结账
+
+**解决的问题**: 当要求创建账户时，移动用户以73%的比率放弃结账，每年造成约230万美元的收入损失，并通过糟糕的第一印象体验降低客户生命周期价值。
+
+**目标用户**: 移动优先购物者（占流量的62%）和首次客户（占结账尝试的34%），他们优先考虑速度和便利性，而非账户创建的好处。
+
+**业务影响**: 预计移动转化率提高15-20%，每季度贡献40万美元收入，同时提高客户获取效率和有机推荐率。
+
+**开发工作量**: 6-8周，跨越3-4个Sprint，需要与支付处理、订单管理和客户沟通系统集成。
+
+**时间线**: 目标在2025年第二季度交付，MVP测试从Sprint 23开始，Sprint 26全面推出。
+
+**成功标准**: 移动转化率提高>15%，客户满意度评分>4.2/5，技术性能保持<2秒结账完成时间。</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="project-overview" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('proj-overview')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>2. 项目概览</span>
+            </button>
+            <div id="proj-overview" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">目的</h3>
+                    <p class="mb-6">将抽象的功能概念转化为具有明确所有权、时间线和战略协调的具体开发计划。本节作为Sprint规划和利益相关方沟通的运营基础。</p>
+                    
+                    <div class="card">
+                        <div class="card-header">项目详情</div>
+                        <table>
+                            <tr>
+                                <th>元素</th>
+                                <th>详情</th>
+                            </tr>
+                            <tr>
+                                <td>产品负责人</td>
+                                <td>[姓名和角色 - 范围/优先级决策权威]</td>
+                            </tr>
+                            <tr>
+                                <td>Scrum主管</td>
+                                <td>[姓名和角色 - 流程促进、障碍移除]</td>
+                            </tr>
+                            <tr>
+                                <td>技术负责人</td>
+                                <td>[姓名和角色 - 技术架构、复杂性估算]</td>
+                            </tr>
+                            <tr>
+                                <td>UX设计师</td>
+                                <td>[姓名和角色 - 用户体验、交互设计]</td>
+                            </tr>
+                            <tr>
+                                <td>QA负责人</td>
+                                <td>[姓名和角色 - 质量保证、验收测试]</td>
+                            </tr>
+                            <tr>
+                                <td>状态</td>
+                                <td>[按计划进行 / 有风险 / 延迟 / 推迟]</td>
+                            </tr>
+                            <tr>
+                                <td>目标发布</td>
+                                <td>[Sprint/发布编号和日期]</td>
+                            </tr>
+                            <tr>
+                                <td>父级史诗</td>
+                                <td>[此功能所属的父级史诗]</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">战略契合</div>
+                        <p class="font-semibold mb-3">业务目标协调:</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li>此功能如何支持公司OKR/目标</li>
+                            <li>与产品路线图的连接</li>
+                            <li>战略重要性和优先级</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-3">背景上下文:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li>为什么我们现在要构建这个？</li>
+                            <li>是什么导致了这个决定？</li>
+                            <li>这如何契合更广泛的产品愿景？</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="callout info">
+                        <p class="font-semibold mb-3">敏捷集成说明</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>链接到您积压管理工具中的相关史诗和计划</li>
+                            <li>在Sprint回顾期间定期更新状态</li>
+                            <li>将此节用于Sprint规划上下文</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="problem-statement" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('prob-statement')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>3. 问题陈述与机会</span>
+            </button>
+            <div id="prob-statement" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">目的</h3>
+                    <p class="mb-6">为功能开发提供分析基础，将用户痛点和业务挑战转化为明确、可操作的开发目标。本节应基于数据，通过研究验证，并结构化以支持初始开发决策和持续迭代。</p>
+                    
+                    <div class="card">
+                        <div class="card-header">问题定义</div>
+                        <p class="font-semibold mb-2">现状:</p>
+                        <p class="mb-4">[描述当前情况、痛点和限制]</p>
+                        
+                        <p class="font-semibold mb-2">期望状态:</p>
+                        <p class="mb-4">[描述实施此功能后的理想未来状态]</p>
+                        
+                        <p class="font-semibold mb-2">差距分析:</p>
+                        <p class="mb-4">[什么阻止了用户今天实现他们的目标？]</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">机会规模</div>
+                        <table>
+                            <tr>
+                                <th>指标</th>
+                                <th>现状</th>
+                                <th>目标状态</th>
+                                <th>预期影响</th>
+                            </tr>
+                            <tr>
+                                <td>用户转化率</td>
+                                <td>[当前值]</td>
+                                <td>[目标值]</td>
+                                <td>[预期%改善]</td>
+                            </tr>
+                            <tr>
+                                <td>业务收入</td>
+                                <td>[当前值]</td>
+                                <td>[目标值]</td>
+                                <td>[预期$影响]</td>
+                            </tr>
+                            <tr>
+                                <td>用户满意度</td>
+                                <td>[当前评分]</td>
+                                <td>[目标评分]</td>
+                                <td>[评分改善]</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">问题陈述示例</div>
+                        <p class="font-semibold mb-2">现状分析:</p>
+                        <p class="mb-4">移动结账完成率在过去六个月中下降了12%，从31%降至27%，而桌面端率保持在45%稳定。对47名移动用户的用户研究将账户创建确定为主要摩擦点，68%的参与者表达对"必须在小屏幕上填写表单"的挫败感，54%表示他们更愿意"立即购买，稍后创建账户"。</p>
+                        
+                        <p class="font-semibold mb-2">期望状态愿景:</p>
+                        <p class="mb-4">移动用户可以在不强制创建账户的情况下完成购买，同时仍通过价值驱动的消息传递和简化的注册流程被鼓励在购买后创建账户。35-40%的目标移动转化率与优化移动商务体验的行业基准保持一致。</p>
+                        
+                        <p class="font-semibold mb-2">机会规模:</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>保守场景（10%转化改善）：每季度额外15万美元收入</li>
+                            <li>现实场景（15%转化改善）：每季度额外40万美元收入</li>
+                            <li>乐观场景（25%转化改善）：每季度额外65万美元收入</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="target-users" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('users-personas')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>4. 目标用户与用户角色</span>
+            </button>
+            <div id="users-personas" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">目的</h3>
+                    <p class="mb-6">将抽象的用户研究转化为具体、可操作的洞察，指导整个功能生命周期的开发决策。有效的用户角色开发超越人口统计信息，捕获行为模式、动机驱动因素和影响用户与数字解决方案交互的上下文因素。</p>
+                    
+                    <div class="card">
+                        <div class="card-header">主要用户角色模板</div>
+                        <pre class="text-sm">
+**角色名称:** [团队能记住的描述性名称]
+
+**人口统计:** [年龄范围、角色、经验水平、位置]
+**目标:** [他们试图通过您的产品实现什么]
+**痛点:** [他们面临的当前挫折和挑战]
+**行为:** [他们当前如何工作/与类似产品交互]
+**动机:** [驱动他们决策和选择的因素]
+**技术舒适度:** [技术熟练程度和设备偏好]
+**使用上下文:** [何时、何地、为何使用产品]
+
+**关键引用:** "[代表他们心态的典型引用]"</pre>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">示例：移动优先购物者（小雅）</div>
+                        <p class="font-semibold mb-2">行为特征:</p>
+                        <p class="mb-4">小雅80%的在线活动都使用智能手机，包括研究、比较购物和购买。她重视速度和便利性，而非全面信息，更喜欢基于关键因素快速做决定，而非广泛研究。她经常在通勤时间、午休时间和晚上休息时间购物，通常在有干扰或时间有限的环境中。</p>
+                        
+                        <p class="font-semibold mb-2">目标和动机:</p>
+                        <p class="mb-4">小雅希望快速完成购买，而不妥协产品质量或价值。她被便利性、有竞争力的价格以及来自评论和推荐的社会证明所激励。她重视尊重她时间并使移动交互毫不费力的品牌。</p>
+                        
+                        <p class="font-semibold mb-2">痛点和挫折:</p>
+                        <p class="mb-4">小雅对冗长的表单、强制账户创建以及需要在应用程序或设备之间切换的结账流程感到挫折。当面临意外费用、复杂导航或中断她流程的技术问题时，她会放弃购买。</p>
+                        
+                        <p class="font-semibold mb-2">关键引用:</p>
+                        <p class="italic">"我只想买了就走。如果需要超过两分钟或我必须记住另一个密码，我就放弃了。"</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">用户旅程映射</div>
+                        <p class="font-semibold mb-3">当前旅程:</p>
+                        <ol class="list-decimal ml-6 mb-6 space-y-2">
+                            <li><strong>产品发现</strong>（移动，30秒）：通过社交媒体或搜索找到产品，对潜在购买感到兴奋</li>
+                            <li><strong>产品评估</strong>（移动，2分钟）：查看图片、价格和关键评论，建立购买决策信心</li>
+                            <li><strong>结账启动</strong>（移动，30秒）：添加到购物车并开始结账，保持购买动力</li>
+                            <li><strong>账户创建障碍</strong>（移动，3-5分钟）：遇到强制注册表单，体验挫折和时间压力</li>
+                            <li><strong>放弃</strong>（移动，即时）：由于复杂性离开网站，计划"稍后回来"但很少这样做</li>
+                        </ol>
+                        
+                        <p class="font-semibold mb-3">使用访客结账的未来旅程:</p>
+                        <ol class="list-decimal ml-6 space-y-2">
+                            <li><strong>产品发现</strong>（移动，30秒）：与当前旅程相同</li>
+                            <li><strong>产品评估</strong>（移动，2分钟）：与当前旅程相同</li>
+                            <li><strong>简化结账</strong>（移动，90秒）：用最少信息完成购买，保持动力和满意度</li>
+                            <li><strong>购买后参与</strong>（邮件/移动，24-48小时）：收到订单确认和可选账户创建邀请</li>
+                            <li><strong>账户创建</strong>（移动，2分钟）：在被订单跟踪好处激励时在购买后创建账户</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="feature-definition" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('feature-scope')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>5. 功能定义与范围</span>
+            </button>
+            <div id="feature-scope" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">目的</h3>
+                    <p class="mb-6">作为利益相关方之间关于当前开发工作将包含和不包含内容的合同。有效的范围定义平衡全面性与清晰度，确保所有团队成员和利益相关方对可交付成果有共同理解，同时保持迭代和学习的灵活性。</p>
+                    
+                    <div class="card">
+                        <div class="card-header">功能概览</div>
+                        <p class="mb-2"><strong>功能名称:</strong> [清晰、描述性的名称]</p>
+                        <p class="mb-2"><strong>功能类型:</strong> [新功能 / 增强 / 错误修复 / 技术债务]</p>
+                        <p class="mb-4"><strong>父级史诗:</strong> [此功能所属的父级史诗]</p>
+                        
+                        <p class="font-semibold mb-2">高级描述:</p>
+                        <p class="mb-4">[2-3句话描述此功能的作用以及为什么有价值]</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">范围定义</div>
+                        <p class="font-semibold mb-3">包含范围:</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li>包含的具体功能</li>
+                            <li>涵盖的用户流程</li>
+                            <li>支持的平台/设备</li>
+                            <li>集成点和数据流</li>
+                            <li>性能和安全要求</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-3">不包含范围（此次迭代）:</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li>明确排除的功能</li>
+                            <li>未来考虑</li>
+                            <li>后续版本的相关功能</li>
+                            <li>可以稍后添加的高级功能</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-3">依赖项:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li>对其他系统的技术依赖</li>
+                            <li>对其他功能或团队的依赖</li>
+                            <li>所需的外部集成</li>
+                            <li>所需的法律或合规审查</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">功能定义示例</div>
+                        <p><strong>功能名称:</strong> 一键访客结账</p>
+                        <p><strong>功能类型:</strong> 新功能增强</p>
+                        <p><strong>父级史诗:</strong> 移动商务优化计划</p>
+                        
+                        <p class="font-semibold mt-4 mb-2">高级描述:</p>
+                        <p class="mb-4">使移动用户能够在不创建账户的情况下完成购买，只收集必要信息（运输、账单、支付），并提供带有清晰价值主张和简化注册流程的可选购买后账户创建。</p>
+                        
+                        <p class="font-semibold mb-2">初始版本包含范围:</p>
+                        <ul class="list-disc ml-6 mb-4 space-y-1">
+                            <li>移动网页和移动应用的访客结账流程</li>
+                            <li>必要信息收集（姓名、邮箱、送货地址、付款方式）</li>
+                            <li>无需账户的订单确认和跟踪</li>
+                            <li>购买后账户创建邀请与订单历史集成</li>
+                            <li>与现有支付处理和订单管理系统集成</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-2">明确不包含范围:</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li>桌面访客结账（基于移动结果计划在第二阶段进行）</li>
+                            <li>社交媒体登录集成（第二季度路线图中的单独史诗）</li>
+                            <li>访客用户的高级个性化功能</li>
+                            <li>与忠诚度计划或高级营销自动化的集成</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="user-stories" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('user-stories-template')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>6. 用户故事与验收标准</span>
+            </button>
+            <div id="user-stories-template" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">目的</h3>
+                    <p class="mb-6">将功能需求转化为具有明确验收标准的Sprint就绪用户故事，支持协作开发和测试。</p>
+                    
+                    <h3 class="text-xl font-semibold mb-4">用户故事模板</h3>
+                    <div class="card">
+                        <div class="card-header">用户故事格式</div>
+                        <pre class="text-sm">
+**故事ID:** [唯一标识符，例如 US-001]
+**故事标题:** [描述性标题]
+**优先级:** [高/中/低 或 MoSCoW评级]
+**故事点:** [工作量估算: 1, 2, 3, 5, 8, 13]
+**Sprint:** [目标Sprint编号]
+
+**用户故事:**
+作为一个 [用户角色/用户类型],
+我想要 [目标/愿望],
+以便 [好处/价值]。
+
+**验收标准:**
+给定 [上下文/前提条件],
+当 [动作/触发器],
+那么 [预期结果]。
+
+**完成定义:**
+- [ ] [具体完成标准]
+- [ ] [测试要求]
+- [ ] [文档更新]
+- [ ] [性能标准达成]
+
+**依赖项:**
+- [必须首先完成的其他故事]
+- [外部依赖项或集成]
+
+**注释/假设:**
+- [额外上下文或澄清]
+- [技术考虑]</pre>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">示例：访客结账用户故事</div>
+                        <pre class="text-sm">
+**故事ID:** US-001
+**故事标题:** 基本访客结账流程
+**优先级:** 高
+**故事点:** 8
+**Sprint:** Sprint 23
+
+**用户故事:**
+作为一个移动优先购物者（小雅），
+我想要在不创建账户的情况下完成购买，
+以便我可以在有限的时间窗口内快速购买。
+
+**验收标准:**
+给定我的购物车中有商品，
+当我选择"访客结账"选项，
+那么我可以只用必要信息（姓名、邮箱、运输、支付）完成购买。
+
+给定我完成访客结账，
+当我的订单被处理，
+那么我收到带有订单跟踪信息的确认邮件。
+
+**完成定义:**
+- [ ] 购物车页面显示访客结账选项
+- [ ] 只收集必填字段的简化表单
+- [ ] 支付处理集成正常工作
+- [ ] 发送订单确认邮件
+- [ ] 实现移动响应式设计
+- [ ] 实现分析跟踪
+- [ ] 性能保持<2秒加载时间
+
+**依赖项:**
+- 支付处理器API更新 (US-000)
+- 订单管理系统修改
+
+**注释:**
+- 必须保持当前安全标准
+- 访客数据处理需要法律审查</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="design-ux" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('design-ux-template')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>7. 设计与用户体验需求</span>
+            </button>
+            <div id="design-ux-template" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">目的</h3>
+                    <p class="mb-6">定义用户体验需求、设计原则和界面规范，确保在整个功能开发过程中实现一致、可访问和有效的用户交互。</p>
+                    
+                    <div class="card">
+                        <div class="card-header">核心设计原则</div>
+                        <p class="font-semibold mb-3">以用户为中心的设计:</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li><strong>清晰度:</strong> 界面元素清楚地传达其目的和功能</li>
+                            <li><strong>一致性:</strong> 设计模式与现有产品标准保持一致</li>
+                            <li><strong>效率:</strong> 用户流程最小化步骤和认知负荷</li>
+                            <li><strong>可访问性:</strong> WCAG 2.1 AA合规，实现包容性设计</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-3">品牌一致性:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>视觉识别:</strong> 颜色调色板、字体、图标与品牌一致</li>
+                            <li><strong>语调:</strong> 消息传递和文案反映品牌个性</li>
+                            <li><strong>品牌价值:</strong> 设计决策支持品牌定位</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">用户体验流程</div>
+                        <table>
+                            <tr>
+                                <th>步骤</th>
+                                <th>用户动作</th>
+                                <th>系统响应</th>
+                                <th>设计需求</th>
+                                <th>成功标准</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>查看购物车内容</td>
+                                <td>显示商品和结账选项</td>
+                                <td>清晰CTA，访客选项突出</td>
+                                <td>95%用户找到访客结账选项</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>选择访客结账</td>
+                                <td>加载简化表单</td>
+                                <td>渐进披露，最少字段</td>
+                                <td>表单完成率>80%</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>输入信息</td>
+                                <td>实时验证和辅助</td>
+                                <td>内联验证，清晰错误消息</td>
+                                <td>表单放弃率<15%</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>完成支付</td>
+                                <td>处理订单并显示确认</td>
+                                <td>加载状态，成功消息</td>
+                                <td>支付完成率>95%</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">移动优先设计规范</div>
+                        <p class="font-semibold mb-3">响应式断点:</p>
+                        <table class="mb-6">
+                            <tr>
+                                <th>设备类型</th>
+                                <th>屏幕宽度</th>
+                                <th>布局考虑</th>
+                                <th>交互模式</th>
+                            </tr>
+                            <tr>
+                                <td>移动端</td>
+                                <td>320px - 768px</td>
+                                <td>单列，堆叠元素</td>
+                                <td>触摸目标最小44px，拇指友好</td>
+                            </tr>
+                            <tr>
+                                <td>平板</td>
+                                <td>768px - 1024px</td>
+                                <td>适当时双列布局</td>
+                                <td>混合触摸和指针交互</td>
+                            </tr>
+                            <tr>
+                                <td>桌面</td>
+                                <td>1024px+</td>
+                                <td>多列，侧边栏集成</td>
+                                <td>鼠标和键盘优化</td>
+                            </tr>
+                        </table>
+                        
+                        <p class="font-semibold mb-3">表单设计标准:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>字段布局:</strong> 移动端单列，逻辑分组</li>
+                            <li><strong>输入类型:</strong> 适当的键盘类型（邮箱、电话、数字）</li>
+                            <li><strong>验证:</strong> 实时反馈，清晰错误消息</li>
+                            <li><strong>进度指示:</strong> 清晰步骤，当前位置</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">视觉设计系统</div>
+                        <p class="font-semibold mb-3">颜色调色板:</p>
+                        <table class="mb-6">
+                            <tr>
+                                <th>用途</th>
+                                <th>颜色</th>
+                                <th>十六进制代码</th>
+                                <th>可访问性说明</th>
+                            </tr>
+                            <tr>
+                                <td>主要CTA</td>
+                                <td>品牌蓝</td>
+                                <td>#0066CC</td>
+                                <td>白色背景上AA对比度</td>
+                            </tr>
+                            <tr>
+                                <td>成功状态</td>
+                                <td>成功绿</td>
+                                <td>#008000</td>
+                                <td>文本AAA对比度</td>
+                            </tr>
+                            <tr>
+                                <td>错误状态</td>
+                                <td>警告红</td>
+                                <td>#CC0000</td>
+                                <td>高对比度，清晰可见性</td>
+                            </tr>
+                            <tr>
+                                <td>中性文本</td>
+                                <td>炭灰色</td>
+                                <td>#333333</td>
+                                <td>浅色背景高可读性</td>
+                            </tr>
+                        </table>
+                        
+                        <p class="font-semibold mb-3">字体层级:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>标题:</strong> Inter字体族，字重600-700，尺寸24px-32px</li>
+                            <li><strong>正文:</strong> Inter字体族，字重400，移动端16px/桌面端18px</li>
+                            <li><strong>小字:</strong> Inter字体族，字重400，尺寸14px，限制使用</li>
+                            <li><strong>按钮文字:</strong> Inter字体族，字重500，最小尺寸16px</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">可访问性需求</div>
+                        <p class="font-semibold mb-3">WCAG 2.1 AA合规:</p>
+                        
+                        <p class="font-semibold mb-2">键盘导航:</p>
+                        <ul class="list-disc ml-6 mb-4 space-y-1">
+                            <li><strong>Tab顺序:</strong> 通过交互元素的逻辑流程</li>
+                            <li><strong>焦点指示器:</strong> 所有交互元素的可见焦点状态</li>
+                            <li><strong>跳过链接:</strong> 屏幕阅读器的导航快捷方式</li>
+                            <li><strong>退出路径:</strong> 清晰的方式退出模态对话框和复杂流程</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-2">屏幕阅读器支持:</p>
+                        <ul class="list-disc ml-6 mb-4 space-y-1">
+                            <li><strong>语义HTML:</strong> 正确的标题层次、表单标签、地标</li>
+                            <li><strong>ARIA标签:</strong> 复杂交互的描述性标签</li>
+                            <li><strong>实时区域:</strong> 动态内容变化的公告</li>
+                            <li><strong>替代文本:</strong> 所有信息性图像的描述性alt文本</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-2">视觉可访问性:</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li><strong>颜色对比度:</strong> 正常文本最小4.5:1比率，大文本3:1</li>
+                            <li><strong>颜色独立性:</strong> 信息不仅通过颜色传达</li>
+                            <li><strong>文本缩放:</strong> 200%缩放时可读，无水平滚动</li>
+                            <li><strong>动作敏感性:</strong> 尊重减少动作偏好</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="callout info">
+                        <p class="font-semibold mb-3">敏捷设计集成</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li><strong>设计Sprint对齐:</strong> 设计可交付物为开发Sprint准备就绪</li>
+                            <li><strong>迭代改进:</strong> 基于用户反馈和分析的设计改进</li>
+                            <li><strong>设计系统更新:</strong> 新组件添加到共享设计系统</li>
+                            <li><strong>跨职能协作:</strong> 与工程团队定期设计评审</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="technical-requirements" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('tech-requirements')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>8. 技术需求</span>
+            </button>
+            <div id="tech-requirements" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">目的</h3>
+                    <p class="mb-6">定义技术规范、约束和集成需求，指导开发决策，同时保持迭代实施的灵活性。</p>
+                    
+                    <div class="card">
+                        <div class="card-header">系统架构概览</div>
+                        <p class="font-semibold mb-3">系统组件:</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li><strong>前端:</strong> 移动应用使用React Native，网页界面使用React.js</li>
+                            <li><strong>后端:</strong> 带Express框架的Node.js API，微服务架构</li>
+                            <li><strong>数据库:</strong> 事务数据使用PostgreSQL，会话管理使用Redis</li>
+                            <li><strong>集成:</strong> 支付使用Stripe，邮件使用SendGrid，资源使用AWS S3</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">性能需求</div>
+                        <table>
+                            <tr>
+                                <th>指标</th>
+                                <th>目标</th>
+                                <th>测量方法</th>
+                                <th>监控</th>
+                            </tr>
+                            <tr>
+                                <td>页面加载时间</td>
+                                <td>&lt;2秒</td>
+                                <td>Lighthouse, WebPageTest</td>
+                                <td>真实用户监控</td>
+                            </tr>
+                            <tr>
+                                <td>API响应时间</td>
+                                <td>&lt;500ms（95百分位）</td>
+                                <td>应用性能监控</td>
+                                <td>New Relic, DataDog</td>
+                            </tr>
+                            <tr>
+                                <td>并发用户</td>
+                                <td>10,000同时在线</td>
+                                <td>负载测试</td>
+                                <td>基础设施监控</td>
+                            </tr>
+                            <tr>
+                                <td>可用性</td>
+                                <td>99.9%正常运行时间</td>
+                                <td>正常运行时间监控</td>
+                                <td>Pingdom, StatusPage</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">安全需求</div>
+                        <p class="font-semibold mb-3">数据保护:</p>
+                        <ul class="list-disc ml-6 mb-4 space-y-2">
+                            <li><strong>加密:</strong> 传输中数据使用TLS 1.3，静态数据使用AES-256</li>
+                            <li><strong>PCI合规:</strong> 支付数据的1级商户要求</li>
+                            <li><strong>GDPR合规:</strong> 用户同意、数据可移植性、删除权</li>
+                            <li><strong>身份验证:</strong> 管理员访问的多因素身份验证</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-3">访问控制:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>基于角色的访问:</strong> 客户、管理员、超级管理员权限</li>
+                            <li><strong>会话管理:</strong> 安全令牌处理、会话超时</li>
+                            <li><strong>输入验证:</strong> 服务器端验证、SQL注入防护</li>
+                            <li><strong>审计日志:</strong> 所有用户操作记录以符合合规要求</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">集成需求</div>
+                        <p class="font-semibold mb-3">外部系统:</p>
+                        <table class="mb-6">
+                            <tr>
+                                <th>系统</th>
+                                <th>集成类型</th>
+                                <th>数据交换</th>
+                                <th>SLA要求</th>
+                            </tr>
+                            <tr>
+                                <td>支付处理器</td>
+                                <td>REST API</td>
+                                <td>支付数据、交易状态</td>
+                                <td>99.9%正常运行时间，&lt;500ms响应</td>
+                            </tr>
+                            <tr>
+                                <td>库存系统</td>
+                                <td>GraphQL API</td>
+                                <td>库存水平、产品信息</td>
+                                <td>实时更新，&lt;200ms响应</td>
+                            </tr>
+                            <tr>
+                                <td>邮件服务</td>
+                                <td>SMTP/API</td>
+                                <td>客户通信</td>
+                                <td>交付确认，&lt;30秒发送时间</td>
+                            </tr>
+                        </table>
+                        
+                        <p class="font-semibold mb-3">API规范:</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>身份验证:</strong> 带JWT令牌的OAuth 2.0</li>
+                            <li><strong>速率限制:</strong> 每个API密钥每分钟1000个请求</li>
+                            <li><strong>错误处理:</strong> 标准HTTP代码，结构化错误响应</li>
+                            <li><strong>数据格式:</strong> 带OpenAPI 3.0规范的JSON</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="callout info">
+                        <p class="font-semibold mb-3">敏捷技术集成</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li><strong>迭代开发:</strong> 先实现核心功能，后优化</li>
+                            <li><strong>技术探索:</strong> 为研究和概念验证分配时间</li>
+                            <li><strong>完成定义:</strong> 包括性能、安全和可扩展性标准</li>
+                            <li><strong>持续集成:</strong> 所有技术需求的自动化测试</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="success-metrics" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('success-metrics-template')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>9. 成功指标与KPI</span>
+            </button>
+            <div id="success-metrics-template" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">目的</h3>
+                    <p class="mb-6">定义可衡量的成功标准，实现数据驱动的决策制定、持续优化，并在开发和上线后阶段清晰展示功能价值给利益相关方。</p>
+                    
+                    <div class="card">
+                        <div class="card-header">主要成功指标</div>
+                        <table>
+                            <tr>
+                                <th>指标类别</th>
+                                <th>具体指标</th>
+                                <th>当前基线</th>
+                                <th>目标</th>
+                                <th>时间线</th>
+                            </tr>
+                            <tr>
+                                <td>转化</td>
+                                <td>移动结账完成率</td>
+                                <td>27%</td>
+                                <td>35% (+15%)</td>
+                                <td>上线后30天</td>
+                            </tr>
+                            <tr>
+                                <td>用户体验</td>
+                                <td>结账流程放弃率</td>
+                                <td>73%</td>
+                                <td>55% (-25%)</td>
+                                <td>上线后14天</td>
+                            </tr>
+                            <tr>
+                                <td>业务影响</td>
+                                <td>月度移动收入</td>
+                                <td>120万美元</td>
+                                <td>138万美元 (+15%)</td>
+                                <td>上线后60天</td>
+                            </tr>
+                            <tr>
+                                <td>客户满意度</td>
+                                <td>结账体验评分</td>
+                                <td>3.2/5</td>
+                                <td>4.2/5 (+31%)</td>
+                                <td>上线后45天</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="callout success">
+                        <p class="font-semibold mb-3">成功测量时间表</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>第1-2周:</strong> 技术验证 - 系统性能、错误率</li>
+                            <li><strong>第3-4周:</strong> 用户采用 - 功能使用、流程完成</li>
+                            <li><strong>第2个月:</strong> 转化影响 - 结账完成、收入</li>
+                            <li><strong>第3个月:</strong> 长期价值 - 客户满意度、留存</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="implementation-plan" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('implementation-plan-template')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>10. 实施计划与时间线</span>
+            </button>
+            <div id="implementation-plan-template" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">目的</h3>
+                    <p class="mb-6">为功能开发提供结构化路线图，与敏捷原则保持一致，支持Sprint规划，实现有效的资源分配和里程碑跟踪。</p>
+                    
+                    <div class="card">
+                        <div class="card-header">开发阶段</div>
+                        <p class="font-semibold mb-3">阶段1：基础与核心MVP（Sprint 22-23）</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li><strong>目标:</strong> 建立基本访客结账功能</li>
+                            <li><strong>可交付物:</strong> 核心用户流程、支付集成、基本UI</li>
+                            <li><strong>成功标准:</strong> 移动端功能性访客结账</li>
+                            <li><strong>风险缓解:</strong> 支付集成的技术探索</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-3">阶段2：增强与优化（Sprint 24-25）</p>
+                        <ul class="list-disc ml-6 mb-6 space-y-2">
+                            <li><strong>目标:</strong> 改善用户体验并添加支持功能</li>
+                            <li><strong>可交付物:</strong> UX改进、账户创建流程、分析</li>
+                            <li><strong>成功标准:</strong> 10%转化改善，用户反馈积极</li>
+                            <li><strong>风险缓解:</strong> 主要UX变更的A/B测试</li>
+                        </ul>
+                        
+                        <p class="font-semibold mb-3">阶段3：发布与优化（Sprint 26）</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>目标:</strong> 全面生产发布和初始优化</li>
+                            <li><strong>可交付物:</strong> 功能标志移除、性能优化、支持培训</li>
+                            <li><strong>成功标准:</strong> 15%转化改善，稳定性能</li>
+                            <li><strong>风险缓解:</strong> 监控下的渐进式推出</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Sprint分解</div>
+                        <table>
+                            <tr>
+                                <th>Sprint</th>
+                                <th>焦点领域</th>
+                                <th>关键用户故事</th>
+                                <th>故事点</th>
+                                <th>Sprint目标</th>
+                            </tr>
+                            <tr>
+                                <td>Sprint 22</td>
+                                <td>基础</td>
+                                <td>US-001: 基本访客结账流程<br>US-004: 支付集成</td>
+                                <td>18</td>
+                                <td>核心结账功能正常工作</td>
+                            </tr>
+                            <tr>
+                                <td>Sprint 23</td>
+                                <td>核心功能</td>
+                                <td>US-002: 账户创建流程<br>US-003: 订单跟踪</td>
+                                <td>16</td>
+                                <td>完整MVP功能集</td>
+                            </tr>
+                            <tr>
+                                <td>Sprint 24</td>
+                                <td>增强</td>
+                                <td>US-005: UX改进<br>US-006: 分析集成</td>
+                                <td>14</td>
+                                <td>优化的用户体验</td>
+                            </tr>
+                            <tr>
+                                <td>Sprint 25</td>
+                                <td>完善与测试</td>
+                                <td>US-007: 性能优化<br>US-008: 错误处理</td>
+                                <td>12</td>
+                                <td>生产就绪功能</td>
+                            </tr>
+                            <tr>
+                                <td>Sprint 26</td>
+                                <td>发布</td>
+                                <td>US-009: 功能标志移除<br>US-010: 监控设置</td>
+                                <td>8</td>
+                                <td>成功的生产发布</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="callout info">
+                        <p class="font-semibold mb-3">敏捷实施最佳实践</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li><strong>Sprint灵活性:</strong> 根据学习和反馈调整Sprint范围</li>
+                            <li><strong>持续集成:</strong> 在整个开发过程中部署增量改进</li>
+                            <li><strong>用户反馈:</strong> 将用户测试结果纳入每个Sprint</li>
+                            <li><strong>跨职能协作:</strong> 所有学科的日常站会参与</li>
+                            <li><strong>风险缓解:</strong> 在开发周期早期解决高风险项目</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="risk-assessment" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('risk-assessment-template')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>11. 风险评估与缓解</span>
+            </button>
+            <div id="risk-assessment-template" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">目的</h3>
+                    <p class="mb-6">识别、评估并规划可能影响功能成功、时间线或业务目标的潜在风险的缓解策略。</p>
+                    
+                    <div class="card">
+                        <div class="card-header">技术风险</div>
+                        <table>
+                            <tr>
+                                <th>风险</th>
+                                <th>影响</th>
+                                <th>概率</th>
+                                <th>评分</th>
+                                <th>缓解策略</th>
+                            </tr>
+                            <tr>
+                                <td>支付处理器集成延迟</td>
+                                <td>高 (4)</td>
+                                <td>中 (2)</td>
+                                <td>8</td>
+                                <td>早期探索工作，备用处理器识别</td>
+                            </tr>
+                            <tr>
+                                <td>移动端性能下降</td>
+                                <td>高 (4)</td>
+                                <td>低 (1)</td>
+                                <td>4</td>
+                                <td>Sprint 24负载测试，优化准备</td>
+                            </tr>
+                            <tr>
+                                <td>访客流程安全漏洞</td>
+                                <td>关键 (4)</td>
+                                <td>低 (1)</td>
+                                <td>4</td>
+                                <td>Sprint 23安全审查，渗透测试</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="callout warning">
+                        <p class="font-semibold mb-3">高优先级风险行动</p>
+                        <ul class="list-disc ml-6 space-y-2">
+                            <li><strong>Sprint 22开始:</strong> 完成支付处理器集成探索</li>
+                            <li><strong>Sprint 23中期:</strong> 进行访客数据处理安全审查</li>
+                            <li><strong>Sprint 24开始:</strong> 开始现实负载的性能测试</li>
+                            <li><strong>Sprint 25开始:</strong> 执行目标用户角色的用户验收测试</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="stakeholder-alignment" class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('stakeholder-alignment-template')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>12. 利益相关方协调与沟通</span>
+            </button>
+            <div id="stakeholder-alignment-template" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">目的</h3>
+                    <p class="mb-6">建立清晰的沟通渠道、决策过程和协调机制，确保所有利益相关方在整个功能开发生命周期中保持知情、参与和支持。</p>
+                    
+                    <div class="card">
+                        <div class="card-header">利益相关方分析矩阵</div>
+                        <table>
+                            <tr>
+                                <th>利益相关方</th>
+                                <th>角色/部门</th>
+                                <th>兴趣水平</th>
+                                <th>影响水平</th>
+                                <th>主要关切</th>
+                                <th>沟通方法</th>
+                            </tr>
+                            <tr>
+                                <td>陈小雅</td>
+                                <td>产品VP</td>
+                                <td>高</td>
+                                <td>高</td>
+                                <td>业务影响，路线图协调</td>
+                                <td>每周1对1，Sprint评审</td>
+                            </tr>
+                            <tr>
+                                <td>托雷斯·迈克</td>
+                                <td>CTO</td>
+                                <td>中</td>
+                                <td>高</td>
+                                <td>技术架构，可扩展性</td>
+                                <td>双周技术评审</td>
+                            </tr>
+                            <tr>
+                                <td>刘珍妮弗</td>
+                                <td>营销VP</td>
+                                <td>高</td>
+                                <td>中</td>
+                                <td>发布时机，竞争定位</td>
+                                <td>月度更新，发布协调</td>
+                            </tr>
+                            <tr>
+                                <td>金大卫</td>
+                                <td>客户成功经理</td>
+                                <td>中</td>
+                                <td>中</td>
+                                <td>客户影响，支持培训</td>
+                                <td>功能演示，培训会议</td>
+                            </tr>
+                            <tr>
+                                <td>罗德里格斯·亚历克斯</td>
+                                <td>法律顾问</td>
+                                <td>中</td>
+                                <td>高</td>
+                                <td>合规，数据隐私</td>
+                                <td>正式审查，文档</td>
+                            </tr>
+                            <tr>
+                                <td>王丽莎</td>
+                                <td>财务总监</td>
+                                <td>中</td>
+                                <td>低</td>
+                                <td>收入影响，ROI</td>
+                                <td>月度业务报告</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">沟通框架</div>
+                        <p class="font-semibold mb-3">定期沟通节奏:</p>
+                        <table class="mb-6">
+                            <tr>
+                                <th>沟通类型</th>
+                                <th>频率</th>
+                                <th>受众</th>
+                                <th>格式</th>
+                                <th>内容焦点</th>
+                                <th>负责人</th>
+                            </tr>
+                            <tr>
+                                <td>Sprint评审</td>
+                                <td>每2周</td>
+                                <td>核心团队+关键利益相关方</td>
+                                <td>实时演示+问答</td>
+                                <td>进展，阻碍，下一步</td>
+                                <td>产品负责人</td>
+                            </tr>
+                            <tr>
+                                <td>利益相关方更新</td>
+                                <td>每周</td>
+                                <td>领导团队</td>
+                                <td>邮件摘要</td>
+                                <td>状态，风险，需要决策</td>
+                                <td>产品负责人</td>
+                            </tr>
+                            <tr>
+                                <td>技术评审</td>
+                                <td>双周</td>
+                                <td>工程领导</td>
+                                <td>技术演练</td>
+                                <td>架构，性能，安全</td>
+                                <td>技术负责人</td>
+                            </tr>
+                            <tr>
+                                <td>业务评审</td>
+                                <td>月度</td>
+                                <td>执行团队</td>
+                                <td>业务指标展示</td>
+                                <td>ROI，市场影响，战略契合</td>
+                                <td>产品VP</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="callout success">
+                        <p class="font-semibold mb-3">协调成功指标</p>
+                        <ul class="list-disc ml-6 space-y-1">
+                            <li><strong>利益相关方满意度:</strong> 沟通有效性评分>4.0/5</li>
+                            <li><strong>决策速度:</strong> 升级决策平均48小时周转</li>
+                            <li><strong>会议效率:</strong> >80%利益相关方认为会议有价值</li>
+                            <li><strong>变更采用:</strong> >90%受影响团队成功实施新流程</li>
+                            <li><strong>反馈整合:</strong> >75%高优先级反馈在2个Sprint内整合</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="implementation" class="section-title">
+            <h2 class="text-3xl">实施指南</h2>
+        </div>
+        
+        <p class="mb-8 text-lg">成功实施敏捷PRD实践需要考虑团队准备情况、组织文化和现有开发流程的深思熟虑的方法。</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="card">
+                <div class="card-header">阶段1：团队准备</div>
+                <ol class="list-decimal ml-6 space-y-3">
+                    <li>审查综合指南以理解敏捷PRD原则</li>
+                    <li>评估当前文档实践并识别改进机会</li>
+                    <li>选择适当的协作创建和Sprint集成工具</li>
+                    <li>培训团队成员协作PRD创建流程</li>
+                </ol>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">阶段2：试点实施</div>
+                <ol class="list-decimal ml-6 space-y-3">
+                    <li>选择中等复杂度功能进行初始敏捷PRD实施</li>
+                    <li>使用模板协作创建您的第一个功能导向PRD</li>
+                    <li>将PRD与Sprint规划和执行流程集成</li>
+                    <li>收集团队成员和利益相关方的反馈</li>
+                </ol>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">阶段3：流程改进</div>
+                <ol class="list-decimal ml-6 space-y-3">
+                    <li>分析试点实施的经验教训</li>
+                    <li>定制模板以适应您团队的具体需求和环境</li>
+                    <li>建立定期PRD审查和更新流程</li>
+                    <li>创建团队特定的指导原则和最佳实践</li>
+                </ol>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">阶段4：组织扩展</div>
+                <ol class="list-decimal ml-6 space-y-3">
+                    <li>与其他产品团队分享成功实践</li>
+                    <li>基于您的经验开发内部培训材料</li>
+                    <li>为敏捷PRD实施建立组织标准</li>
+                    <li>创建持续改进的指标和反馈机制</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div id="best-practices" class="section-title">
+            <h2 class="text-3xl">最佳实践</h2>
+        </div>
+        
+        <div class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('collaborative')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>协作创建与所有权</span>
+            </button>
+            <div id="collaborative" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <p class="mb-6">从产品经理拥有文档转向协作团队所有权代表了敏捷PRD实施中最重要的变化之一。</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="card">
+                            <div class="card-header">建立工作流程</div>
+                            <p>产品经理以用户研究和业务背景为起点，但从最早阶段就让设计师和工程师参与用户故事、技术需求和成功指标的优化。</p>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">决策权威</div>
+                            <p>产品经理保留对范围和业务需求的权威，设计师领导UX决策，工程师指导技术实施方法。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('common-pitfalls')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>常见陷阱与规避方法</span>
+            </button>
+            <div id="common-pitfalls" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="card">
+                            <div class="card-header">过度文档化</div>
+                            <p class="mb-2"><strong>陷阱:</strong> 创建过于详细的PRD，重新引入传统文档的负担。</p>
+                            <p><strong>解决方案:</strong> 专注于"恰好足够"的文档来支持决策制定和开发工作。将模板作为指南使用，而非必须完全填写的清单。</p>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">协作而无决策</div>
+                            <p class="mb-2"><strong>陷阱:</strong> 没有明确决策过程的延长讨论，导致分析瘫痪。</p>
+                            <p><strong>解决方案:</strong> 为PRD的不同方面建立明确的决策权威。使用有明确决策点的时间盒讨论。</p>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">将PRD视为静态</div>
+                            <p class="mb-2"><strong>陷阱:</strong> 协作创建PRD但然后将其视为固定合同。</p>
+                            <p><strong>解决方案:</strong> 建立与Sprint仪式对齐的定期PRD审查点。为基于新洞察更新PRD创建明确流程。</p>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">利益相关方协调挑战</div>
+                            <p class="mb-2"><strong>陷阱:</strong> 利益相关方难以适应敏捷PRD的迭代、演进特性。</p>
+                            <p><strong>解决方案:</strong> 教育利益相关方敏捷PRD方法和好处。创建专注于业务结果的利益相关方特定视图。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="research" class="section-title">
+            <h2 class="text-3xl">研究基础</h2>
+        </div>
+        
+        <p class="mb-8 text-lg">敏捷PRD方法建立在对行业最佳实践和领先组织实际实施经验的广泛研究基础上。</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="card">
+                <div class="card-header">Atlassian的方法</div>
+                <p class="mb-4">强调产品负责人、设计师和开发团队之间的共同理解。专注于更高级别的需求，同时将实施细节留给开发团队。</p>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li>协作客户访问</li>
+                    <li>用户故事映射练习</li>
+                    <li>视觉模型作为需求</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">Delibr的功能文档</div>
+                <p class="mb-4">倡导功能导向文档而非产品级PRD。强调协作创建而非需求移交。</p>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li>单一功能范围</li>
+                    <li>价值与可行性讨论</li>
+                    <li>持续协作模式</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('atlassian-research')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>Atlassian在敏捷中的PRD方法</span>
+            </button>
+            <div id="atlassian-research" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">关键洞察:</h3>
+                    <ul class="list-disc ml-6 mb-6 space-y-2">
+                        <li>敏捷需求依赖于产品负责人、设计师和开发团队之间对客户的共同理解</li>
+                        <li>产品负责人可以专注于更高级别的需求，将实施细节留给开发团队</li>
+                        <li>在团队间使用一致的模板进行反馈和协作</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-semibold mb-4">推荐的PRD结构（Atlassian）:</h3>
+                    <ol class="list-decimal ml-6 mb-6 space-y-2">
+                        <li><strong>定义项目细节</strong>: 参与者、状态、目标发布</li>
+                        <li><strong>团队目标和业务目标</strong>: 直接切入要点</li>
+                        <li><strong>背景和战略契合</strong>: 我们为什么要做这个？</li>
+                        <li><strong>假设</strong>: 列出技术、业务或用户假设</li>
+                        <li><strong>用户故事</strong>: 链接到客户访谈，包含截图</li>
+                        <li><strong>用户交互和设计</strong>: 链接设计探索</li>
+                        <li><strong>问题</strong>: 跟踪我们需要决定或研究的事项</li>
+                        <li><strong>我们不做的事</strong>: 通过明确范围保持团队专注</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('delibr-research')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>Delibr的观点：功能文档vs传统PRD</span>
+            </button>
+            <div id="delibr-research" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">敏捷中传统PRD的问题:</h3>
+                    
+                    <div class="mb-6">
+                        <p class="font-semibold">1. 范围问题 - "统治一切的文档"</p>
+                        <ul class="list-disc ml-6 mb-4 space-y-1">
+                            <li>传统PRD涵盖整个产品，而非单个功能</li>
+                            <li>创建非常长、复杂且难以管理的文档</li>
+                            <li>将团队从敏捷拉向瀑布方法论</li>
+                            <li>团队通常一次处理单个功能，而非整个产品</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <p class="font-semibold">2. 需求移交问题</p>
+                        <ul class="list-disc ml-6 mb-4 space-y-1">
+                            <li>"需求"意味着从PM到开发团队的单向移交</li>
+                            <li>减少团队输入和协作机会</li>
+                            <li>开发团队通常更了解实施时间/复杂性</li>
+                            <li>构建低价值、耗时功能的风险</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mb-4">解决方案：功能文档而非PRD</h3>
+                    <ul class="list-disc ml-6 space-y-2">
+                        <li><strong>明确范围</strong>: 文档专注于单个功能/史诗</li>
+                        <li><strong>协作方法</strong>: 从需求移交转向持续协作</li>
+                        <li><strong>可管理增量</strong>: 更容易处理较小的功能</li>
+                        <li><strong>价值与可行性讨论</strong>: 实现团队间对话</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-10">
+            <button class="toggle-button" onclick="toggleContent('user-stories-research')">
+                <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
+                <span>敏捷开发中的用户故事</span>
+            </button>
+            <div id="user-stories-research" class="toggle-content">
+                <div class="pl-8 border-l-4 border-blue-200">
+                    <h3 class="text-xl font-semibold mb-4">用户故事结构:</h3>
+                    <p class="mb-4 font-semibold">"作为一个[角色]，我[想要]，[以便]。"</p>
+                    
+                    <p class="font-semibold mb-3">分解说明:</p>
+                    <ul class="list-disc ml-6 mb-6 space-y-2">
+                        <li><strong>"作为一个[角色]"</strong>: 我们为谁构建这个？专注于角色，而非仅仅职位头衔</li>
+                        <li><strong>"想要"</strong>: 描述他们的意图，而非他们使用的功能。应该不涉及实施</li>
+                        <li><strong>"以便"</strong>: 他们的直接愿望如何适应更大的图景？</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-semibold mb-4">关键原则:</h3>
+                    <ul class="list-disc ml-6 mb-6 space-y-2">
+                        <li>用户故事是敏捷框架中最小的工作单元</li>
+                        <li>它是一个最终目标，而非功能，从软件用户的角度表达</li>
+                        <li>目的是阐述一项工作如何为客户提供特定价值</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-semibold mb-4">与敏捷框架的集成:</h3>
+                    <ul class="list-disc ml-6 space-y-2">
+                        <li><strong>Scrum</strong>: 用户故事添加到Sprint中，在Sprint期间"燃尽"</li>
+                        <li><strong>看板</strong>: 团队将用户故事拉入积压并通过工作流运行</li>
+                        <li><strong>史诗和计划</strong>: 用户故事是更大敏捷框架的构建块</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="callout info mb-12">
+            <p class="font-semibold mb-4">模板使用建议</p>
+            <ul class="list-disc ml-6 space-y-2">
+                <li><strong>灵活应用:</strong> 根据功能复杂度和团队需求调整模板内容</li>
+                <li><strong>持续更新:</strong> 定期根据项目进展和学习更新文档</li>
+                <li><strong>团队协作:</strong> 确保所有团队成员都参与文档的创建和维护</li>
+                <li><strong>工具集成:</strong> 将PRD与您的开发工具和流程紧密集成</li>
+                <li><strong>反馈循环:</strong> 建立定期收集和整合反馈的机制</li>
+            </ul>
+        </div>
+        
+        <div class="mt-20 pt-8 border-t-2 border-gray-200">
+            <div class="text-center">
+                <h3 class="text-xl font-semibold mb-4">关于此知识库</h3>
+                <p class="text-gray-600 mb-2">敏捷产品需求文档知识库旨在帮助产品团队实施更高效的文档实践</p>
+                <p class="text-gray-500">支持迭代开发、促进跨职能协作、提高产品交付成功率</p>
+                <div class="mt-6 pt-4 border-t border-gray-200">
+                    <p class="text-gray-500">敏捷产品需求文档知识库 • 作者：Victor Lee • 2025年7月27日</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleContent(id) {
+            const content = document.getElementById(id);
+            const button = content.previousElementSibling;
+            const icon = button.querySelector('.toggle-icon i');
+            
+            if (content.classList.contains('show')) {
+                content.classList.remove('show');
+                icon.parentElement.classList.remove('rotated');
+            } else {
+                content.classList.add('show');
+                icon.parentElement.classList.add('rotated');
+            }
+        }
+        
+        function setActiveLink(element) {
+            // Remove active class from all links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Add active class to clicked link
+            element.classList.add('active');
+            
+            // Close mobile menu if open
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('mobile-open')) {
+                sidebar.classList.remove('mobile-open');
+            }
+        }
+        
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('mobile-open');
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
+                sidebar.classList.remove('mobile-open');
+            }
+        });
+        
+        // Auto-highlight active section in navigation
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('[id]');
+            const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('scroll-spy-active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('scroll-spy-active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

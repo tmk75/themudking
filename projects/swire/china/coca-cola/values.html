@@ -27,56 +27,6 @@
             padding: 40px 20px;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 60px;
-            padding: 80px 40px;
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            border-radius: 24px;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .header h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            letter-spacing: -0.02em;
-        }
-
-        .header .subtitle {
-            font-size: 1.25rem;
-            opacity: 0.9;
-            margin-bottom: 24px;
-            font-weight: 400;
-        }
-
-        .period-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -84,280 +34,10 @@
             margin-bottom: 60px;
         }
 
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 32px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
-            margin-right: 16px;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .metric {
-            margin-bottom: 20px;
-            padding: 20px;
-            background: #f8fafc;
-            border-radius: 12px;
-            border-left: 4px solid #3b82f6;
-        }
-
-        .metric-value {
-            font-size: 2.25rem;
-            font-weight: 700;
-            color: #1e40af;
-            margin-bottom: 4px;
-        }
-
-        .metric-label {
-            font-size: 0.875rem;
-            color: #64748b;
-            margin-bottom: 4px;
-            font-weight: 500;
-        }
-
-        .metric-trend {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #059669;
-        }
-
         .large-card {
             grid-column: span 2;
         }
 
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .feature-list li {
-            padding: 12px 0;
-            border-bottom: 1px solid #f1f5f9;
-            position: relative;
-            padding-left: 32px;
-            color: #475569;
-        }
-
-        .feature-list li:last-child {
-            border-bottom: none;
-        }
-
-        .feature-list li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            top: 12px;
-            color: #059669;
-            font-weight: bold;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #ecfdf5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e2e8f0;
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 8px 0;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
-            border-radius: 4px;
-            transition: width 1s ease;
-        }
-
-        .chart-container {
-            height: 200px;
-            background: #f8fafc;
-            border-radius: 12px;
-            display: flex;
-            align-items: end;
-            justify-content: center;
-            margin: 20px 0;
-            padding: 20px;
-        }
-
-        .bar-chart {
-            display: flex;
-            align-items: end;
-            height: 160px;
-            gap: 16px;
-        }
-
-        .bar {
-            width: 32px;
-            background: linear-gradient(to top, #3b82f6, #60a5fa);
-            border-radius: 4px 4px 0 0;
-            position: relative;
-            transition: all 0.5s ease;
-        }
-
-        .bar-label {
-            position: absolute;
-            bottom: -24px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.75rem;
-            color: #64748b;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-
-        .key-initiatives {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 24px;
-        }
-
-        .initiative {
-            background: #f1f5f9;
-            padding: 24px;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-        }
-
-        .initiative:hover {
-            background: #e0f2fe;
-            border-color: #0ea5e9;
-            transform: translateY(-4px);
-        }
-
-        .initiative h4 {
-            margin-bottom: 12px;
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .initiative p {
-            font-size: 0.875rem;
-            color: #64748b;
-            line-height: 1.5;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-        }
-
-        .stats-section h4 {
-            margin-bottom: 20px;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .progress-item {
-            margin-bottom: 20px;
-        }
-
-        .progress-item .label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 0.875rem;
-            color: #64748b;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 60px;
-            padding: 40px;
-            background: white;
-            border-radius: 20px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .footer p {
-            color: #64748b;
-            font-size: 0.875rem;
-            line-height: 1.6;
-        }
-
-        .footer p:last-child {
-            margin-top: 12px;
-            opacity: 0.7;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .large-card {
-                grid-column: span 1;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-            
-            .header h1 {
-                font-size: 2.5rem;
-            }
-            
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .card {
-                padding: 24px;
-            }
-            
-            .key-initiatives {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Animation Classes */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -379,251 +59,324 @@
         .fade-in:nth-child(6) { animation-delay: 0.6s; }
         .fade-in:nth-child(7) { animation-delay: 0.7s; }
         .fade-in:nth-child(8) { animation-delay: 0.8s; }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .large-card {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="header-content">
-                <h1>Swire Coca-Cola China</h1>
-                <div class="subtitle">Digital Transformation Journey with AI Integration</div>
-                <div class="period-badge">January 2025 - Present Performance</div>
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 60px; padding: 80px 40px; background: linear-gradient(135deg, #DC143C 0%, #B22222 100%); border-radius: 24px; color: white; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 1px, transparent 1px), radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 20px 20px; opacity: 0.3;"></div>
+            <div style="position: relative; z-index: 1;">
+                <h1 style="font-size: 3.5rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.02em;">Swire Coca-Cola China</h1>
+                <div style="font-size: 1.25rem; opacity: 0.9; margin-bottom: 24px; font-weight: 400;">Digital Transformation Journey with AI Integration</div>
+                <div style="display: inline-block; background: rgba(255, 255, 255, 0.2); padding: 12px 24px; border-radius: 50px; font-weight: 500; border: 1px solid rgba(255, 255, 255, 0.3);">January 2025 - Present Performance</div>
             </div>
         </div>
 
         <div class="dashboard-grid">
-            <!-- Digital Sales Transformation -->
-            <div class="card fade-in">
-                <div class="card-header">
-                    <div class="card-icon">📈</div>
-                    <div class="card-title">Digital Sales Growth</div>
+            <!-- Digital Sales Growth -->
+            <div class="fade-in" style="background: linear-gradient(135deg, #DC143C 0%, #FF4500 100%); border-radius: 20px; padding: 32px; color: white; box-shadow: 0 8px 32px rgba(220, 20, 60, 0.25); transition: all 0.3s ease;">
+                <div style="display: flex; align-items: center; margin-bottom: 24px;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-right: 16px;">📈</div>
+                    <div style="font-size: 1.5rem; font-weight: 600;">Digital Sales Growth</div>
                 </div>
-                <div class="metric">
-                    <div class="metric-value">¥45.8B</div>
-                    <div class="metric-label">Q1 2025 Digital Revenue</div>
-                    <div class="metric-trend">↗ +18% vs Q1 2024</div>
+                <div style="margin-bottom: 20px; padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 12px; border-left: 4px solid rgba(255, 255, 255, 0.5);">
+                    <div style="font-size: 2.25rem; font-weight: 700; margin-bottom: 4px;">¥45.8B</div>
+                    <div style="font-size: 0.875rem; margin-bottom: 4px; opacity: 0.9;">Q1 2025 Digital Revenue</div>
+                    <div style="font-size: 0.75rem; font-weight: 600; color: #90EE90;">↗ +18% vs Q1 2024</div>
                 </div>
-                <div class="metric">
-                    <div class="metric-value">65%</div>
-                    <div class="metric-label">Digital Channel Share</div>
-                    <div class="metric-trend">↗ +12% increase</div>
+                <div style="margin-bottom: 20px; padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 12px; border-left: 4px solid rgba(255, 255, 255, 0.5);">
+                    <div style="font-size: 2.25rem; font-weight: 700; margin-bottom: 4px;">65%</div>
+                    <div style="font-size: 0.875rem; margin-bottom: 4px; opacity: 0.9;">Digital Channel Share</div>
+                    <div style="font-size: 0.75rem; font-weight: 600; color: #90EE90;">↗ +12% increase</div>
                 </div>
-                <div class="metric">
-                    <div class="metric-value">+42%</div>
-                    <div class="metric-label">E-commerce Growth</div>
-                    <div class="metric-trend">↗ Digital expansion</div>
-                </div>
-            </div>
-
-            <!-- Digital Infrastructure -->
-            <div class="card fade-in">
-                <div class="card-header">
-                    <div class="card-icon">🏗️</div>
-                    <div class="card-title">Infrastructure Scale</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">25,000+</div>
-                    <div class="metric-label">Smart Vending Machines</div>
-                    <div class="metric-trend">↗ +25% expansion</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">18M+</div>
-                    <div class="metric-label">Digital Members</div>
-                    <div class="metric-trend">↗ +80% growth</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">95%</div>
-                    <div class="metric-label">Digital Payment Rate</div>
-                    <div class="metric-trend">↗ Cashless dominance</div>
+                <div style="padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 12px; border-left: 4px solid rgba(255, 255, 255, 0.5);">
+                    <div style="font-size: 2.25rem; font-weight: 700; margin-bottom: 4px;">+42%</div>
+                    <div style="font-size: 0.875rem; margin-bottom: 4px; opacity: 0.9;">E-commerce Growth</div>
+                    <div style="font-size: 0.75rem; font-weight: 600; color: #90EE90;">↗ Digital expansion</div>
                 </div>
             </div>
 
-            <!-- Customer Journey Transformation -->
-            <div class="card large-card fade-in">
-                <div class="card-header">
-                    <div class="card-icon">🎯</div>
-                    <div class="card-title">Customer Journey Evolution</div>
+            <!-- Infrastructure Scale -->
+            <div class="fade-in" style="background: linear-gradient(135deg, #FF4500 0%, #FF6347 100%); border-radius: 20px; padding: 32px; color: white; box-shadow: 0 8px 32px rgba(255, 69, 0, 0.25); transition: all 0.3s ease;">
+                <div style="display: flex; align-items: center; margin-bottom: 24px;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-right: 16px;">🏗️</div>
+                    <div style="font-size: 1.5rem; font-weight: 600;">Infrastructure Scale</div>
+                </div>
+                <div style="margin-bottom: 20px; padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 12px; border-left: 4px solid rgba(255, 255, 255, 0.5);">
+                    <div style="font-size: 2.25rem; font-weight: 700; margin-bottom: 4px;">25,000+</div>
+                    <div style="font-size: 0.875rem; margin-bottom: 4px; opacity: 0.9;">Smart Vending Machines</div>
+                    <div style="font-size: 0.75rem; font-weight: 600; color: #90EE90;">↗ +25% expansion</div>
+                </div>
+                <div style="margin-bottom: 20px; padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 12px; border-left: 4px solid rgba(255, 255, 255, 0.5);">
+                    <div style="font-size: 2.25rem; font-weight: 700; margin-bottom: 4px;">18M+</div>
+                    <div style="font-size: 0.875rem; margin-bottom: 4px; opacity: 0.9;">Digital Members</div>
+                    <div style="font-size: 0.75rem; font-weight: 600; color: #90EE90;">↗ +80% growth</div>
+                </div>
+                <div style="padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 12px; border-left: 4px solid rgba(255, 255, 255, 0.5);">
+                    <div style="font-size: 2.25rem; font-weight: 700; margin-bottom: 4px;">95%</div>
+                    <div style="font-size: 0.875rem; margin-bottom: 4px; opacity: 0.9;">Digital Payment Rate</div>
+                    <div style="font-size: 0.75rem; font-weight: 600; color: #90EE90;">↗ Cashless dominance</div>
+                </div>
+            </div>
+
+            <!-- Success Milestones & Targets -->
+            <div class="fade-in" style="background: linear-gradient(135deg, #FF6347 0%, #FFA07A 100%); border-radius: 20px; padding: 32px; color: white; box-shadow: 0 8px 32px rgba(255, 99, 71, 0.25); transition: all 0.3s ease;">
+                <div style="display: flex; align-items: center; margin-bottom: 24px;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-right: 16px;">🎯</div>
+                    <div style="font-size: 1.5rem; font-weight: 600;">Success Milestones</div>
+                </div>
+                <div style="margin-bottom: 20px; padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 12px; border-left: 4px solid rgba(255, 255, 255, 0.5);">
+                    <div style="font-size: 2.25rem; font-weight: 700; margin-bottom: 4px;">30,000+</div>
+                    <div style="font-size: 0.875rem; margin-bottom: 4px; opacity: 0.9;">Smart Machines by Q1 2026</div>
+                    <div style="font-size: 0.75rem; font-weight: 600; color: #90EE90;">↗ Infrastructure target</div>
+                </div>
+                <div style="margin-bottom: 20px; padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 12px; border-left: 4px solid rgba(255, 255, 255, 0.5);">
+                    <div style="font-size: 2.25rem; font-weight: 700; margin-bottom: 4px;">¥200B+</div>
+                    <div style="font-size: 0.875rem; margin-bottom: 4px; opacity: 0.9;">Annual Revenue Goal</div>
+                    <div style="font-size: 0.75rem; font-weight: 600; color: #90EE90;">↗ Growth target</div>
+                </div>
+                <div style="padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 12px; border-left: 4px solid rgba(255, 255, 255, 0.5);">
+                    <div style="font-size: 2.25rem; font-weight: 700; margin-bottom: 4px;">80%</div>
+                    <div style="font-size: 0.875rem; margin-bottom: 4px; opacity: 0.9;">Digital Channel Share</div>
+                    <div style="font-size: 0.75rem; font-weight: 600; color: #90EE90;">↗ Market leadership</div>
+                </div>
+            </div>
+
+            <!-- Customer Journey Evolution -->
+            <div class="large-card fade-in" style="background: linear-gradient(135deg, #FFA07A 0%, #FFB6C1 100%); border-radius: 20px; padding: 32px; color: #8B0000; box-shadow: 0 8px 32px rgba(255, 160, 122, 0.25); transition: all 0.3s ease;">
+                <div style="display: flex; align-items: center; margin-bottom: 24px;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(139, 0, 0, 0.15); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-right: 16px; color: #8B0000;">🎯</div>
+                    <div style="font-size: 1.5rem; font-weight: 600;">Customer Journey Evolution</div>
                 </div>
                 
-                <div class="key-initiatives">
-                    <div class="initiative">
-                        <h4>Omnichannel Experience</h4>
-                        <p>Seamless integration across mobile apps, smart vending, e-commerce, and social platforms</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 24px;">
+                    <div style="background: rgba(139, 0, 0, 0.1); padding: 24px; border-radius: 12px; text-align: center; transition: all 0.3s ease; border: 1px solid rgba(139, 0, 0, 0.2);">
+                        <h4 style="margin-bottom: 12px; font-size: 1.125rem; font-weight: 600; color: #8B0000;">Omnichannel Experience</h4>
+                        <p style="font-size: 0.875rem; line-height: 1.5; color: #A0522D;">Seamless integration across mobile apps, smart vending, e-commerce, and social platforms</p>
                     </div>
-                    <div class="initiative">
-                        <h4>Data-Driven Insights</h4>
-                        <p>18M+ customer interactions analyzed for personalized experiences and targeted offerings</p>
+                    <div style="background: rgba(139, 0, 0, 0.1); padding: 24px; border-radius: 12px; text-align: center; transition: all 0.3s ease; border: 1px solid rgba(139, 0, 0, 0.2);">
+                        <h4 style="margin-bottom: 12px; font-size: 1.125rem; font-weight: 600; color: #8B0000;">Data-Driven Insights</h4>
+                        <p style="font-size: 0.875rem; line-height: 1.5; color: #A0522D;">18M+ customer interactions analyzed for personalized experiences and targeted offerings</p>
                     </div>
-                    <div class="initiative">
-                        <h4>AI-Powered Service</h4>
-                        <p>Intelligent chatbots and automated support delivering 95% first-contact resolution</p>
+                    <div style="background: rgba(139, 0, 0, 0.1); padding: 24px; border-radius: 12px; text-align: center; transition: all 0.3s ease; border: 1px solid rgba(139, 0, 0, 0.2);">
+                        <h4 style="margin-bottom: 12px; font-size: 1.125rem; font-weight: 600; color: #8B0000;">AI-Powered Service</h4>
+                        <p style="font-size: 0.875rem; line-height: 1.5; color: #A0522D;">Intelligent chatbots and automated support delivering 95% first-contact resolution</p>
                     </div>
-                    <div class="initiative">
-                        <h4>Smart Retail Innovation</h4>
-                        <p>IoT-enabled inventory management and contactless purchase experiences</p>
+                    <div style="background: rgba(139, 0, 0, 0.1); padding: 24px; border-radius: 12px; text-align: center; transition: all 0.3s ease; border: 1px solid rgba(139, 0, 0, 0.2);">
+                        <h4 style="margin-bottom: 12px; font-size: 1.125rem; font-weight: 600; color: #8B0000;">Smart Retail Innovation</h4>
+                        <p style="font-size: 0.875rem; line-height: 1.5; color: #A0522D;">IoT-enabled inventory management and contactless purchase experiences</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Technology Capabilities -->
-            <div class="card fade-in">
-                <div class="card-header">
-                    <div class="card-icon">⚡</div>
-                    <div class="card-title">Technology Stack</div>
+            <!-- Technology Stack -->
+            <div class="fade-in" style="background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%); border-radius: 20px; padding: 32px; color: #8B0000; box-shadow: 0 8px 32px rgba(255, 182, 193, 0.25); transition: all 0.3s ease;">
+                <div style="display: flex; align-items: center; margin-bottom: 24px;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #DC143C, #FF4500); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; margin-right: 16px;">⚡</div>
+                    <div style="font-size: 1.5rem; font-weight: 600;">Technology Stack</div>
                 </div>
-                <ul class="feature-list">
-                    <li>Cloud-native infrastructure (99.9% uptime)</li>
-                    <li>Real-time analytics & business intelligence</li>
-                    <li>IoT sensors across supply chain</li>
-                    <li>Mobile-first applications</li>
-                    <li>AI/ML optimization engines</li>
-                    <li>Blockchain transparency</li>
-                    <li>Digital twin operations</li>
-                    <li>Advanced cybersecurity</li>
-                </ul>
+                <div style="list-style: none; padding: 0;">
+                    <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        Cloud-native infrastructure (99.9% uptime)
+                    </div>
+                    <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        Real-time analytics & business intelligence
+                    </div>
+                    <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        IoT sensors across supply chain
+                    </div>
+                    <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        Mobile-first applications
+                    </div>
+                    <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        AI/ML optimization engines
+                    </div>
+                    <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        Blockchain transparency
+                    </div>
+                    <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        Digital twin operations
+                    </div>
+                    <div style="padding: 12px 0; position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        Advanced cybersecurity
+                    </div>
+                </div>
             </div>
 
             <!-- ROI Impact -->
-            <div class="card fade-in">
-                <div class="card-header">
-                    <div class="card-icon">💰</div>
-                    <div class="card-title">ROI Impact</div>
+            <div class="fade-in" style="background: linear-gradient(135deg, #FFC0CB 0%, #FFFFE0 100%); border-radius: 20px; padding: 32px; color: #8B0000; box-shadow: 0 8px 32px rgba(255, 192, 203, 0.25); transition: all 0.3s ease;">
+                <div style="display: flex; align-items: center; margin-bottom: 24px;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #DC143C, #FF4500); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; margin-right: 16px;">💰</div>
+                    <div style="font-size: 1.5rem; font-weight: 600;">ROI Impact</div>
                 </div>
-                <div class="metric">
-                    <div class="metric-value">+35%</div>
-                    <div class="metric-label">Revenue Growth</div>
-                    <div class="metric-trend">↗ Digital-driven increase</div>
+                <div style="margin-bottom: 20px; padding: 20px; background: rgba(139, 0, 0, 0.05); border-radius: 12px; border-left: 4px solid #DC143C;">
+                    <div style="font-size: 2.25rem; font-weight: 700; color: #DC143C; margin-bottom: 4px;">+35%</div>
+                    <div style="font-size: 0.875rem; color: #A0522D; margin-bottom: 4px; font-weight: 500;">Revenue Growth</div>
+                    <div style="font-size: 0.75rem; font-weight: 600; color: #228B22;">↗ Digital-driven increase</div>
                 </div>
-                <div class="metric">
-                    <div class="metric-value">-38%</div>
-                    <div class="metric-label">Process Costs</div>
-                    <div class="metric-trend">↗ Automation savings</div>
+                <div style="margin-bottom: 20px; padding: 20px; background: rgba(139, 0, 0, 0.05); border-radius: 12px; border-left: 4px solid #DC143C;">
+                    <div style="font-size: 2.25rem; font-weight: 700; color: #DC143C; margin-bottom: 4px;">-38%</div>
+                    <div style="font-size: 0.875rem; color: #A0522D; margin-bottom: 4px; font-weight: 500;">Process Costs</div>
+                    <div style="font-size: 0.75rem; font-weight: 600; color: #228B22;">↗ Automation savings</div>
                 </div>
-                <div class="metric">
-                    <div class="metric-value">70%</div>
-                    <div class="metric-label">Faster Decisions</div>
-                    <div class="metric-trend">↗ Real-time insights</div>
+                <div style="padding: 20px; background: rgba(139, 0, 0, 0.05); border-radius: 12px; border-left: 4px solid #DC143C;">
+                    <div style="font-size: 2.25rem; font-weight: 700; color: #DC143C; margin-bottom: 4px;">70%</div>
+                    <div style="font-size: 0.875rem; color: #A0522D; margin-bottom: 4px; font-weight: 500;">Faster Decisions</div>
+                    <div style="font-size: 0.75rem; font-weight: 600; color: #228B22;">↗ Real-time insights</div>
                 </div>
             </div>
 
-            <!-- AI Accomplishments -->
-            <div class="card large-card fade-in">
-                <div class="card-header">
-                    <div class="card-icon">🤖</div>
-                    <div class="card-title">AI Implementation Success</div>
+            <!-- AI Implementation Success -->
+            <div class="large-card fade-in" style="background: linear-gradient(135deg, #FFFFE0 0%, #F0F8FF 100%); border-radius: 20px; padding: 32px; color: #8B0000; box-shadow: 0 8px 32px rgba(255, 255, 224, 0.25); transition: all 0.3s ease;">
+                <div style="display: flex; align-items: center; margin-bottom: 24px;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #DC143C, #FF4500); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; margin-right: 16px;">🤖</div>
+                    <div style="font-size: 1.5rem; font-weight: 600;">AI Implementation Success</div>
                 </div>
                 
-                <div class="stats-grid">
-                    <div class="stats-section">
-                        <h4>AI Performance Metrics</h4>
-                        <div class="metric">
-                            <div class="metric-value">98.2%</div>
-                            <div class="metric-label">Prediction Accuracy</div>
-                            <div class="metric-trend">↗ Demand forecasting</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+                    <div>
+                        <h4 style="margin-bottom: 20px; font-size: 1.25rem; font-weight: 600; color: #8B0000;">AI Performance Metrics</h4>
+                        <div style="margin-bottom: 20px; padding: 20px; background: rgba(139, 0, 0, 0.05); border-radius: 12px; border-left: 4px solid #DC143C;">
+                            <div style="font-size: 2.25rem; font-weight: 700; color: #DC143C; margin-bottom: 4px;">98.2%</div>
+                            <div style="font-size: 0.875rem; color: #A0522D; margin-bottom: 4px; font-weight: 500;">Prediction Accuracy</div>
+                            <div style="font-size: 0.75rem; font-weight: 600; color: #228B22;">↗ Demand forecasting</div>
                         </div>
-                        <div class="metric">
-                            <div class="metric-value">+52%</div>
-                            <div class="metric-label">Campaign ROI</div>
-                            <div class="metric-trend">↗ ML optimization</div>
+                        <div style="margin-bottom: 20px; padding: 20px; background: rgba(139, 0, 0, 0.05); border-radius: 12px; border-left: 4px solid #DC143C;">
+                            <div style="font-size: 2.25rem; font-weight: 700; color: #DC143C; margin-bottom: 4px;">+52%</div>
+                            <div style="font-size: 0.875rem; color: #A0522D; margin-bottom: 4px; font-weight: 500;">Campaign ROI</div>
+                            <div style="font-size: 0.75rem; font-weight: 600; color: #228B22;">↗ ML optimization</div>
                         </div>
-                        <div class="metric">
-                            <div class="metric-value">95%</div>
-                            <div class="metric-label">Chatbot Resolution</div>
-                            <div class="metric-trend">↗ First-contact success</div>
+                        <div style="padding: 20px; background: rgba(139, 0, 0, 0.05); border-radius: 12px; border-left: 4px solid #DC143C;">
+                            <div style="font-size: 2.25rem; font-weight: 700; color: #DC143C; margin-bottom: 4px;">95%</div>
+                            <div style="font-size: 0.875rem; color: #A0522D; margin-bottom: 4px; font-weight: 500;">Chatbot Resolution</div>
+                            <div style="font-size: 0.75rem; font-weight: 600; color: #228B22;">↗ First-contact success</div>
                         </div>
                     </div>
                     
-                    <div class="stats-section">
-                        <h4>AI Technology Achievements</h4>
-                        <ul class="feature-list">
-                            <li><strong>Computer Vision:</strong> 99.7% inventory accuracy</li>
-                            <li><strong>NLP Integration:</strong> Multilingual support</li>
-                            <li><strong>Predictive Analytics:</strong> 27% forecast improvement</li>
-                            <li><strong>Personalization:</strong> 92% recommendation success</li>
-                            <li><strong>Voice Commerce:</strong> 68% adoption rate</li>
-                            <li><strong>Edge AI:</strong> <1ms response time</li>
-                        </ul>
+                    <div>
+                        <h4 style="margin-bottom: 20px; font-size: 1.25rem; font-weight: 600; color: #8B0000;">AI Technology Achievements</h4>
+                        <div style="list-style: none; padding: 0; font-size: 0.95rem;">
+                            <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                                <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                                <strong style="color: #DC143C;">Computer Vision:</strong> 99.7% accuracy in inventory tracking across 25,000+ machines
+                            </div>
+                            <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                                <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                                <strong style="color: #DC143C;">NLP Integration:</strong> GPT-4 powered customer service with multilingual support
+                            </div>
+                            <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                                <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                                <strong style="color: #DC143C;">Predictive Analytics:</strong> 27% improvement in sales forecasting accuracy
+                            </div>
+                            <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                                <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                                <strong style="color: #DC143C;">Personalization Engine:</strong> 92% success rate in product recommendations
+                            </div>
+                            <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                                <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                                <strong style="color: #DC143C;">Voice Commerce:</strong> 68% adoption rate in smart vending interactions
+                            </div>
+                            <div style="padding: 12px 0; position: relative; padding-left: 32px; color: #A0522D;">
+                                <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                                <strong style="color: #DC143C;">Edge AI:</strong> &lt;1ms response time in 5G-enabled smart machines
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Platform Integration -->
-            <div class="card fade-in">
-                <div class="card-header">
-                    <div class="card-icon">🔧</div>
-                    <div class="card-title">Platform Integration</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">SAP S/4HANA</div>
-                    <div class="metric-label">Enterprise Resource Planning</div>
-                    <div class="metric-trend">↗ Full integration</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">Salesforce CRM</div>
-                    <div class="metric-label">Customer Management</div>
-                    <div class="metric-trend">↗ 360° customer view</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">WeChat Ecosystem</div>
-                    <div class="metric-label">Social Commerce</div>
-                    <div class="metric-trend">↗ 18M+ users</div>
-                </div>
-            </div>
-
-            <!-- Digital Engagement -->
-            <div class="card large-card fade-in">
-                <div class="card-header">
-                    <div class="card-icon">🔗</div>
-                    <div class="card-title">Digital Engagement Metrics</div>
+            <!-- Digital Engagement Metrics -->
+            <div class="large-card fade-in" style="background: linear-gradient(135deg, #F0F8FF 0%, #E6E6FA 100%); border-radius: 20px; padding: 32px; color: #8B0000; box-shadow: 0 8px 32px rgba(240, 248, 255, 0.25); transition: all 0.3s ease;">
+                <div style="display: flex; align-items: center; margin-bottom: 24px;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #DC143C, #FF4500); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; margin-right: 16px;">🔗</div>
+                    <div style="font-size: 1.5rem; font-weight: 600;">Digital Engagement Metrics</div>
                 </div>
                 
-                <div class="stats-grid">
-                    <div class="stats-section">
-                        <h4>Customer Adoption</h4>
-                        <div class="progress-item">
-                            <div class="label">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+                    <div>
+                        <h4 style="margin-bottom: 20px; font-size: 1.25rem; font-weight: 600; color: #8B0000;">Customer Adoption</h4>
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.875rem; color: #A0522D;">
                                 <span>Digital Platform Usage</span>
                                 <span>88%</span>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 88%"></div>
+                            <div style="width: 100%; height: 8px; background: rgba(139, 0, 0, 0.1); border-radius: 4px; overflow: hidden;">
+                                <div style="height: 100%; background: linear-gradient(90deg, #DC143C, #FF4500); border-radius: 4px; width: 88%; transition: width 1s ease;"></div>
                             </div>
                         </div>
-                        <div class="progress-item">
-                            <div class="label">
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.875rem; color: #A0522D;">
                                 <span>Mobile App Engagement</span>
                                 <span>75%</span>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 75%"></div>
+                            <div style="width: 100%; height: 8px; background: rgba(139, 0, 0, 0.1); border-radius: 4px; overflow: hidden;">
+                                <div style="height: 100%; background: linear-gradient(90deg, #DC143C, #FF4500); border-radius: 4px; width: 75%; transition: width 1s ease;"></div>
                             </div>
                         </div>
-                        <div class="progress-item">
-                            <div class="label">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.875rem; color: #A0522D;">
                                 <span>Conversion Rate</span>
                                 <span>72%</span>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 72%"></div>
+                            <div style="width: 100%; height: 8px; background: rgba(139, 0, 0, 0.1); border-radius: 4px; overflow: hidden;">
+                                <div style="height: 100%; background: linear-gradient(90deg, #DC143C, #FF4500); border-radius: 4px; width: 72%; transition: width 1s ease;"></div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="stats-section">
-                        <h4>Channel Performance</h4>
-                        <div class="chart-container">
-                            <div class="bar-chart">
-                                <div class="bar" style="height: 92%;">
-                                    <div class="bar-label">Mobile App</div>
+                    <div>
+                        <h4 style="margin-bottom: 20px; font-size: 1.25rem; font-weight: 600; color: #8B0000;">Channel Performance</h4>
+                        <div style="height: 200px; background: rgba(139, 0, 0, 0.05); border-radius: 12px; padding: 20px; position: relative;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-end; height: 140px; padding: 0 10px;">
+                                <!-- Mobile App: 92% -->
+                                <div style="display: flex; flex-direction: column; align-items: center; width: 60px;">
+                                    <div style="width: 40px; height: 128px; background: linear-gradient(to top, #DC143C, #FF4500); border-radius: 4px 4px 0 0; margin-bottom: 8px;"></div>
+                                    <div style="font-size: 0.7rem; color: #A0522D; font-weight: 500; text-align: center; line-height: 1.1;">Mobile<br>App<br><span style="color: #DC143C; font-weight: 600;">92%</span></div>
                                 </div>
-                                <div class="bar" style="height: 85%;">
-                                    <div class="bar-label">Smart Vending</div>
+                                
+                                <!-- Smart Vending: 85% -->
+                                <div style="display: flex; flex-direction: column; align-items: center; width: 60px;">
+                                    <div style="width: 40px; height: 119px; background: linear-gradient(to top, #DC143C, #FF4500); border-radius: 4px 4px 0 0; margin-bottom: 8px;"></div>
+                                    <div style="font-size: 0.7rem; color: #A0522D; font-weight: 500; text-align: center; line-height: 1.1;">Smart<br>Vending<br><span style="color: #DC143C; font-weight: 600;">85%</span></div>
                                 </div>
-                                <div class="bar" style="height: 78%;">
-                                    <div class="bar-label">E-commerce</div>
+                                
+                                <!-- E-commerce: 78% -->
+                                <div style="display: flex; flex-direction: column; align-items: center; width: 60px;">
+                                    <div style="width: 40px; height: 109px; background: linear-gradient(to top, #DC143C, #FF4500); border-radius: 4px 4px 0 0; margin-bottom: 8px;"></div>
+                                    <div style="font-size: 0.7rem; color: #A0522D; font-weight: 500; text-align: center; line-height: 1.1;">E-commerce<br><span style="color: #DC143C; font-weight: 600;">78%</span></div>
                                 </div>
-                                <div class="bar" style="height: 68%;">
-                                    <div class="bar-label">Social</div>
+                                
+                                <!-- Social Commerce: 68% -->
+                                <div style="display: flex; flex-direction: column; align-items: center; width: 60px;">
+                                    <div style="width: 40px; height: 95px; background: linear-gradient(to top, #DC143C, #FF4500); border-radius: 4px 4px 0 0; margin-bottom: 8px;"></div>
+                                    <div style="font-size: 0.7rem; color: #A0522D; font-weight: 500; text-align: center; line-height: 1.1;">Social<br>Commerce<br><span style="color: #DC143C; font-weight: 600;">68%</span></div>
                                 </div>
                             </div>
                         </div>
@@ -631,96 +384,216 @@
                 </div>
             </div>
 
-            <!-- Innovation Roadmap -->
-            <div class="card fade-in">
-                <div class="card-header">
-                    <div class="card-icon">🚀</div>
-                    <div class="card-title">2025 Innovation Pipeline</div>
+            <!-- Innovation Pipeline -->
+            <div class="fade-in" style="background: linear-gradient(135deg, #E6E6FA 0%, #FFF8DC 100%); border-radius: 20px; padding: 32px; color: #8B0000; box-shadow: 0 8px 32px rgba(230, 230, 250, 0.25); transition: all 0.3s ease;">
+                <div style="display: flex; align-items: center; margin-bottom: 24px;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #DC143C, #FF4500); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; margin-right: 16px;">🚀</div>
+                    <div style="font-size: 1.5rem; font-weight: 600;">2025 Innovation Pipeline</div>
                 </div>
-                <ul class="feature-list">
-                    <li>Advanced analytics & BI expansion</li>
-                    <li>Enhanced mobile experiences</li>
-                    <li>Predictive AI integration</li>
-                    <li>IoT network expansion</li>
-                    <li>Sustainability tracking systems</li>
-                    <li>AR marketing campaigns</li>
-                    <li>Blockchain supply chain</li>
-                    <li>Voice commerce rollout</li>
-                </ul>
+                <div style="list-style: none; padding: 0;">
+                    <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        Advanced analytics & BI expansion
+                    </div>
+                    <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        Enhanced mobile experiences
+                    </div>
+                    <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        Predictive AI integration
+                    </div>
+                    <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        IoT network expansion
+                    </div>
+                    <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        Sustainability tracking systems
+                    </div>
+                    <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        AR marketing campaigns
+                    </div>
+                    <div style="padding: 12px 0; border-bottom: 1px solid rgba(139, 0, 0, 0.1); position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        Blockchain supply chain
+                    </div>
+                    <div style="padding: 12px 0; position: relative; padding-left: 32px; color: #A0522D;">
+                        <div style="content: '✓'; position: absolute; left: 0; top: 12px; color: #228B22; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; background: #F0FFF0; display: flex; align-items: center; justify-content: center; font-size: 12px;">✓</div>
+                        Voice commerce rollout
+                    </div>
+                </div>
             </div>
 
             <!-- 12-Month Digital & AI Roadmap -->
-            <div class="card large-card fade-in">
-                <div class="card-header">
-                    <div class="card-icon">📅</div>
-                    <div class="card-title">12-Month Digital & AI Roadmap</div>
+            <div class="large-card fade-in" style="background: linear-gradient(135deg, #FFF8DC 0%, #F5F5DC 100%); border-radius: 20px; padding: 32px; color: #8B0000; box-shadow: 0 8px 32px rgba(255, 248, 220, 0.25); transition: all 0.3s ease;">
+                <div style="display: flex; align-items: center; margin-bottom: 24px;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #DC143C, #FF4500); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; margin-right: 16px;">📅</div>
+                    <div style="font-size: 1.5rem; font-weight: 600;">12-Month Digital & AI Roadmap</div>
                 </div>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 24px;">
-                    <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; border-left: 4px solid #3b82f6;">
-                        <h4 style="color: #1e40af; margin-bottom: 16px; font-weight: 600;">Q2 2025 (Apr-Jun)</h4>
-                        <ul style="list-style: none; padding: 0; color: #475569; font-size: 0.875rem;">
-                            <li style="margin-bottom: 8px;">🤖 Deploy advanced AI chatbots across all channels</li>
-                            <li style="margin-bottom: 8px;">📱 Launch enhanced mobile app v3.0</li>
-                            <li style="margin-bottom: 8px;">🔗 Complete SAP S/4HANA optimization</li>
-                            <li style="margin-bottom: 8px;">📊 Implement real-time analytics dashboard</li>
-                            <li style="margin-bottom: 8px;">🎯 Roll out personalization engine</li>
-                        </ul>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 24px;">
+                    <div style="background: linear-gradient(135deg, #DC143C 0%, #FF4500 100%); padding: 24px; border-radius: 16px; color: white;">
+                        <h4 style="margin-bottom: 16px; font-size: 1.25rem; font-weight: 600;">Q2 2025 (Apr-Jun)</h4>
+                        <div style="space-y: 12px;">
+                            <div style="margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                                <strong>Digital:</strong> Mobile app redesign launch
+                            </div>
+                            <div style="margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                                <strong>AI:</strong> Computer vision rollout to 5,000 machines
+                            </div>
+                            <div style="margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                                <strong>Platform:</strong> SAP S/4HANA optimization
+                            </div>
+                            <div style="padding: 8px 0;">
+                                <strong>Target:</strong> 20M+ digital members
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; border-left: 4px solid #1d4ed8;">
-                        <h4 style="color: #1e40af; margin-bottom: 16px; font-weight: 600;">Q3 2025 (Jul-Sep)</h4>
-                        <ul style="list-style: none; padding: 0; color: #475569; font-size: 0.875rem;">
-                            <li style="margin-bottom: 8px;">🧠 Launch predictive demand forecasting</li>
-                            <li style="margin-bottom: 8px;">🏪 Expand smart vending to 30,000 units</li>
-                            <li style="margin-bottom: 8px;">🗣️ Integrate voice commerce capabilities</li>
-                            <li style="margin-bottom: 8px;">🌐 Deploy IoT sensors network phase 1</li>
-                            <li style="margin-bottom: 8px;">👁️ Implement computer vision inventory tracking</li>
-                        </ul>
+
+                    <div style="background: linear-gradient(135deg, #FF4500 0%, #FF6347 100%); padding: 24px; border-radius: 16px; color: white;">
+                        <h4 style="margin-bottom: 16px; font-size: 1.25rem; font-weight: 600;">Q3 2025 (Jul-Sep)</h4>
+                        <div style="space-y: 12px;">
+                            <div style="margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                                <strong>Digital:</strong> IoT sensor network expansion
+                            </div>
+                            <div style="margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                                <strong>AI:</strong> Predictive analytics platform launch
+                            </div>
+                            <div style="margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                                <strong>Innovation:</strong> AR marketing pilot campaigns
+                            </div>
+                            <div style="padding: 8px 0;">
+                                <strong>Target:</strong> 99% prediction accuracy
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; border-left: 4px solid #2563eb;">
-                        <h4 style="color: #1e40af; margin-bottom: 16px; font-weight: 600;">Q4 2025 (Oct-Dec)</h4>
-                        <ul style="list-style: none; padding: 0; color: #475569; font-size: 0.875rem;">
-                            <li style="margin-bottom: 8px;">🔮 Launch AR marketing campaigns</li>
-                            <li style="margin-bottom: 8px;">⛓️ Pilot blockchain supply chain tracking</li>
-                            <li style="margin-bottom: 8px;">🌱 Deploy sustainability tracking platform</li>
-                            <li style="margin-bottom: 8px;">🤝 Integrate social commerce features</li>
-                            <li style="margin-bottom: 8px;">📈 Implement dynamic pricing AI</li>
-                        </ul>
+
+                    <div style="background: linear-gradient(135deg, #FF6347 0%, #FFA07A 100%); padding: 24px; border-radius: 16px; color: white;">
+                        <h4 style="margin-bottom: 16px; font-size: 1.25rem; font-weight: 600;">Q4 2025 (Oct-Dec)</h4>
+                        <div style="space-y: 12px;">
+                            <div style="margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                                <strong>Digital:</strong> Voice commerce integration
+                            </div>
+                            <div style="margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                                <strong>AI:</strong> Advanced NLP chatbot deployment
+                            </div>
+                            <div style="margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                                <strong>Sustainability:</strong> Digital carbon tracking
+                            </div>
+                            <div style="padding: 8px 0;">
+                                <strong>Target:</strong> 75% digital conversion rate
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; border-left: 4px solid #1e40af;">
-                        <h4 style="color: #1e40af; margin-bottom: 16px; font-weight: 600;">Q1 2026 (Jan-Mar)</h4>
-                        <ul style="list-style: none; padding: 0; color: #475569; font-size: 0.875rem;">
-                            <li style="margin-bottom: 8px;">🎨 Deploy generative AI for marketing</li>
-                            <li style="margin-bottom: 8px;">🔄 Complete digital twin implementation</li>
-                            <li style="margin-bottom: 8px;">🌍 Launch ESG reporting automation</li>
-                            <li style="margin-bottom: 8px;">🚀 Scale AI across all operations</li>
-                            <li style="margin-bottom: 8px;">📊 Full business intelligence integration</li>
-                        </ul>
+
+                    <div style="background: linear-gradient(135deg, #FFA07A 0%, #FFB6C1 100%); padding: 24px; border-radius: 16px; color: #8B0000;">
+                        <h4 style="margin-bottom: 16px; font-size: 1.25rem; font-weight: 600;">Q1 2026 (Jan-Mar)</h4>
+                        <div style="space-y: 12px;">
+                            <div style="margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid rgba(139,0,0,0.2);">
+                                <strong>Digital:</strong> Blockchain supply chain pilot
+                            </div>
+                            <div style="margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid rgba(139,0,0,0.2);">
+                                <strong>AI:</strong> Edge AI deployment complete
+                            </div>
+                            <div style="margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid rgba(139,0,0,0.2);">
+                                <strong>Integration:</strong> Full ecosystem optimization
+                            </div>
+                            <div style="padding: 8px 0;">
+                                <strong>Target:</strong> 30,000+ smart machines
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Key Milestones & Success Metrics -->
+            <div class="large-card fade-in" style="background: linear-gradient(135deg, #F5F5DC 0%, #FFFACD 100%); border-radius: 20px; padding: 32px; color: #8B0000; box-shadow: 0 8px 32px rgba(245, 245, 220, 0.25); transition: all 0.3s ease;">
+                <div style="display: flex; align-items: center; margin-bottom: 24px;">
+                    <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #DC143C, #FF4500); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; margin-right: 16px;">🏆</div>
+                    <div style="font-size: 1.5rem; font-weight: 600;">Key Milestones & Success Metrics</div>
+                </div>
                 
-                <div style="margin-top: 24px; padding: 20px; background: #e0f2fe; border-radius: 12px; border: 1px solid #0ea5e9;">
-                    <h4 style="color: #0c4a6e; margin-bottom: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
-                        <span>🎯</span> Key Success Metrics for 12-Month Period
-                    </h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; font-size: 0.875rem; color: #164e63;">
-                        <div><strong>Digital Revenue Growth:</strong> +50% target</div>
-                        <div><strong>AI Automation Rate:</strong> 85% of processes</div>
-                        <div><strong>Customer Satisfaction:</strong> >95% NPS score</div>
-                        <div><strong>Operational Efficiency:</strong> -45% cost reduction</div>
-                        <div><strong>Digital Member Growth:</strong> 25M+ active users</div>
-                        <div><strong>AI Prediction Accuracy:</strong> >99% reliability</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+                    <!-- Infrastructure Milestone -->
+                    <div style="background: rgba(139, 0, 0, 0.05); padding: 24px; border-radius: 16px; text-align: center; border: 1px solid rgba(139, 0, 0, 0.1);">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #DC143C, #FF4500); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: white; font-size: 24px;">🏗️</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: #DC143C; margin-bottom: 8px;">30,000+</div>
+                        <div style="font-size: 1rem; color: #8B0000; font-weight: 600; margin-bottom: 4px;">Smart Machines</div>
+                        <div style="font-size: 0.875rem; color: #A0522D;">Target by Q1 2026</div>
+                    </div>
+
+                    <!-- Revenue Milestone -->
+                    <div style="background: rgba(139, 0, 0, 0.05); padding: 24px; border-radius: 16px; text-align: center; border: 1px solid rgba(139, 0, 0, 0.1);">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #DC143C, #FF4500); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: white; font-size: 24px;">💰</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: #DC143C; margin-bottom: 8px;">¥200B+</div>
+                        <div style="font-size: 1rem; color: #8B0000; font-weight: 600; margin-bottom: 4px;">Annual Revenue Goal</div>
+                        <div style="font-size: 0.875rem; color: #A0522D;">Digital transformation target</div>
+                    </div>
+
+                    <!-- Digital Members Milestone -->
+                    <div style="background: rgba(139, 0, 0, 0.05); padding: 24px; border-radius: 16px; text-align: center; border: 1px solid rgba(139, 0, 0, 0.1);">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #DC143C, #FF4500); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: white; font-size: 24px;">👥</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: #DC143C; margin-bottom: 8px;">25M+</div>
+                        <div style="font-size: 1rem; color: #8B0000; font-weight: 600; margin-bottom: 4px;">Digital Members</div>
+                        <div style="font-size: 0.875rem; color: #A0522D;">Target by Q4 2025</div>
+                    </div>
+
+                    <!-- Market Share Milestone -->
+                    <div style="background: rgba(139, 0, 0, 0.05); padding: 24px; border-radius: 16px; text-align: center; border: 1px solid rgba(139, 0, 0, 0.1);">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #DC143C, #FF4500); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: white; font-size: 24px;">📊</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: #DC143C; margin-bottom: 8px;">80%</div>
+                        <div style="font-size: 1rem; color: #8B0000; font-weight: 600; margin-bottom: 4px;">Digital Channel Share</div>
+                        <div style="font-size: 0.875rem; color: #A0522D;">Market leadership goal</div>
+                    </div>
+
+                    <!-- AI Accuracy Milestone -->
+                    <div style="background: rgba(139, 0, 0, 0.05); padding: 24px; border-radius: 16px; text-align: center; border: 1px solid rgba(139, 0, 0, 0.1);">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #DC143C, #FF4500); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: white; font-size: 24px;">🎯</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: #DC143C; margin-bottom: 8px;">99%</div>
+                        <div style="font-size: 1rem; color: #8B0000; font-weight: 600; margin-bottom: 4px;">AI Prediction Accuracy</div>
+                        <div style="font-size: 0.875rem; color: #A0522D;">Target by Q3 2025</div>
+                    </div>
+
+                    <!-- Cost Reduction Milestone -->
+                    <div style="background: rgba(139, 0, 0, 0.05); padding: 24px; border-radius: 16px; text-align: center; border: 1px solid rgba(139, 0, 0, 0.1);">
+                        <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #DC143C, #FF4500); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: white; font-size: 24px;">📉</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: #DC143C; margin-bottom: 8px;">-50%</div>
+                        <div style="font-size: 1rem; color: #8B0000; font-weight: 600; margin-bottom: 4px;">Operational Cost Reduction</div>
+                        <div style="font-size: 0.875rem; color: #A0522D;">Through digital automation</div>
+                    </div>
+                </div>
+
+                <!-- Success Indicators -->
+                <div style="margin-top: 32px; padding: 24px; background: rgba(139, 0, 0, 0.05); border-radius: 16px; border: 1px solid rgba(139, 0, 0, 0.1);">
+                    <h4 style="margin-bottom: 20px; color: #8B0000; font-size: 1.25rem; font-weight: 600; text-align: center;">Digital Transformation Success Indicators</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                        <div style="text-align: center; padding: 16px;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #DC143C; margin-bottom: 4px;">95%+</div>
+                            <div style="font-size: 0.875rem; color: #A0522D;">Customer Satisfaction</div>
+                        </div>
+                        <div style="text-align: center; padding: 16px;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #DC143C; margin-bottom: 4px;">100%</div>
+                            <div style="font-size: 0.875rem; color: #A0522D;">Digital Platform Uptime</div>
+                        </div>
+                        <div style="text-align: center; padding: 16px;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #DC143C; margin-bottom: 4px;">3x</div>
+                            <div style="font-size: 0.875rem; color: #A0522D;">ROI on Digital Investment</div>
+                        </div>
+                        <div style="text-align: center; padding: 16px;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #DC143C; margin-bottom: 4px;">#1</div>
+                            <div style="font-size: 0.875rem; color: #A0522D;">Digital Leader in Industry</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="footer fade-in">
-            <p><strong>Transformation Success:</strong> Since January 2025, Swire Coca-Cola China has accelerated its digital transformation, integrating AI alongside cloud technologies, IoT, and mobile platforms to revolutionize customer experience and drive operational excellence.</p>
-            <p>Dashboard reflects comprehensive digital transformation metrics from January 2025 to present</p>
+        <!-- Footer -->
+        <div style="text-align: center; margin-top: 60px; padding: 40px; background: linear-gradient(135deg, #F5F5DC 0%, #FFFACD 100%); border-radius: 20px; border: 1px solid rgba(139, 0, 0, 0.1);">
+            <p style="color: #A0522D; font-size: 0.875rem; line-height: 1.6;"><strong>Transformation Success:</strong> Since January 2025, Swire Coca-Cola China has accelerated its digital transformation, integrating AI alongside cloud technologies, IoT, and mobile platforms to revolutionize customer experience and drive operational excellence.</p>
+            <p style="margin-top: 12px; opacity: 0.7; color: #A0522D; font-size: 0.875rem;">Dashboard reflects comprehensive digital transformation metrics from January 2025 to present</p>
         </div>
     </div>
 
@@ -729,27 +602,48 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Animate progress bars on page load
             setTimeout(() => {
-                const progressBars = document.querySelectorAll('.progress-fill');
+                // Find all progress bars with specific width styles
+                const progressBars = document.querySelectorAll('div[style*="width:"][style*="%"]');
                 progressBars.forEach(bar => {
-                    const width = bar.style.width;
-                    bar.style.width = '0%';
-                    setTimeout(() => {
-                        bar.style.width = width;
-                    }, 300);
+                    const currentStyle = bar.getAttribute('style');
+                    if (currentStyle && currentStyle.includes('width:') && currentStyle.includes('%')) {
+                        try {
+                            const widthMatch = currentStyle.match(/width:\s*(\d+)%/);
+                            if (widthMatch && widthMatch[1]) {
+                                const width = widthMatch[1] + '%';
+                                bar.style.width = '0%';
+                                setTimeout(() => {
+                                    bar.style.width = width;
+                                }, 300);
+                            }
+                        } catch (error) {
+                            console.log('Progress bar animation skipped for element:', bar);
+                        }
+                    }
                 });
             }, 500);
 
-            // Animate chart bars
+            // Add hover effects to cards with gradients
             setTimeout(() => {
-                const bars = document.querySelectorAll('.bar');
-                bars.forEach((bar, index) => {
-                    const height = bar.style.height;
-                    bar.style.height = '0%';
-                    setTimeout(() => {
-                        bar.style.height = height;
-                    }, 200 + (index * 100));
-                });
-            }, 800);
+                try {
+                    const cards = document.querySelectorAll('div[style*="background: linear-gradient"]');
+                    cards.forEach(card => {
+                        // Only add hover effects to main cards, not sub-elements
+                        if (card.style.padding && card.style.borderRadius) {
+                            card.addEventListener('mouseenter', function() {
+                                this.style.transform = 'translateY(-8px) scale(1.02)';
+                                this.style.transition = 'all 0.3s ease';
+                            });
+                            
+                            card.addEventListener('mouseleave', function() {
+                                this.style.transform = 'translateY(0) scale(1)';
+                            });
+                        }
+                    });
+                } catch (error) {
+                    console.log('Hover effects initialization failed:', error);
+                }
+            }, 100);
         });
     </script>
 </body>

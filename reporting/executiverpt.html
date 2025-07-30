@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Global Beverages Company Digital & AI Transformation Strategy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: #333;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100vh;
+            display: none;
+            padding: 60px;
+            position: relative;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            gap: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 15px 25px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #b71c1c;
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-indicator {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            z-index: 1000;
+        }
+
+        /* Slide Styles */
+        .slide-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .slide-title {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #d32f2f;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .slide-subtitle {
+            font-size: 1.8rem;
+            color: #666;
+            font-weight: 300;
+        }
+
+        .focus-message {
+            background: linear-gradient(135deg, #d32f2f, #b71c1c);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 20px 60px rgba(211, 47, 47, 0.3);
+        }
+
+        .focus-message h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .focus-message p {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .content-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border-left: 6px solid #d32f2f;
+            transition: transform 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .content-card h3 {
+            font-size: 2rem;
+            color: #d32f2f;
+            margin-bottom: 20px;
+        }
+
+        .content-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .content-card li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 1.1rem;
+        }
+
+        .content-card li:last-child {
+            border-bottom: none;
+        }
+
+        /* Metrics Display */
+        .metrics-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .metric-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border-top: 6px solid #d32f2f;
+            transition: all 0.3s ease;
+        }
+
+        .metric-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 30px 80px rgba(211, 47, 47, 0.2);
+        }
+
+        .metric-value {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #d32f2f;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .metric-description {
+            font-size: 1rem;
+            color: #888;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Financial Table */
+        .financial-table {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            margin: 40px 0;
+        }
+
+        .financial-table table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.1rem;
+        }
+
+        .financial-table th {
+            background: linear-gradient(135deg, #d32f2f, #b71c1c);
+            color: white;
+            padding: 25px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .financial-table td {
+            padding: 20px 25px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .financial-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .value-highlight {
+            font-weight: 700;
+            color: #2e7d32;
+            font-size: 1.3rem;
+        }
+
+        /* ROI Highlight */
+        .roi-section {
+            background: linear-gradient(135deg, #fff3e0, #ffebee);
+            padding: 50px;
+            border-radius: 25px;
+            text-align: center;
+            border: 3px solid #ff9800;
+            margin: 40px 0;
+        }
+
+        .roi-section h2 {
+            font-size: 3.5rem;
+            color: #e65100;
+            margin-bottom: 30px;
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .roi-item {
+            text-align: center;
+        }
+
+        .roi-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #d32f2f;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .roi-label {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Technology Stack */
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .tech-item {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border-left: 6px solid #2196f3;
+        }
+
+        .tech-item h4 {
+            font-size: 1.8rem;
+            color: #1976d2;
+            margin-bottom: 20px;
+        }
+
+        /* Strategic Pillars */
+        .pillars-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .pillar-card {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-15px);
+        }
+
+        .pillar-icon {
+            font-size: 5rem;
+            margin-bottom: 30px;
+            color: #d32f2f;
+        }
+
+        .pillar-card h3 {
+            font-size: 2.2rem;
+            color: #d32f2f;
+            margin-bottom: 25px;
+        }
+
+        .pillar-card p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        /* Decision Framework */
+        .decision-box {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            padding: 50px;
+            border-radius: 25px;
+            text-align: center;
+            border: 4px solid #4caf50;
+            margin: 40px 0;
+        }
+
+        .decision-box h2 {
+            font-size: 3.5rem;
+            color: #2e7d32;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .decision-box p {
+            font-size: 1.4rem;
+            color: #1b5e20;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            margin: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: #d32f2f;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 45%;
+            position: relative;
+        }
+
+        .timeline-marker {
+            width: 20px;
+            height: 20px;
+            background: #d32f2f;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .slide { padding: 30px; }
+            .slide-title { font-size: 3rem; }
+            .content-grid { grid-template-columns: 1fr; }
+            .metrics-showcase { grid-template-columns: repeat(2, 1fr); }
+            .pillars-container { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .slide-title { font-size: 2.5rem; }
+            .focus-message h2 { font-size: 2.2rem; }
+            .metrics-showcase { grid-template-columns: 1fr; }
+            .nav-container { 
+                padding: 10px 15px;
+                gap: 10px;
+            }
+            .nav-btn { 
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body { background: white; }
+            .slide { 
+                display: block !important;
+                page-break-after: always;
+                height: auto;
+                background: white;
+            }
+            .nav-container, .slide-indicator { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide Indicator -->
+        <div class="slide-indicator">
+            <span id="current-slide">1</span> / <span id="total-slides">13</span>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-container">
+            <button class="nav-btn" id="prev-btn" onclick="prevSlide()" disabled>← Previous</button>
+            <button class="nav-btn" id="next-btn" onclick="nextSlide()">Next →</button>
+        </div>
+
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active">
+            <div class="slide-header">
+                <h1 class="slide-title">A Global Beverages Company</h1>
+                <p class="slide-subtitle">Digital & AI Transformation Strategy</p>
+            </div>
+            
+            <div class="focus-message">
+                <h2>Executive Strategic Review</h2>
+                <p>Comprehensive analysis of digital transformation initiatives, AI integration, and strategic value creation for global Coca-Cola leadership team</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Report Scope</h3>
+                    <ul>
+                        <li><strong>Geographic Focus:</strong> China Operations (11 provinces + Shanghai)</li>
+                        <li><strong>Consumer Base:</strong> 674.9 million franchise population</li>
+                        <li><strong>Strategic Period:</strong> 2019-2025 with 2030 outlook</li>
+                        <li><strong>Investment Scale:</strong> ¥12 billion over next 10 years</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <h3>Executive Audience</h3>
+                    <ul>
+                        <li><strong>Global CEO:</strong> Strategic vision and competitive positioning</li>
+                        <li><strong>CFO:</strong> Financial performance and ROI analysis</li>
+                        <li><strong>China CEO:</strong> Regional market leadership strategy</li>
+                        <li><strong>CIO/CTO:</strong> Technology implementation roadmap</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="background: #f8f9fa; padding: 30px; border-radius: 15px; text-align: center; margin-top: 40px;">
+                <p style="font-size: 1.2rem; color: #666;"><strong>Prepared:</strong> July 2025 | <strong>Classification:</strong> Executive Strategic Planning</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Bottom Line Up Front -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Bottom Line Up Front</h1>
+                <p class="slide-subtitle">Executive Summary & Key Findings</p>
+            </div>
+
+            <div class="focus-message">
+                <h2>Strategic Achievement</h2>
+                <p>A Global Beverages Company has achieved #1 operational efficiency ranking globally among 80+ countries while building China's most advanced beverage industry digital ecosystem</p>
+            </div>
+
+            <div class="metrics-showcase">
+                <div class="metric-box">
+                    <span class="metric-value">#1</span>
+                    <div class="metric-label">Global OEE Ranking</div>
+                    <div class="metric-description">Among 80+ countries in Coca-Cola system</div>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">¥400M</span>
+                    <div class="metric-label">Avoided Capex</div>
+                    <div class="metric-description">Equivalent to 4 production lines</div>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">10M+</span>
+                    <div class="metric-label">Digital Members</div>
+                    <div class="metric-description">Active consumer ecosystem</div>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">20K+</span>
+                    <div class="metric-label">Smart Machines</div>
+                    <div class="metric-description">Connected vending network</div>
+                </div>
+            </div>
+
+            <div class="content-card" style="margin: 40px 0;">
+                <h3>Strategic Transformation Timeline</h3>
+                <ul>
+                    <li><strong>2019:</strong> Digital strategy identified as core strategic pillar</li>
+                    <li><strong>2021:</strong> First MIS 2.0 digital production line operational (Hangzhou)</li>
+                    <li><strong>2022:</strong> Achieved #1 global operational efficiency ranking</li>
+                    <li><strong>2023:</strong> 30 billion QR-coded products distributed</li>
+                    <li><strong>2024:</strong> SAP S/4HANA implementation completed</li>
+                    <li><strong>2025:</strong> Three new plants operational with advanced AI integration</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 3: Financial Performance -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Financial Performance</h1>
+                <p class="slide-subtitle">2024 Results & Strategic Value Creation</p>
+            </div>
+
+            <div class="focus-message">
+                <h2>¥23.2 Billion Revenue</h2>
+                <p>Strong financial performance with ¥7.7 billion profit (+6% YoY) despite volume challenges through strategic pricing optimization and premium positioning</p>
+            </div>
+
+            <div class="financial-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Performance Metric</th>
+                            <th>2024 Result</th>
+                            <th>YoY Growth</th>
+                            <th>Strategic Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>China Mainland Revenue</strong></td>
+                            <td class="value-highlight">¥23.2 Billion</td>
+                            <td style="color: #4caf50; font-weight: 600;">+2%</td>
+                            <td>Value-driven growth model</td>
+                        </tr>
+                        <tr>
+                            <td><strong>China Mainland Profit</strong></td>
+                            <td class="value-highlight">¥7.7 Billion</td>
+                            <td style="color: #4caf50; font-weight: 600;">+6%</td>
+                            <td>Operational efficiency gains</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Energy Drinks Revenue</strong></td>
+                            <td class="value-highlight">Category Growth</td>
+                            <td style="color: #4caf50; font-weight: 600;">+41%</td>
+                            <td>Market intelligence advantage</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Carbonated Beverages</strong></td>
+                            <td class="value-highlight">Core Portfolio</td>
+                            <td style="color: #4caf50; font-weight: 600;">+3%</td>
+                            <td>Premium pricing power</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Digital Investment ROI</strong></td>
+                            <td class="value-highlight">¥35+ Million</td>
+                            <td style="color: #4caf50; font-weight: 600;">Direct Returns</td>
+                            <td>MIS platform value creation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Business Model Evolution</h3>
+                    <ul>
+                        <li><strong>Volume Strategy → Value Strategy:</strong> Focus on premium positioning</li>
+                        <li><strong>Cost Reduction → Efficiency Gains:</strong> AI-driven optimization</li>
+                        <li><strong>Product Sales → Ecosystem Revenue:</strong> Digital services integration</li>
+                        <li><strong>Reactive → Predictive:</strong> Data-driven decision making</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <h3>Market Position Strength</h3>
+                    <ul>
+                        <li><strong>Consumer Reach:</strong> 674.9 million franchise population</li>
+                        <li><strong>Digital Ecosystem:</strong> 10+ million active members</li>
+                        <li><strong>Smart Infrastructure:</strong> 20,000+ connected touchpoints</li>
+                        <li><strong>Innovation Pipeline:</strong> 30 billion QR-coded products</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Total Strategic Value -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Total Strategic Value</h1>
+                <p class="slide-subtitle">Comprehensive ROI Analysis & Business Case</p>
+            </div>
+
+            <div class="roi-section">
+                <h2>¥1.99 Billion Annual Value</h2>
+                <p style="font-size: 1.3rem; margin-bottom: 30px;">Comprehensive value creation across all strategic categories</p>
+                
+                <div class="roi-grid">
+                    <div class="roi-item">
+                        <span class="roi-value">166%</span>
+                        <div class="roi-label">Annual ROI</div>
+                    </div>
+                    <div class="roi-item">
+                        <span class="roi-value">18</span>
+                        <div class="roi-label">Months Payback</div>
+                    </div>
+                    <div class="roi-item">
+                        <span class="roi-value">¥9.5B</span>
+                        <div class="roi-label">5-Year NPV</div>
+                    </div>
+                    <div class="roi-item">
+                        <span class="roi-value">¥790M</span>
+                        <div class="roi-label">Net Annual Benefit</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="financial-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Benefit Category</th>
+                            <th>Annual Value (¥M)</th>
+                            <th>5-Year NPV (¥M)</th>
+                            <th>Strategic Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Operational Savings</strong></td>
+                            <td class="value-highlight">460+</td>
+                            <td class="value-highlight">1,840+</td>
+                            <td><span style="color: #d32f2f; font-weight: 600;">Very High</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Revenue Growth Acceleration</strong></td>
+                            <td class="value-highlight">324+</td>
+                            <td class="value-highlight">1,620+</td>
+                            <td><span style="color: #d32f2f; font-weight: 600;">Critical</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Market Defense Value</strong></td>
+                            <td class="value-highlight">540+</td>
+                            <td class="value-highlight">2,700+</td>
+                            <td><span style="color: #d32f2f; font-weight: 600;">Critical</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Innovation & Speed Benefits</strong></td>
+                            <td class="value-highlight">298+</td>
+                            <td class="value-highlight">1,490+</td>
+                            <td><span style="color: #ff9800; font-weight: 600;">High</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sustainability ROI</strong></td>
+                            <td class="value-highlight">109+</td>
+                            <td class="value-highlight">545+</td>
+                            <td><span style="color: #ff9800; font-weight: 600;">Medium-High</span></td>
+                        </tr>
+                        <tr style="background: #f0f0f0; font-weight: 700;">
+                            <td><strong>TOTAL ANNUAL VALUE</strong></td>
+                            <td class="value-highlight" style="font-size: 1.4rem; color: #d32f2f;">¥1,990+</td>
+                            <td class="value-highlight" style="font-size: 1.4rem; color: #d32f2f;">¥9,505+</td>
+                            <td><span style="color: #d32f2f; font-weight: 700;">Transformational</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 5: Manufacturing Excellence -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Manufacturing Excellence</h1>
+                <p class="slide-subtitle">AI-Powered Production & MIS 2.0 Platform</p>
+            </div>
+
+            <div class="focus-message">
+                <h2>Manufacturing Information System 2.0</h2>
+                <p>Strategic partnership with Siemens delivering world-class production optimization across 26 plants and 97 production lines</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Technology Infrastructure</h3>
+                    <ul>
+                        <li><strong>Cloud-Edge Architecture:</strong> Real-time data processing</li>
+                        <li><strong>320+ WinCC+PM Software Sets:</strong> Production monitoring</li>
+                        <li><strong>300+ Scalance Networks:</strong> Industrial connectivity</li>
+                        <li><strong>6+ 5G Modules:</strong> Next-generation communication</li>
+                        <li><strong>40+ S7-1500 PLCs:</strong> Advanced process control</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <h3>Operational Benefits</h3>
+                    <ul>
+                        <li><strong>4.2% OEE Improvement:</strong> Global #1 ranking achieved</li>
+                        <li><strong>550M Can Capacity:</strong> Unlocked without new investment</li>
+                        <li><strong>Predictive Maintenance:</strong> First-in-industry solution</li>
+                        <li><strong>Real-time Quality:</strong> Sugar content & volume monitoring</li>
+                        <li><strong>Mobile Access:</strong> Nationwide data availability</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="metrics-showcase">
+                <div class="metric-box">
+                    <span class="metric-value">¥400M</span>
+                    <div class="metric-label">Production Line Savings</div>
+                    <div class="metric-description">Equivalent to 4 avoided investments</div>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">10M</span>
+                    <div class="metric-label">kWh Annual Savings</div>
+                    <div class="metric-description">5,000 household equivalent</div>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">7,500</span>
+                    <div class="metric-label">Tons CO₂ Reduction</div>
+                    <div class="metric-description">Environmental impact</div>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">¥35M</span>
+                    <div class="metric-label">Direct MIS ROI</div>
+                    <div class="metric-description">Platform revenue generation</div>
+                </div>
+            </div>
+
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <h4>AI Integration Capabilities</h4>
+                    <p><strong>Multi-dimensional Analysis:</strong> Efficiency, energy consumption, safety, quality, and predictive maintenance algorithms working in real-time</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Quality Management Evolution</h4>
+                    <p><strong>From Sampling to Continuous:</strong> Every bottle monitored for sugar content and volume with AI-driven defect prediction and prevention</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Digital Transformation Journey -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Journey of Digital Transformation</h1>
+                <p class="slide-subtitle">Strategic Framework & Implementation Roadmap</p>
+            </div>
+
+            <div class="focus-message">
+                <h2>Three-Pillar Transformation Strategy</h2>
+                <p>Comprehensive digital transformation journey aligned with global Coca-Cola digital strategy framework, delivering enhanced consumer experience, sales effectiveness, and operational agility</p>
+            </div>
+
+            <div style="margin: 40px 0;">
+                <!-- Pillar 1: Enhance Consumer Experience -->
+                <div style="background: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    <h3 style="color: #d32f2f; font-size: 1.8rem; margin-bottom: 15px;">🎯 ENHANCE CONSUMER EXPERIENCE</h3>
+                    <p style="color: #666; margin-bottom: 20px; font-style: italic;">Unlock growth and competitive advantage through agile, digitally powered marketing fueled by data and new technologies</p>
+                    
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+                        <div style="background: #1976d2; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; min-width: 200px; text-align: center;">
+                            Data Driven, Tech & AI Sales Organization
+                        </div>
+                        <div style="color: #1976d2; font-size: 2rem;">→</div>
+                        <div style="background: #4caf50; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; min-width: 200px; text-align: center;">
+                            Excel in Commercial Practices
+                        </div>
+                        <div style="color: #4caf50; font-size: 2rem;">→</div>
+                        <div style="background: #ff9800; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; min-width: 200px; text-align: center;">
+                            Truly Consumer & Customer Centric
+                        </div>
+                        <div style="color: #ff9800; font-size: 2rem;">→</div>
+                        <div style="background: #2196f3; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; min-width: 200px; text-align: center;">
+                            Attract & Develop Best Talent
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pillar 2: Driving Sales Effectiveness -->
+                <div style="background: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    <h3 style="color: #d32f2f; font-size: 1.8rem; margin-bottom: 15px;">🚀 DRIVING SALES EFFECTIVENESS</h3>
+                    <p style="color: #666; margin-bottom: 20px; font-style: italic;">Leverage technology and strengthen commercial capabilities to build a high-performing, future-ready sales team</p>
+                    
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+                        <div style="background: #1976d2; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; min-width: 200px; text-align: center;">
+                            Direct Consumer Access at Scale
+                        </div>
+                        <div style="color: #1976d2; font-size: 2rem;">→</div>
+                        <div style="background: #4caf50; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; min-width: 200px; text-align: center;">
+                            Next Level Content
+                        </div>
+                        <div style="color: #4caf50; font-size: 2rem;">→</div>
+                        <div style="background: #ff9800; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; min-width: 200px; text-align: center;">
+                            Always On Analytics
+                        </div>
+                        <div style="color: #ff9800; font-size: 2rem;">→</div>
+                        <div style="background: #2196f3; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; min-width: 200px; text-align: center;">
+                            Channel-less Commerce
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pillar 3: Agile & Efficient Operations -->
+                <div style="background: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    <h3 style="color: #d32f2f; font-size: 1.8rem; margin-bottom: 15px;">⚡ AGILE & EFFICIENT OPERATIONS</h3>
+                    <p style="color: #666; margin-bottom: 20px; font-style: italic;">Win Consumer Preference empowering our people to make faster better decisions</p>
+                    
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+                        <div style="background: #9c27b0; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; min-width: 150px; text-align: center;">
+                            Connected Sourcing
+                        </div>
+                        <div style="color: #9c27b0; font-size: 2rem;">→</div>
+                        <div style="background: #1976d2; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; min-width: 150px; text-align: center;">
+                            Connected Planning
+                        </div>
+                        <div style="color: #1976d2; font-size: 2rem;">→</div>
+                        <div style="background: #4caf50; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; min-width: 150px; text-align: center;">
+                            Connected Factories
+                        </div>
+                        <div style="color: #4caf50; font-size: 2rem;">→</div>
+                        <div style="background: #ff9800; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; min-width: 150px; text-align: center;">
+                            Connected Logistics
+                        </div>
+                        <div style="color: #ff9800; font-size: 2rem;">→</div>
+                        <div style="background: #2196f3; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; min-width: 150px; text-align: center;">
+                            Connected Customers
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Foundation -->
+                <div style="background: linear-gradient(135deg, #f5f5f5, #e0e0e0); padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    <h4 style="color: #ff6b35; font-size: 1.4rem; margin-bottom: 20px; text-align: center;">🏗️ Future Ready People Capabilities & Culture</h4>
+                    
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; align-items: center;">
+                        <div style="background: #e3f2fd; color: #1976d2; padding: 15px 20px; border-radius: 10px; font-weight: 600; text-align: center; border: 2px solid #1976d2;">
+                            E2E Operating Model with Functional Excellence
+                        </div>
+                        <div style="color: #666; font-size: 1.5rem;">→</div>
+                        <div style="background: #e8f5e8; color: #2e7d32; padding: 15px 20px; border-radius: 10px; font-weight: 600; text-align: center; border: 2px solid #4caf50;">
+                            Integrated Business Services
+                        </div>
+                        <div style="color: #666; font-size: 1.5rem;">→</div>
+                        <div style="background: #fff3e0; color: #f57c00; padding: 15px 20px; border-radius: 10px; font-weight: 600; text-align: center; border: 2px solid #ff9800;">
+                            Data & AI
+                        </div>
+                        <div style="color: #666; font-size: 1.5rem;">→</div>
+                        <div style="background: #e0f2f1; color: #00695c; padding: 15px 20px; border-radius: 10px; font-weight: 600; text-align: center; border: 2px solid #26a69a;">
+                            Technology
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>China Implementation Status</h3>
+                    <ul>
+                        <li><strong>✅ Connected Factories:</strong> MIS 2.0 across 26 plants, 97 production lines</li>
+                        <li><strong>✅ Direct Consumer Access:</strong> 20,000+ smart vending machines deployed</li>
+                        <li><strong>✅ Always On Analytics:</strong> 10M+ digital members with real-time insights</li>
+                        <li><strong>✅ Data & AI Foundation:</strong> Predictive maintenance and quality systems</li>
+                        <li><strong>🔄 Connected Logistics:</strong> AI-driven supply chain optimization ongoing</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <h3>Global Replication Priorities</h3>
+                    <ul>
+                        <li><strong>Phase 1:</strong> Connected Factories foundation (MIS platform rollout)</li>
+                        <li><strong>Phase 2:</strong> Direct Consumer Access scaling (smart infrastructure)</li>
+                        <li><strong>Phase 3:</strong> Always On Analytics implementation (AI/data platforms)</li>
+                        <li><strong>Phase 4:</strong> Channel-less Commerce integration (omnichannel)</li>
+                        <li><strong>Phase 5:</strong> End-to-end connected ecosystem (full transformation)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Digital Consumer Ecosystem -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Digital Consumer Ecosystem</h1>
+                <p class="slide-subtitle">Direct Consumer Access & Sales Effectiveness Implementation</p>
+            </div>
+
+            <div class="focus-message">
+                <h2>10+ Million Active Digital Members</h2>
+                <p>Comprehensive implementation of "Direct Consumer Access at Scale" and "Always On Analytics" pillars creating unprecedented consumer insights and channel-less commerce capabilities</p>
+            </div>
+
+            <!-- Consumer Experience Journey -->
+            <div style="background: white; padding: 30px; border-radius: 15px; margin: 30px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <h3 style="color: #d32f2f; font-size: 1.8rem; margin-bottom: 20px; text-align: center;">🎯 Enhanced Consumer Experience Implementation</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 20px;">
+                    <div style="background: #e3f2fd; padding: 25px; border-radius: 15px; border-left: 6px solid #1976d2;">
+                        <h4 style="color: #1976d2; margin-bottom: 15px;">🏪 Direct Consumer Access at Scale</h4>
+                        <ul>
+                            <li><strong>20,000+ Smart Vending Machines:</strong> Real-time consumer behavior analytics</li>
+                            <li><strong>30 Billion QR-Coded Products:</strong> Unique transaction codes enabling direct engagement</li>
+                            <li><strong>Omnichannel Integration:</strong> Seamless online-offline experience</li>
+                            <li><strong>Payment Innovation:</strong> Mobile payment and loyalty integration</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #e8f5e8; padding: 25px; border-radius: 15px; border-left: 6px solid #4caf50;">
+                        <h4 style="color: #4caf50; margin-bottom: 15px;">📱 Next Level Content</h4>
+                        <ul>
+                            <li><strong>"Everyday Coke" WeChat Platform:</strong> Personalized content delivery</li>
+                            <li><strong>AI-Powered Personalization:</strong> Dynamic content optimization</li>
+                            <li><strong>Real-time Campaigns:</strong> Instant market response capabilities</li>
+                            <li><strong>Interactive Experiences:</strong> Gamification and engagement tools</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #fff3e0; padding: 25px; border-radius: 15px; border-left: 6px solid #ff9800;">
+                        <h4 style="color: #ff9800; margin-bottom: 15px;">📊 Always On Analytics</h4>
+                        <ul>
+                            <li><strong>Consumer Intelligence Platform:</strong> Real-time behavioral insights</li>
+                            <li><strong>Predictive Analytics:</strong> Purchase intention and trend forecasting</li>
+                            <li><strong>Market Feedback Loop:</strong> Instant consumer preference data</li>
+                            <li><strong>Performance Optimization:</strong> Continuous campaign and content refinement</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #e0f2f1; padding: 25px; border-radius: 15px; border-left: 6px solid #26a69a;">
+                        <h4 style="color: #26a69a; margin-bottom: 15px;">🛒 Channel-less Commerce</h4>
+                        <ul>
+                            <li><strong>Unified Commerce Platform:</strong> Single view across all touchpoints</li>
+                            <li><strong>Direct Purchase Integration:</strong> Seamless buying experiences</li>
+                            <li><strong>Inventory Synchronization:</strong> Real-time stock management</li>
+                            <li><strong>Customer Journey Optimization:</strong> End-to-end experience management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Consumer-Centric Transformation -->
+            <div style="background: linear-gradient(135deg, #f5f5f5, #e8f4f8); padding: 30px; border-radius: 15px; margin: 30px 0;">
+                <h3 style="color: #d32f2f; font-size: 1.8rem; margin-bottom: 25px; text-align: center;">Be Truly Consumer & Customer Centric</h3>
+                
+                <div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 20px;">
+                    <div style="text-align: center; background: white; padding: 20px; border-radius: 15px; min-width: 200px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 2.5rem; color: #1976d2; margin-bottom: 10px;">674.9M</div>
+                        <div style="font-weight: 600; color: #666;">Consumer Reach</div>
+                        <div style="font-size: 0.9rem; color: #888; margin-top: 5px;">Franchise Population</div>
+                    </div>
+                    <div style="color: #1976d2; font-size: 2rem;">→</div>
+                    <div style="text-align: center; background: white; padding: 20px; border-radius: 15px; min-width: 200px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 2.5rem; color: #4caf50; margin-bottom: 10px;">10M+</div>
+                        <div style="font-weight: 600; color: #666;">Digital Members</div>
+                        <div style="font-size: 0.9rem; color: #888; margin-top: 5px;">Active Engagement</div>
+                    </div>
+                    <div style="color: #4caf50; font-size: 2rem;">→</div>
+                    <div style="text-align: center; background: white; padding: 20px; border-radius: 15px; min-width: 200px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 2.5rem; color: #ff9800; margin-bottom: 10px;">¥180+</div>
+                        <div style="font-weight: 600; color: #666;">Lifetime Value</div>
+                        <div style="font-size: 0.9rem; color: #888; margin-top: 5px;">Per Digital Member</div>
+                    </div>
+                    <div style="color: #ff9800; font-size: 2rem;">→</div>
+                    <div style="text-align: center; background: white; padding: 20px; border-radius: 15px; min-width: 200px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 2.5rem; color: #2196f3; margin-bottom: 10px;">¥1.8B+</div>
+                        <div style="font-weight: 600; color: #666;">Ecosystem Value</div>
+                        <div style="font-size: 0.9rem; color: #888; margin-top: 5px;">5-Year Potential</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Strategic Competitive Advantages</h3>
+                    <ul>
+                        <li><strong>Data-Driven Organization:</strong> Comprehensive consumer insights driving all decisions</li>
+                        <li><strong>Tech & AI Sales Excellence:</strong> Automated and optimized sales processes</li>
+                        <li><strong>Commercial Practice Leadership:</strong> Industry-leading marketing and engagement</li>
+                        <li><strong>Consumer Data Supremacy:</strong> Unmatched insight depth in China market</li>
+                        <li><strong>Digital Ecosystem Moat:</strong> High consumer switching costs</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <h3>Future Capabilities Development</h3>
+                    <ul>
+                        <li><strong>Attract Best Talent:</strong> Digital-first organization attracting top performers</li>
+                        <li><strong>AI-Powered Personalization:</strong> Individual consumer journey optimization</li>
+                        <li><strong>Predictive Commerce:</strong> Anticipate and fulfill consumer needs</li>
+                        <li><strong>Innovation Acceleration:</strong> Faster time-to-market for new products</li>
+                        <li><strong>Global Standards Setting:</strong> Best practice export to other markets</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: AI & Safety Innovation -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">AI & Safety Innovation</h1>
+                <p class="slide-subtitle">Connected Operations & Predictive Analytics Implementation</p>
+            </div>
+
+            <div class="focus-message">
+                <h2>27% Reduction in Safety Incidents</h2>
+                <p>Implementation of "Connected Operations" pillar through AI-powered safety management and predictive manufacturing systems delivering operational excellence and cost optimization</p>
+            </div>
+
+            <!-- Connected Operations Implementation -->
+            <div style="background: white; padding: 30px; border-radius: 15px; margin: 30px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <h3 style="color: #d32f2f; font-size: 1.8rem; margin-bottom: 20px; text-align: center;">⚡ Agile & Efficient Operations Achievement</h3>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+                    <div style="background: #9c27b0; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; text-align: center; flex: 1; min-width: 150px;">
+                        Connected Sourcing<br>
+                        <small style="opacity: 0.8;">✅ AI-powered supplier optimization</small>
+                    </div>
+                    <div style="color: #9c27b0; font-size: 1.5rem;">→</div>
+                    <div style="background: #1976d2; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; text-align: center; flex: 1; min-width: 150px;">
+                        Connected Planning<br>
+                        <small style="opacity: 0.8;">✅ Predictive demand management</small>
+                    </div>
+                    <div style="color: #1976d2; font-size: 1.5rem;">→</div>
+                    <div style="background: #4caf50; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; text-align: center; flex: 1; min-width: 150px;">
+                        Connected Factories<br>
+                        <small style="opacity: 0.8;">✅ MIS 2.0 platform deployed</small>
+                    </div>
+                    <div style="color: #4caf50; font-size: 1.5rem;">→</div>
+                    <div style="background: #ff9800; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; text-align: center; flex: 1; min-width: 150px;">
+                        Connected Logistics<br>
+                        <small style="opacity: 0.8;">🔄 AI optimization ongoing</small>
+                    </div>
+                    <div style="color: #ff9800; font-size: 1.5rem;">→</div>
+                    <div style="background: #2196f3; color: white; padding: 15px 20px; border-radius: 10px; font-weight: 600; text-align: center; flex: 1; min-width: 150px;">
+                        Connected Customers<br>
+                        <small style="opacity: 0.8;">✅ 10M+ digital members</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>AI Safety & Predictive Systems</h3>
+                    <ul>
+                        <li><strong>Intenseye AI Platform:</strong> Real-time hazard detection and prevention</li>
+                        <li><strong>CCTV Integration:</strong> Existing infrastructure AI enhancement</li>
+                        <li><strong>Predictive Maintenance:</strong> Equipment failure prevention systems</li>
+                        <li><strong>Multi-environment Coverage:</strong> Production, warehouses, logistics areas</li>
+                        <li><strong>Microsoft AI Partnership:</strong> Factory Namespace Manager implementation</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <h3>Connected Manufacturing Excellence</h3>
+                    <ul>
+                        <li><strong>MIS 2.0 Platform:</strong> Real-time production optimization across 26 plants</li>
+                        <li><strong>Quality Control AI:</strong> Every bottle monitored for consistency</li>
+                        <li><strong>Energy Management AI:</strong> 10M kWh annual savings achievement</li>
+                        <li><strong>Fault Diagnosis:</strong> Reduced equipment downtime through AI</li>
+                        <li><strong>Performance Analytics:</strong> Multi-dimensional operational insights</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="metrics-showcase">
+                <div class="metric-box">
+                    <span class="metric-value">27%</span>
+                    <div class="metric-label">Safety Incident Reduction</div>
+                    <div class="metric-description">Lost Day Rate improvement</div>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">¥25M</span>
+                    <div class="metric-label">Safety Cost Savings</div>
+                    <div class="metric-description">Annual operational benefits</div>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">¥12M</span>
+                    <div class="metric-label">Energy Cost Savings</div>
+                    <div class="metric-description">10M kWh optimization</div>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">40-60%</span>
+                    <div class="metric-label">Defect Reduction</div>
+                    <div class="metric-description">AI quality control impact</div>
+                </div>
+            </div>
+
+            <!-- Future Ready Foundation -->
+            <div style="background: linear-gradient(135deg, #e8f5e8, #f0f8ff); padding: 30px; border-radius: 15px; margin-top: 30px;">
+                <h4 style="color: #d32f2f; font-size: 1.6rem; margin-bottom: 20px; text-align: center;">Future Ready People Capabilities Implementation</h4>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #1976d2;">
+                        <strong style="color: #1976d2;">E2E Operating Model:</strong> Standardized processes enabling faster, better decision-making across all connected operations
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #4caf50;">
+                        <strong style="color: #4caf50;">Data & AI Excellence:</strong> Advanced analytics capabilities empowering people to optimize operations in real-time
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Strategic Technology Partnerships</h1>
+                <p class="slide-subtitle">Global Technology Alliance Ecosystem</p>
+            </div>
+
+            <div class="focus-message">
+                <h2>World-Class Technology Integration</h2>
+                <p>Strategic partnerships with industry leaders Siemens, Microsoft, and SAP creating comprehensive digital transformation platform</p>
+            </div>
+
+            <div class="tech-stack">
+                <div class="tech-item" style="border-left-color: #0072CE;">
+                    <h4>Siemens Digital Partnership</h4>
+                    <p><strong>Scope:</strong> Digital plant construction, supply chain intelligent management, digital talent training</p>
+                    <p><strong>Innovation:</strong> Joint MIS 2.0 platform development as industry benchmark</p>
+                    <p><strong>Future:</strong> AI, big data, and MindSphere integration roadmap</p>
+                    <p><strong>Global Ambition:</strong> MIS platform as worldwide company standard</p>
+                </div>
+                <div class="tech-item" style="border-left-color: #00A4EF;">
+                    <h4>Microsoft AI Collaboration</h4>
+                    <p><strong>Focus:</strong> Industrial AI model adaptation for manufacturing optimization</p>
+                    <p><strong>Platform:</strong> Azure-based AI services for data processing and analytics</p>
+                    <p><strong>Integration:</strong> Factory data standardization and enterprise connectivity</p>
+                    <p><strong>Innovation:</strong> Factory Namespace Manager for AI-ready manufacturing</p>
+                </div>
+                <div class="tech-item" style="border-left-color: #0FAAFF;">
+                    <h4>SAP Digital Foundation</h4>
+                    <p><strong>Implementation:</strong> S/4HANA across Hong Kong operations (2024)</p>
+                    <p><strong>Scope:</strong> Manufacturing, sourcing, financing, customer ordering optimization</p>
+                    <p><strong>Scalability:</strong> Harmonized operations with real-time insights</p>
+                    <p><strong>Integration:</strong> Warehousing and delivery optimization platform</p>
+                </div>
+                <div class="tech-item" style="border-left-color: #FF6B35;">
+                    <h4>Intenseye Safety AI</h4>
+                    <p><strong>Technology:</strong> Computer vision AI for workplace safety management</p>
+                    <p><strong>Results:</strong> 27% reduction in Lost Day Rate within one year</p>
+                    <p><strong>Coverage:</strong> Production workshops, warehouses, high-traffic areas</p>
+                    <p><strong>Expansion:</strong> Planned rollout to Taiwan and other markets</p>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Partnership Strategic Value</h3>
+                    <ul>
+                        <li><strong>Technology Leadership:</strong> Access to cutting-edge innovations</li>
+                        <li><strong>Implementation Speed:</strong> Proven solutions reduce development time</li>
+                        <li><strong>Global Scale:</strong> Enterprise-grade platforms with worldwide support</li>
+                        <li><strong>Continuous Innovation:</strong> Ongoing R&D collaboration and updates</li>
+                        <li><strong>Risk Mitigation:</strong> Industry-leading security and reliability</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <h3>Competitive Differentiation</h3>
+                    <ul>
+                        <li><strong>Exclusive Capabilities:</strong> Custom solutions unavailable to competitors</li>
+                        <li><strong>Integration Depth:</strong> End-to-end technology stack optimization</li>
+                        <li><strong>Innovation Pipeline:</strong> Early access to emerging technologies</li>
+                        <li><strong>Global Standards:</strong> Setting industry benchmarks and best practices</li>
+                        <li><strong>Ecosystem Effects:</strong> Network value multiplication through partnerships</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Future Investment Strategy -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Future Investment Strategy</h1>
+                <p class="slide-subtitle">2025-2035 Strategic Vision Aligned with Digital Transformation Journey</p>
+            </div>
+
+            <div class="focus-message">
+                <h2>¥12 Billion Investment Commitment</h2>
+                <p>Comprehensive 10-year investment strategy aligned with three-pillar digital transformation framework: Enhanced Consumer Experience, Sales Effectiveness, and Operational Agility</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4 style="color: #d32f2f; font-size: 1.5rem; margin-bottom: 15px;">Phase 1 (2025-2027): Foundation & Scale</h4>
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin-bottom: 15px;">
+                            <strong style="color: #1976d2;">🎯 Enhance Consumer Experience:</strong>
+                            <ul style="margin-top: 10px;">
+                                <li>Complete data-driven tech & AI sales organization transformation</li>
+                                <li>Excel in commercial practices through digital tools deployment</li>
+                                <li>Achieve true consumer-centric operations via real-time analytics</li>
+                            </ul>
+                        </div>
+                        <div style="background: #f0f8ff; padding: 20px; border-radius: 10px; margin-bottom: 15px;">
+                            <strong style="color: #4caf50;">🚀 Driving Sales Effectiveness:</strong>
+                            <ul style="margin-top: 10px;">
+                                <li>Scale direct consumer access to 50,000+ smart touchpoints</li>
+                                <li>Deploy next-level content through AI-powered personalization</li>
+                                <li>Implement always-on analytics across all customer interactions</li>
+                            </ul>
+                        </div>
+                        <div style="background: #f8fff8; padding: 20px; border-radius: 10px;">
+                            <strong style="color: #ff9800;">⚡ Agile & Efficient Operations:</strong>
+                            <ul style="margin-top: 10px;">
+                                <li>Complete connected factories rollout (3 new plants: Suzhou ¥2B, Zhengzhou, Guangdong)</li>
+                                <li>Integrate connected planning and sourcing systems</li>
+                                <li>Launch connected logistics optimization platform</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4 style="color: #d32f2f; font-size: 1.5rem; margin-bottom: 15px;">Phase 2 (2028-2030): Integration & Optimization</h4>
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin-bottom: 15px;">
+                            <strong style="color: #1976d2;">🎯 Consumer Experience Excellence:</strong>
+                            <ul style="margin-top: 10px;">
+                                <li>Attract and develop best-in-class digital talent ecosystem</li>
+                                <li>Achieve full consumer-centricity through AI-powered insights</li>
+                                <li>Deploy advanced commercial practices with predictive capabilities</li>
+                            </ul>
+                        </div>
+                        <div style="background: #f0f8ff; padding: 20px; border-radius: 10px; margin-bottom: 15px;">
+                            <strong style="color: #4caf50;">🚀 Advanced Sales Effectiveness:</strong>
+                            <ul style="margin-top: 10px;">
+                                <li>Achieve true channel-less commerce integration</li>
+                                <li>Deploy advanced AI content generation and optimization</li>
+                                <li>Implement predictive consumer demand modeling</li>
+                            </ul>
+                        </div>
+                        <div style="background: #f8fff8; padding: 20px; border-radius: 10px;">
+                            <strong style="color: #ff9800;">⚡ Fully Connected Operations:</strong>
+                            <ul style="margin-top: 10px;">
+                                <li>Complete end-to-end connected customer integration</li>
+                                <li>Deploy autonomous supply chain and logistics networks</li>
+                                <li>Achieve real-time connected ecosystem across all operations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4 style="color: #d32f2f; font-size: 1.5rem; margin-bottom: 15px;">Phase 3 (2030-2035): Leadership & Innovation</h4>
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin-bottom: 15px;">
+                            <strong style="color: #1976d2;">🎯 Industry-Leading Experience:</strong>
+                            <ul style="margin-top: 10px;">
+                                <li>Set global standards for consumer experience in beverage industry</li>
+                                <li>Lead talent development and organizational transformation globally</li>
+                                <li>Pioneer next-generation commercial practices and technologies</li>
+                            </ul>
+                        </div>
+                        <div style="background: #f0f8ff; padding: 20px; border-radius: 10px; margin-bottom: 15px;">
+                            <strong style="color: #4caf50;">🚀 Sales Innovation Leadership:</strong>
+                            <ul style="margin-top: 10px;">
+                                <li>Define future of channel-less commerce for global beverage industry</li>
+                                <li>Lead AI-powered content and analytics innovation</li>
+                                <li>Establish global standards for direct consumer engagement at scale</li>
+                            </ul>
+                        </div>
+                        <div style="background: #f8fff8; padding: 20px; border-radius: 10px;">
+                            <strong style="color: #ff9800;">⚡ Operational Excellence Standard:</strong>
+                            <ul style="margin-top: 10px;">
+                                <li>Achieve carbon neutrality through fully connected, AI-optimized operations</li>
+                                <li>Set global benchmark for connected supply chain and manufacturing</li>
+                                <li>Export operational excellence model to global Coca-Cola system</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #e8f5e8, #c8e6c9); padding: 30px; border-radius: 20px; margin-top: 40px; border: 2px solid #4caf50;">
+                <h4 style="color: #2e7d32; font-size: 1.8rem; margin-bottom: 20px; text-align: center;">🏗️ Foundation Investment Priorities</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div style="text-align: center; background: white; padding: 20px; border-radius: 10px;">
+                        <div style="font-size: 2rem; color: #1976d2; font-weight: 700;">¥4.8B</div>
+                        <div style="color: #666; font-weight: 600;">E2E Operating Model & Functional Excellence</div>
+                    </div>
+                    <div style="text-align: center; background: white; padding: 20px; border-radius: 10px;">
+                        <div style="font-size: 2rem; color: #4caf50; font-weight: 700;">¥2.4B</div>
+                        <div style="color: #666; font-weight: 600;">Integrated Business Services</div>
+                    </div>
+                    <div style="text-align: center; background: white; padding: 20px; border-radius: 10px;">
+                        <div style="font-size: 2rem; color: #ff9800; font-weight: 700;">¥3.6B</div>
+                        <div style="color: #666; font-weight: 600;">Data & AI Platform Development</div>
+                    </div>
+                    <div style="text-align: center; background: white; padding: 20px; border-radius: 10px;">
+                        <div style="font-size: 2rem; color: #2196f3; font-weight: 700;">¥1.2B</div>
+                        <div style="color: #666; font-weight: 600;">Technology Infrastructure</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Global Replication Strategy -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Global Replication Strategy</h1>
+                <p class="slide-subtitle">Scaling Digital Transformation Journey Across Global Coca-Cola System</p>
+            </div>
+
+            <div class="focus-message">
+                <h2>Three-Pillar Global Implementation</h2>
+                <p>Systematic rollout of proven digital transformation journey framework across 80+ countries, prioritizing high-impact markets with established infrastructure capabilities</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 40px 0;">
+                <!-- Phase 1: Foundation -->
+                <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-left: 6px solid #1976d2;">
+                    <h3 style="color: #1976d2; font-size: 1.8rem; margin-bottom: 20px;">Phase 1: Foundation (0-18 months)</h3>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #d32f2f; margin-bottom: 10px;">🏭 Agile & Efficient Operations</h4>
+                        <ul>
+                            <li>Deploy MIS 2.0 platform in priority markets</li>
+                            <li>Establish connected factories foundation</li>
+                            <li>Implement AI safety management systems</li>
+                            <li>Create connected planning capabilities</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #f5f5f5; padding: 15px; border-radius: 10px;">
+                        <strong>Priority Markets:</strong> India, Mexico, Brazil, Philippines<br>
+                        <strong>Investment:</strong> ¥8-10B across 4 markets<br>
+                        <strong>Target:</strong> 50+ plants, 150+ production lines
+                    </div>
+                </div>
+
+                <!-- Phase 2: Consumer & Sales -->
+                <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-left: 6px solid #4caf50;">
+                    <h3 style="color: #4caf50; font-size: 1.8rem; margin-bottom: 20px;">Phase 2: Consumer & Sales (18-36 months)</h3>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #d32f2f; margin-bottom: 10px;">🎯 Enhanced Consumer Experience</h4>
+                        <ul>
+                            <li>Deploy smart vending networks at scale</li>
+                            <li>Implement QR-coded product strategies</li>
+                            <li>Launch localized digital platforms</li>
+                            <li>Build consumer-centric analytics</li>
+                        </ul>
+                        
+                        <h4 style="color: #d32f2f; margin-bottom: 10px; margin-top: 15px;">🚀 Driving Sales Effectiveness</h4>
+                        <ul>
+                            <li>Scale direct consumer access programs</li>
+                            <li>Deploy next-level content platforms</li>
+                            <li>Implement always-on analytics</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #f0f8ff; padding: 15px; border-radius: 10px;">
+                        <strong>Expansion Markets:</strong> Indonesia, Egypt, Turkey, Vietnam<br>
+                        <strong>Investment:</strong> ¥5-7B additional investment<br>
+                        <strong>Target:</strong> 100K+ smart touchpoints
+                    </div>
+                </div>
+            </div>
+
+            <!-- Implementation Framework -->
+            <div style="background: linear-gradient(135deg, #f5f5f5, #e0e0e0); padding: 40px; border-radius: 20px; margin: 40px 0;">
+                <h3 style="color: #d32f2f; font-size: 2rem; margin-bottom: 30px; text-align: center;">Global Implementation Framework</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+                    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; border-top: 4px solid #1976d2;">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">🏗️</div>
+                        <h4 style="color: #1976d2; margin-bottom: 15px;">E2E Operating Model</h4>
+                        <p style="font-size: 0.9rem; color: #666;">Functional excellence foundation with standardized processes and governance</p>
+                    </div>
+                    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; border-top: 4px solid #4caf50;">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">🔗</div>
+                        <h4 style="color: #4caf50; margin-bottom: 15px;">Integrated Business Services</h4>
+                        <p style="font-size: 0.9rem; color: #666;">Shared services model enabling scale and efficiency</p>
+                    </div>
+                    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; border-top: 4px solid #ff9800;">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">🤖</div>
+                        <h4 style="color: #ff9800; margin-bottom: 15px;">Data & AI</h4>
+                        <p style="font-size: 0.9rem; color: #666;">Advanced analytics and AI capabilities for decision making</p>
+                    </div>
+                    <div style="background: white; padding: 25px; border-radius: 15px; text-align: center; border-top: 4px solid #2196f3;">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">💻</div>
+                        <h4 style="color: #2196f3; margin-bottom: 15px;">Technology</h4>
+                        <p style="font-size: 0.9rem; color: #666;">Modern technology infrastructure and platforms</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metrics-showcase">
+                <div class="metric-box">
+                    <span class="metric-value">¥15B+</span>
+                    <div class="metric-label">Global Value Potential</div>
+                    <div class="metric-description">3-year system-wide implementation</div>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">80+</span>
+                    <div class="metric-label">Target Countries</div>
+                    <div class="metric-description">Phased market penetration</div>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">18-24</span>
+                    <div class="metric-label">Month Advantage</div>
+                    <div class="metric-description">First-mover competitive window</div>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">200%+</span>
+                    <div class="metric-label">System ROI</div>
+                    <div class="metric-description">Expected global returns</div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Success Enablers</h3>
+                    <ul>
+                        <li><strong>Partnership Leverage:</strong> Existing Siemens, Microsoft, SAP relationships</li>
+                        <li><strong>Proven Playbook:</strong> China implementation provides validated approach</li>
+                        <li><strong>Technology Transfer:</strong> MIS 2.0 platform ready for deployment</li>
+                        <li><strong>Talent Development:</strong> Future-ready people capabilities program</li>
+                        <li><strong>Change Management:</strong> Cultural transformation methodology</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <h3>Regional Adaptation Strategy</h3>
+                    <ul>
+                        <li><strong>Market Customization:</strong> Local consumer behavior and preferences</li>
+                        <li><strong>Regulatory Compliance:</strong> Country-specific data and AI regulations</li>
+                        <li><strong>Infrastructure Assessment:</strong> Technology readiness evaluation</li>
+                        <li><strong>Partnership Network:</strong> Local technology and implementation partners</li>
+                        <li><strong>Talent Acquisition:</strong> Regional digital skills development</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Risk Assessment -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Strategic Risk Assessment</h1>
+                <p class="slide-subtitle">Risk Mitigation & Implementation Readiness</p>
+            </div>
+
+            <div class="focus-message">
+                <h2>Low-Risk, High-Reward Opportunity</h2>
+                <p>Proven technology stack with established partners and validated business model provides strong foundation for global implementation</p>
+            </div>
+
+            <div class="financial-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Risk Category</th>
+                            <th>Risk Level</th>
+                            <th>Mitigation Strategy</th>
+                            <th>Implementation Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Technology Risk</strong></td>
+                            <td style="color: #4caf50; font-weight: 600;">LOW</td>
+                            <td>Proven technology stack with established partners</td>
+                            <td>✅ Validated in China operations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Market Risk</strong></td>
+                            <td style="color: #ff9800; font-weight: 600;">MEDIUM</td>
+                            <td>Agile platform architecture, consumer feedback integration</td>
+                            <td>⚠️ Regional adaptation required</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Competitive Risk</strong></td>
+                            <td style="color: #f44336; font-weight: 600;">HIGH if delayed</td>
+                            <td>Immediate action, continuous innovation acceleration</td>
+                            <td>🔴 First-mover advantages critical</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Execution Risk</strong></td>
+                            <td style="color: #ff9800; font-weight: 600;">LOW-MEDIUM</td>
+                            <td>Proven China implementation provides playbook</td>
+                            <td>✅ Success template available</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Financial Risk</strong></td>
+                            <td style="color: #4caf50; font-weight: 600;">LOW</td>
+                            <td>166%+ ROI with 18-month payback proven</td>
+                            <td>✅ Strong financial validation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Implementation Readiness</h3>
+                    <ul>
+                        <li><strong>✅ Technology Partners:</strong> Siemens, Microsoft, SAP relationships established</li>
+                        <li><strong>✅ Proof of Concept:</strong> #1 global operational ranking achieved</li>
+                        <li><strong>✅ Financial Model:</strong> ¥7.7B profit with 6% growth validated</li>
+                        <li><strong>✅ Scalability:</strong> MIS 2.0 platform designed for global deployment</li>
+                        <li><strong>⚠️ Regional Adaptation:</strong> Local market customization needed</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <h3>Success Factors</h3>
+                    <ul>
+                        <li><strong>Executive Leadership:</strong> C-suite sponsorship essential for scale</li>
+                        <li><strong>Partnership Leverage:</strong> Existing vendor advantages</li>
+                        <li><strong>Phased Deployment:</strong> High-impact market prioritization</li>
+                        <li><strong>Talent Development:</strong> Digital skills transformation</li>
+                        <li><strong>Consumer Focus:</strong> Local adaptation with core benefits</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="background: #fff3e0; padding: 30px; border-radius: 15px; border-left: 6px solid #ff9800; margin-top: 40px;">
+                <h4 style="color: #e65100; margin-bottom: 15px; font-size: 1.5rem;">⚠️ Timeline Imperative</h4>
+                <p style="font-size: 1.2rem; color: #ef6c00;">Competitive advantage window is narrowing as industry adopts AI. Immediate action required to maintain 18-24 month first-mover advantage demonstrated in China market.</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Decision Framework -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Executive Decision Framework</h1>
+                <p class="slide-subtitle">Go/No-Go Analysis & Strategic Recommendation</p>
+            </div>
+
+            <div class="roi-section">
+                <h2>Investment vs. Returns</h2>
+                <div class="roi-grid">
+                    <div class="roi-item">
+                        <span class="roi-value">¥1.2B</span>
+                        <div class="roi-label">Annual Investment</div>
+                    </div>
+                    <div class="roi-item">
+                        <span class="roi-value">¥1.99B</span>
+                        <div class="roi-label">Annual Value Creation</div>
+                    </div>
+                    <div class="roi-item">
+                        <span class="roi-value">¥790M</span>
+                        <div class="roi-label">Net Annual Benefit</div>
+                    </div>
+                    <div class="roi-item">
+                        <span class="roi-value">166%</span>
+                        <div class="roi-label">Annual ROI</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="decision-box">
+                <h2>RECOMMENDATION: IMMEDIATE GO DECISION</h2>
+                <p>The China digital transformation model represents a once-in-a-decade strategic opportunity to establish transformational competitive advantage. The combination of proven financial returns (166%+ ROI), operational excellence (#1 global ranking), and strategic market positioning justifies immediate global implementation.</p>
+            </div>
+
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>Strategic Rationale</h3>
+                    <ul>
+                        <li><strong>Proven ROI:</strong> 166%+ returns with 18-month payback validated</li>
+                        <li><strong>Operational Excellence:</strong> #1 global ranking demonstrates capability</li>
+                        <li><strong>Market Leadership:</strong> First-mover advantage in AI transformation</li>
+                        <li><strong>Consumer Value:</strong> 10M+ engaged members prove market acceptance</li>
+                        <li><strong>Scalable Platform:</strong> Technology stack ready for global deployment</li>
+                    </ul>
+                </div>
+                <div class="content-card">
+                    <h3>Next Steps</h3>
+                    <ul>
+                        <li><strong>Immediate Authorization:</strong> Global implementation program approval</li>
+                        <li><strong>Partnership Activation:</strong> Siemens, Microsoft, SAP global agreements</li>
+                        <li><strong>Market Prioritization:</strong> High-impact region selection and sequencing</li>
+                        <li><strong>Resource Allocation:</strong> Capital and talent deployment planning</li>
+                        <li><strong>Timeline Acceleration:</strong> 90-day implementation roadmap</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="background: #e8f5e8; padding: 40px; border-radius: 20px; border: 3px solid #4caf50; text-align: center; margin-top: 40px;">
+                <h3 style="color: #2e7d32; font-size: 2.2rem; margin-bottom: 20px;">Strategic Imperative</h3>
+                <p style="color: #1b5e20; line-height: 1.6; font-weight: 500;">Digital transformation is not optional—it's essential for competitive survival. China proves the model works. The question is not whether to act, but how quickly we can execute globally.</p>
+            </div>
+
+            <div style="background: #1a1a2e; color: white; padding: 30px; border-radius: 15px; text-align: center; margin-top: 30px;">
+                <p style="font-size: 1.1rem; margin-bottom: 10px;"><strong>Report Classification:</strong> Strategic Planning - Executive Level</p>
+                <p style="opacity: 0.8;"><strong>Distribution:</strong> Global CEO, CFO, China CEO, CIO, CTO</p>
+                <p style="opacity: 0.6; margin-top: 20px;">© 2025 Global Beverages Company Strategic Analysis | Next Review: October 2025</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[n].classList.add('active');
+            
+            document.getElementById('current-slide').textContent = n + 1;
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = (n === 0);
+            document.getElementById('next-btn').disabled = (n === totalSlides - 1);
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                currentSlide = 0;
+                showSlide(currentSlide);
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                currentSlide = totalSlides - 1;
+                showSlide(currentSlide);
+            }
+        });
+
+        // Auto-advance option (disabled by default)
+        let autoAdvance = false;
+        let autoAdvanceTimer;
+
+        function startAutoAdvance() {
+            if (autoAdvance) {
+                autoAdvanceTimer = setInterval(() => {
+                    if (currentSlide < totalSlides - 1) {
+                        nextSlide();
+                    } else {
+                        currentSlide = 0;
+                        showSlide(currentSlide);
+                    }
+                }, 10000); // 10 seconds per slide
+            }
+        }
+
+        function stopAutoAdvance() {
+            clearInterval(autoAdvanceTimer);
+        }
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            
+            // Only trigger swipe if horizontal movement is greater than vertical
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                if (deltaX > 0) {
+                    prevSlide();
+                } else {
+                    nextSlide();
+                }
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+
+        // Smooth loading animation
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Print all slides
+        function printPresentation() {
+            window.print();
+        }
+
+        // Add print button (optional)
+        document.addEventListener('DOMContentLoaded', function() {
+            const nav = document.querySelector('.nav-container');
+            const printBtn = document.createElement('button');
+            printBtn.className = 'nav-btn';
+            printBtn.innerHTML = '🖨️ Print';
+            printBtn.onclick = printPresentation;
+            nav.appendChild(printBtn);
+        });
+    </script>
+</body>
+</html>

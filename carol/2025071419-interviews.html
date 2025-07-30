@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APP Interview Analysis - RACI Dashboard & BI Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+            line-height: 1.6;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .dashboard-header h1 {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+            font-weight: 300;
+        }
+
+        .dashboard-header p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .tab-container {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 8px;
+            background: #e9ecef;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-right: 1px solid #dee2e6;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .tab:last-child {
+            border-right: none;
+        }
+
+        .tab.active {
+            background: white;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+        }
+
+        .tab:hover, .tab:focus {
+            background: #f1f3f4;
+            outline: none;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 15px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .section-title {
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        /* RACI Matrix Styles */
+        .raci-matrix {
+            overflow-x: auto;
+            margin-bottom: 20px;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .raci-table {
+            width: 100%;
+            min-width: 800px;
+            border-collapse: collapse;
+            background: white;
+            font-size: 0.8em;
+        }
+
+        .raci-table th {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 12px 6px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.8em;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .raci-table td {
+            padding: 10px 6px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            font-size: 0.8em;
+        }
+
+        .raci-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .process-name {
+            text-align: left !important;
+            font-weight: 600;
+            background: #f8f9fa !important;
+            color: #2c3e50;
+            position: sticky;
+            left: 0;
+            z-index: 5;
+            min-width: 150px;
+            max-width: 200px;
+            word-wrap: break-word;
+        }
+
+        .raci-r, .raci-a, .raci-c, .raci-i {
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.7em;
+            color: white;
+        }
+
+        .raci-r { background: #e74c3c; }
+        .raci-a { background: #f39c12; }
+        .raci-c { background: #3498db; }
+        .raci-i { background: #27ae60; }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .metric-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .metric-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 1.2em;
+        }
+
+        .metric-title {
+            font-size: 1em;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #3498db;
+            margin-bottom: 8px;
+        }
+
+        .metric-description {
+            color: #7f8c8d;
+            font-size: 0.85em;
+        }
+
+        /* Issues Grid */
+        .issues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .issue-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .issue-header {
+            padding: 15px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .issue-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .issue-owner {
+            opacity: 0.9;
+            font-size: 0.85em;
+        }
+
+        .issue-content {
+            padding: 15px;
+        }
+
+        .issue-description {
+            color: #2c3e50;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            font-size: 0.9em;
+        }
+
+        .issue-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .status-high { background: #ff6b6b; color: white; }
+        .status-medium { background: #feca57; color: white; }
+        .status-low { background: #48dbfb; color: white; }
+
+        /* Chart Container */
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .chart-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .chart-bars {
+            display: flex;
+            justify-content: space-around;
+            align-items: end;
+            height: 150px;
+            padding: 15px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .chart-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 60px;
+        }
+
+        .bar {
+            width: 45px;
+            border-radius: 4px 4px 0 0;
+            margin-bottom: 8px;
+        }
+
+        .bar-label {
+            font-size: 0.8em;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .bar-value {
+            font-size: 0.7em;
+            color: #7f8c8d;
+            text-align: center;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85em;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+        }
+
+        /* Succession Timeline */
+        .succession-timeline {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .timeline-date {
+            min-width: 100px;
+            font-weight: 600;
+            color: #3498db;
+            font-size: 0.9em;
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-left: 15px;
+            border-left: 3px solid #3498db;
+            margin-left: 8px;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: #3498db;
+            border-radius: 50%;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 4px;
+            font-size: 0.95em;
+        }
+
+        .timeline-description {
+            color: #7f8c8d;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        /* Progress Bars */
+        .progress-section {
+            padding: 15px;
+        }
+
+        .progress-item {
+            margin-bottom: 15px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .progress-name {
+            font-weight: 600;
+        }
+
+        .progress-percentage {
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            background: #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.8s ease;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+
+            .dashboard-header {
+                padding: 15px;
+            }
+
+            .dashboard-header h1 {
+                font-size: 1.5em;
+            }
+
+            .dashboard-header p {
+                font-size: 0.8em;
+            }
+
+            .tab-content {
+                padding: 12px;
+            }
+
+            .section-title {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 12px;
+            }
+
+            .metric-card {
+                padding: 15px;
+            }
+
+            .metric-value {
+                font-size: 1.8em;
+            }
+
+            .issues-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .chart-bars {
+                height: 120px;
+                padding: 10px 0;
+            }
+
+            .bar {
+                width: 35px;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                margin-bottom: 20px;
+            }
+
+            .timeline-date {
+                min-width: auto;
+                margin-bottom: 5px;
+            }
+
+            .timeline-content {
+                padding-left: 0;
+                border-left: none;
+                border-top: 3px solid #3498db;
+                padding-top: 10px;
+                margin-left: 0;
+            }
+
+            .timeline-content::before {
+                left: 0;
+                top: -6px;
+            }
+
+            .raci-table {
+                font-size: 0.7em;
+            }
+
+            .raci-table th,
+            .raci-table td {
+                padding: 8px 4px;
+            }
+
+            .raci-r, .raci-a, .raci-c, .raci-i {
+                width: 18px;
+                height: 18px;
+                font-size: 0.6em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tab {
+                padding: 10px 6px;
+                font-size: 0.8em;
+                min-width: 100px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-bars {
+                flex-direction: column;
+                height: auto;
+                gap: 15px;
+            }
+
+            .chart-bar {
+                flex-direction: row;
+                width: 100%;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .bar {
+                width: 60%;
+                height: 20px;
+                border-radius: 10px;
+                margin-bottom: 0;
+                margin-left: 10px;
+            }
+
+            .legend {
+                gap: 10px;
+            }
+
+            .legend-item {
+                font-size: 0.8em;
+            }
+        }
+
+        /* Accessibility Improvements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .dashboard-container {
+                border: 2px solid #000;
+            }
+            
+            .tab.active {
+                border: 2px solid #000;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .dashboard-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            
+            .tab-container {
+                display: none;
+            }
+            
+            .tab-content {
+                display: block !important;
+                page-break-before: always;
+            }
+            
+            .tab-content:first-child {
+                page-break-before: auto;
+            }
+        }
+
+        /* Focus styles for keyboard navigation */
+        .tab:focus-visible {
+            outline: 2px solid #3498db;
+            outline-offset: 2px;
+        }
+
+        /* Loading animation */
+        .metric-value {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Smooth scrolling */
+        .raci-matrix {
+            scroll-behavior: smooth;
+        }
+
+        /* Touch-friendly improvements */
+        .tab {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .metric-card {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>APP Interview Analysis Dashboard</h1>
+            <p>RACI Matrix & Business Intelligence Report - July 2025</p>
+        </div>
+
+        <div class="tab-container">
+            <button class="tab active" onclick="showTab('raci')" role="tab" aria-selected="true">RACI Matrix</button>
+            <button class="tab" onclick="showTab('metrics')" role="tab" aria-selected="false">Key Metrics</button>
+            <button class="tab" onclick="showTab('issues')" role="tab" aria-selected="false">Issues & Concerns</button>
+            <button class="tab" onclick="showTab('succession')" role="tab" aria-selected="false">Succession Planning</button>
+        </div>
+
+        <div id="raci" class="tab-content active" role="tabpanel">
+            <h2 class="section-title">RACI Responsibility Matrix</h2>
+            <div class="raci-matrix">
+                <table class="raci-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 180px;">Process/Initiative</th>
+                            <th>Hendri<br>Gunawan</th>
+                            <th>Kho<br>Yanto</th>
+                            <th>Liao<br>Banghong</th>
+                            <th>Andry<br>Suherman</th>
+                            <th>Martinus<br>Senjaya</th>
+                            <th>Agenus</th>
+                            <th>Jeffry</th>
+                            <th>Marky</th>
+                            <th>Daniel<br>Hutabarat</th>
+                            <th>Liu Ming<br>Chieh</th>
+                            <th>Lin Chun<br>Ming</th>
+                            <th>Sukardi</th>
+                            <th>Pak Yeh</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="process-name">Production Management</td>
+                            <td><span class="raci-a" title="Accountable">A</span></td>
+                            <td><span class="raci-r" title="Responsible">R</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="process-name">IKK Construction Project</td>
+                            <td><span class="raci-a" title="Accountable">A</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-r" title="Responsible">R</span></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="process-name">Succession Planning</td>
+                            <td><span class="raci-a" title="Accountable">A</span></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><span class="raci-r" title="Responsible">R</span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="process-name">HR Policy Implementation</td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><span class="raci-a" title="Accountable">A</span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><span class="raci-r" title="Responsible">R</span></td>
+                            <td></td>
+                            <td></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                        </tr>
+                        <tr>
+                            <td class="process-name">Training & Development</td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-a" title="Accountable">A</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-r" title="Responsible">R</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="process-name">Business Strategy</td>
+                            <td><span class="raci-a" title="Accountable">A</span></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td></td>
+                            <td><span class="raci-r" title="Responsible">R</span></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="process-name">Compensation & Benefits</td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><span class="raci-a" title="Accountable">A</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td></td>
+                            <td><span class="raci-r" title="Responsible">R</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                        </tr>
+                        <tr>
+                            <td class="process-name">Audit & Compliance</td>
+                            <td><span class="raci-a" title="Accountable">A</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-r" title="Responsible">R</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-c" title="Consulted">C</span></td>
+                            <td></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td></td>
+                            <td><span class="raci-i" title="Informed">I</span></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color raci-r"></div>
+                    <span>R - Responsible (Does the work)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color raci-a"></div>
+                    <span>A - Accountable (Signs off on work)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color raci-c"></div>
+                    <span>C - Consulted (Provides input)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color raci-i"></div>
+                    <span>I - Informed (Kept updated)</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="metrics" class="tab-content" role="tabpanel">
+            <h2 class="section-title">Key Performance Metrics</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-icon" style="background: linear-gradient(135deg, #3498db, #2980b9);">👥</div>
+                        <div class="metric-title">Total Interviewees</div>
+                    </div>
+                    <div class="metric-value">13</div>
+                    <div class="metric-description">Across multiple departments and levels</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-icon" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">⚠️</div>
+                        <div class="metric-title">Critical Issues</div>
+                    </div>
+                    <div class="metric-value">8</div>
+                    <div class="metric-description">Requiring immediate attention</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-icon" style="background: linear-gradient(135deg, #f39c12, #e67e22);">📈</div>
+                        <div class="metric-title">Succession Plans</div>
+                    </div>
+                    <div class="metric-value">5</div>
+                    <div class="metric-description">Active succession planning identified</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-icon" style="background: linear-gradient(135deg, #27ae60, #229954);">🎓</div>
+                        <div class="metric-title">Training Requests</div>
+                    </div>
+                    <div class="metric-value">7</div>
+                    <div class="metric-description">Various skill development needs</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-icon" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">💰</div>
+                        <div class="metric-title">Compensation Issues</div>
+                    </div>
+                    <div class="metric-value">4</div>
+                    <div class="metric-description">Salary/promotion concerns raised</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-icon" style="background: linear-gradient(135deg, #34495e, #2c3e50);">⏱️</div>
+                        <div class="metric-title">Avg. Tenure</div>
+                    </div>
+                    <div class="metric-value">8.2</div>
+                    <div class="metric-description">Years average experience at APP</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Employee Distribution by Department</div>
+                <div class="chart-bars">
+                    <div class="chart-bar">
+                        <div class="bar" style="height: 90px; background: linear-gradient(to top, #3498db, #5dade2);"></div>
+                        <div class="bar-label">Production</div>
+                        <div class="bar-value">3 people</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar" style="height: 60px; background: linear-gradient(to top, #e74c3c, #ec7063);"></div>
+                        <div class="bar-label">HR</div>
+                        <div class="bar-value">2 people</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar" style="height: 75px; background: linear-gradient(to top, #f39c12, #f5b041);"></div>
+                        <div class="bar-label">Strategy</div>
+                        <div class="bar-value">3 people</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar" style="height: 65px; background: linear-gradient(to top, #27ae60, #58d68d);"></div>
+                        <div class="bar-label">Supply Chain</div>
+                        <div class="bar-value">2 people</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar" style="height: 55px; background: linear-gradient(to top, #9b59b6, #bb8fce);"></div>
+                        <div class="bar-label">Others</div>
+                        <div class="bar-value">3 people</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="issues" class="tab-content" role="tabpanel">
+            <h2 class="section-title">Critical Issues & Concerns</h2>
+            <div class="issues-grid">
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-title">Executive Insurance Coverage</div>
+                        <div class="issue-owner">Raised by: Hendri Gunawan</div>
+                    </div>
+                    <div class="issue-content">
+                        <div class="issue-description">
+                            Current outpatient medical coverage for management is insufficient. Personal case involved $70,000 surgery in Singapore, highlighting the risk gap.
+                        </div>
+                        <span class="issue-status status-high">High Priority</span>
+                    </div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-title">IKK Team Retention Plan</div>
+                        <div class="issue-owner">Raised by: Hendri Gunawan</div>
+                    </div>
+                    <div class="issue-content">
+                        <div class="issue-description">
+                            Current 3-year retention plan has 2 years remaining. Need follow-up plan to retain IKK operations team after program concludes.
+                        </div>
+                        <span class="issue-status status-medium">Medium Priority</span>
+                    </div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-title">Aging Production Equipment</div>
+                        <div class="issue-owner">Raised by: Marky</div>
+                    </div>
+                    <div class="issue-content">
+                        <div class="issue-description">
+                            Stationery paper production equipment is 25 years old, causing low efficiency, high costs, and poor product quality.
+                        </div>
+                        <span class="issue-status status-high">High Priority</span>
+                    </div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-title">Compensation Below Market</div>
+                        <div class="issue-owner">Raised by: Jeffry, Agenus</div>
+                    </div>
+                    <div class="issue-content">
+                        <div class="issue-description">
+                            Salary increases below inflation. Promise of market-rate compensation not fulfilled. Bell curve restrictions causing internal inequities.
+                        </div>
+                        <span class="issue-status status-high">High Priority</span>
+                    </div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-title">Promotion Without Salary Increase</div>
+                        <div class="issue-owner">Raised by: Liu Ming Chieh</div>
+                    </div>
+                    <div class="issue-content">
+                        <div class="issue-description">
+                            Job grade promotions not accompanied by corresponding salary adjustments, affecting employee motivation.
+                        </div>
+                        <span class="issue-status status-medium">Medium Priority</span>
+                    </div>
+                </div>
+
+                <div class="issue-card">
+                    <div class="issue-header">
+                        <div class="issue-title">Visa Renewal Policy Dispute</div>
+                        <div class="issue-owner">Raised by: Pak Yeh</div>
+                    </div>
+                    <div class="issue-content">
+                        <div class="issue-description">
+                            Disagreement on whether 3-week visa renewal should count as personal leave. Proposed compromise of 1 week WFH + 2 weeks leave.
+                        </div>
+                        <span class="issue-status status-low">Low Priority</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="succession" class="tab-content" role="tabpanel">
+            <h2 class="section-title">Succession Planning Timeline</h2>
+            <div class="succession-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Current</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Kho Yanto takes charge of Pindo 1 Production</div>
+                        <div class="timeline-description">Full responsibility for production operations. Adrian Sephadi Rahandlo ready to take over previous role.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">+6 months</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Adrian fully operational at Mill Head Office</div>
+                        <div class="timeline-description">Former APP employee with 2-3 months experience working with Pak Hendri.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">+1 year</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Kho Yanto moves to Pindo 2</div>
+                        <div class="timeline-description">Transfer for further assessment with goal of leading overall production at Pindo Deli.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">+1-2 years</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Liao Banghong final evaluation</div>
+                        <div class="timeline-description">Currently under observation after 1+ years. Requires additional assessment period.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">+2 years</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">IKK Retention Plan expires</div>
+                        <div class="timeline-description">Current 3-year plan ending. Follow-up retention strategy needed for operations team.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Ongoing</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Multiple succession developments</div>
+                        <div class="timeline-description">
+                            • Ilsen Wunil (Agenus successor) - 2.5 months experience<br>
+                            • Peter groomed as Ilsen's successor<br>
+                            • Sukardi as Lin Chun Ming successor<br>
+                            • Daniel Hutabarat training internal successor
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container" style="margin-top: 20px;">
+                <div class="chart-title">Succession Readiness Assessment</div>
+                <div class="progress-section">
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-name">Adrian Sephadi Rahandlo</span>
+                            <span class="progress-percentage" style="color: #27ae60;">90%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 90%; background: linear-gradient(135deg, #27ae60, #229954);"></div>
+                        </div>
+                    </div>
+
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-name">Sukardi</span>
+                            <span class="progress-percentage" style="color: #f39c12;">75%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%; background: linear-gradient(135deg, #f39c12, #e67e22);"></div>
+                        </div>
+                    </div>
+
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-name">Peter (Logistics)</span>
+                            <span class="progress-percentage" style="color: #3498db;">60%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%; background: linear-gradient(135deg, #3498db, #2980b9);"></div>
+                        </div>
+                    </div>
+
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-name">Daniel's Internal Successor</span>
+                            <span class="progress-percentage" style="color: #9b59b6;">40%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%; background: linear-gradient(135deg, #9b59b6, #8e44ad);"></div>
+                        </div>
+                    </div>
+
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-name">Ilsen Wunil</span>
+                            <span class="progress-percentage" style="color: #e74c3c;">25%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 25%; background: linear-gradient(135deg, #e74c3c, #c0392b);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Update ARIA attributes
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.setAttribute('aria-selected', 'false');
+                tab.classList.remove('active');
+            });
+
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked tab and update ARIA
+            event.target.classList.add('active');
+            event.target.setAttribute('aria-selected', 'true');
+
+            // Scroll to top of content on mobile
+            if (window.innerWidth <= 768) {
+                document.getElementById(tabName).scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Keyboard navigation for tabs
+        document.addEventListener('keydown', function(e) {
+            if (e.target.classList.contains('tab')) {
+                const tabs = Array.from(document.querySelectorAll('.tab'));
+                const currentIndex = tabs.indexOf(e.target);
+                
+                if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    const nextIndex = e.key === 'ArrowRight' 
+                        ? (currentIndex + 1) % tabs.length 
+                        : (currentIndex - 1 + tabs.length) % tabs.length;
+                    
+                    tabs[nextIndex].focus();
+                    tabs[nextIndex].click();
+                }
+            }
+        });
+
+        // Progressive enhancement - animate metrics on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate metric values
+            const metricValues = document.querySelectorAll('.metric-value');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateMetricValue(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+
+            metricValues.forEach(value => {
+                observer.observe(value);
+            });
+
+            // Animate progress bars when visible
+            const progressBars = document.querySelectorAll('.progress-fill');
+            const progressObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.style.width;
+                        entry.target.style.width = '0%';
+                        setTimeout(() => {
+                            entry.target.style.width = width;
+                        }, 100);
+                        progressObserver.unobserve(entry.target);
+                    }
+                });
+            });
+
+            progressBars.forEach(bar => {
+                progressObserver.observe(bar);
+            });
+        });
+
+        function animateMetricValue(element) {
+            const finalValue = element.textContent.replace(/[^\d.]/g, '');
+            const isFloat = finalValue.includes('.');
+            let currentValue = 0;
+            const increment = parseFloat(finalValue) / 60; // 60 frames
+            
+            element.style.opacity = '1';
+            
+            const timer = setInterval(() => {
+                currentValue += increment;
+                if (currentValue >= parseFloat(finalValue)) {
+                    element.textContent = finalValue;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = isFloat 
+                        ? currentValue.toFixed(1) 
+                        : Math.floor(currentValue);
+                }
+            }, 16); // ~60fps
+        }
+
+        // Handle orientation changes on mobile
+        window.addEventListener('orientationchange', function() {
+            // Re-adjust layout after orientation change
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 100);
+        });
+
+        // Lazy load content optimization
+        if ('IntersectionObserver' in window) {
+            const lazyImages = document.querySelectorAll('[data-src]');
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            lazyImages.forEach(img => imageObserver.observe(img));
+        }
+
+        // Service Worker registration for offline capability (progressive web app)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Service worker would be registered here for offline functionality
+                console.log('Dashboard ready for offline use');
+            });
+        }
+
+        // Add touch gestures for mobile (swipe between tabs)
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                const currentTab = document.querySelector('.tab.active');
+                const tabs = Array.from(document.querySelectorAll('.tab'));
+                const currentIndex = tabs.indexOf(currentTab);
+                
+                if (diff > 0 && currentIndex < tabs.length - 1) {
+                    // Swipe left - next tab
+                    tabs[currentIndex + 1].click();
+                } else if (diff < 0 && currentIndex > 0) {
+                    // Swipe right - previous tab
+                    tabs[currentIndex - 1].click();
+                }
+            }
+        }
+    </script>
+</body>
+</html>

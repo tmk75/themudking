@@ -29,33 +29,79 @@
 
         /* Tab Navigation Styles */
         .tab-navigation {
-            position: sticky;
-            top: 80px;
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
             z-index: 100;
             backdrop-filter: blur(20px);
+            padding: 20px;
+            border-radius: 20px;
+            opacity: 0.25;
+            transition: opacity 0.3s ease;
+        }
+
+        .tab-navigation:hover {
+            opacity: 1;
+        }
+
+        .tab-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .tab-btn {
-            padding: 12px 20px;
+            padding: 12px;
             background: rgba(255, 255, 255, 0.2);
             border: 2px solid rgba(221, 37, 37, 0.3);
-            border-radius: 25px;
+            border-radius: 50%;
             color: #333;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 500;
             display: flex;
             align-items: center;
             gap: 8px;
+            white-space: nowrap;
+            width: 48px;
+            height: 48px;
+            justify-content: center;
+            overflow: visible;
+            position: relative;
         }
 
         .tab-btn:hover {
             background: rgba(221, 37, 37, 0.1);
             border-color: #dd2525;
             color: #dd2525;
-            transform: translateY(-2px);
+            transform: scale(1.1);
         }
+
+        .tab-btn::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .tab-btn:hover::after {
+            opacity: 1;
+        }
+
+
 
         .tab-btn.active {
             background: rgba(221, 37, 37, 0.2);
@@ -137,9 +183,9 @@
 
         /* Main container */
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 100px 20px 50px;
+            width: 100%;
+            margin: 0;
+            padding: 0 20px 20px 20px;
         }
 
         /* Hero section */
@@ -181,7 +227,7 @@
         /* Section styling */
         .section {
             margin-bottom: 60px;
-            padding: 40px;
+            padding: 20px 40px 40px 40px;
             animation: fadeInUp 0.8s ease-out;
             animation-fill-mode: both;
             transition: all 0.3s ease;
@@ -1080,45 +1126,15 @@
 
         /* RACI Matrix Styles */
         .raci-header {
-            background: linear-gradient(135deg, #dd2525, #ff6b6b);
-            color: white;
-            padding: 30px;
-            border-radius: 20px 20px 0 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
         }
 
-        .raci-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: repeating-linear-gradient(45deg,
-                    transparent,
-                    transparent 10px,
-                    rgba(255, 255, 255, 0.1) 10px,
-                    rgba(255, 255, 255, 0.1) 20px);
-            animation: slide 20s linear infinite;
-        }
 
-        @keyframes slide {
-            0% {
-                transform: translateX(-50px) translateY(-50px);
-            }
 
-            100% {
-                transform: translateX(50px) translateY(50px);
-            }
-        }
 
-        .raci-subtitle {
-            font-size: 1.1rem;
-            margin-top: 10px;
-            opacity: 0.9;
-        }
 
         .raci-legend {
             display: flex;
@@ -1416,9 +1432,9 @@
         }
 
         .dashboard-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
+            width: 100%;
+            margin: 0;
+            padding: 20px 120px 20px 20px;
             position: relative;
         }
 
@@ -1807,9 +1823,9 @@
         }
 
         .action-plan-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            width: 100%;
+            margin: 0;
+            padding: 20px 120px 20px 20px;
             position: relative;
         }
 
@@ -1977,9 +1993,9 @@
         }
 
         .detailed-view-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
+            width: 100%;
+            margin: 0;
+            padding: 20px 120px 20px 20px;
             position: relative;
         }
 
@@ -4057,31 +4073,31 @@
 
     <div class="container">
         <!-- Tab Navigation -->
-        <div class="tab-navigation glass" style="margin: 30px 0; padding: 20px; border-radius: 20px;">
-            <div class="tab-buttons" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
-                <button class="tab-btn active" onclick="showTab('title')" data-tab="title">
-                    <i class="fas fa-home"></i> 项目介绍
+        <div class="tab-navigation glass">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="showTab('title')" data-tab="title" data-tooltip="项目介绍">
+                    <i class="fas fa-home"></i>
                 </button>
-                <button class="tab-btn" onclick="showTab('target')" data-tab="target">
-                    <i class="fas fa-bullseye"></i> 目标人群
+                <button class="tab-btn" onclick="showTab('target')" data-tab="target" data-tooltip="目标人群">
+                    <i class="fas fa-bullseye"></i>
                 </button>
-                <button class="tab-btn" onclick="showTab('interview')" data-tab="interview">
-                    <i class="fas fa-comments"></i> 面试框架
+                <button class="tab-btn" onclick="showTab('interview')" data-tab="interview" data-tooltip="访谈内容">
+                    <i class="fas fa-comments"></i>
                 </button>
-                <button class="tab-btn" onclick="showTab('dashboard')" data-tab="dashboard">
-                    <i class="fas fa-tachometer-alt"></i> 仪表盘
+                <button class="tab-btn" onclick="showTab('dashboard')" data-tab="dashboard" data-tooltip="仪表盘">
+                    <i class="fas fa-tachometer-alt"></i>
                 </button>
-                <button class="tab-btn" onclick="showTab('framework')" data-tab="framework">
-                    <i class="fas fa-cogs"></i> 5B框架
+                <button class="tab-btn" onclick="showTab('framework')" data-tab="framework" data-tooltip="5B框架">
+                    <i class="fas fa-cogs"></i>
                 </button>
-                <button class="tab-btn" onclick="showTab('raci')" data-tab="raci">
-                    <i class="fas fa-users-cog"></i> RACI矩阵
+                <button class="tab-btn" onclick="showTab('raci')" data-tab="raci" data-tooltip="RACI矩阵">
+                    <i class="fas fa-users-cog"></i>
                 </button>
-                <button class="tab-btn" onclick="showTab('insights')" data-tab="insights">
-                    <i class="fas fa-brain"></i> 人才洞察
+                <button class="tab-btn" onclick="showTab('insights')" data-tab="insights" data-tooltip="人才洞察">
+                    <i class="fas fa-brain"></i>
                 </button>
-                <button class="tab-btn" onclick="showTab('strategy')" data-tab="strategy">
-                    <i class="fas fa-chess"></i> 战略建议
+                <button class="tab-btn" onclick="showTab('strategy')" data-tab="strategy" data-tooltip="战略建议">
+                    <i class="fas fa-chess"></i>
                 </button>
             </div>
         </div>
@@ -4383,7 +4399,7 @@
 
             <!-- Target Population -->
             <div class="tab-content" id="target-tab">
-                <section id="target" class="section glass interactive-card"></section>
+                <section id="target" class="section glass interactive-card">
                 <h2 class="section-title">
                     <span class="section-icon">🎯</span>
                     目标群体
@@ -4422,21 +4438,130 @@
                         </tr>
                     </tbody>
                 </table>
-                </section>
 
+                <!-- Framework Detail Cards -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-top: 30px;">
+                    <div class="framework-detail-card">
+                        <div class="card-number">1</div>
+                        <h4 class="card-title">Career Aspiration & Mobility</h4>
+                        <p class="card-subtitle">Understanding long-term career goals and flexibility</p>
+                        <ul class="card-details">
+                            <li>5-10 year career vision and aspirations</li>
+                            <li>Geographic mobility and relocation preferences</li>
+                            <li>Role progression expectations and timeline</li>
+                            <li>Work-life balance priorities and constraints</li>
+                            <li>Industry and functional area interests</li>
+                        </ul>
+                    </div>
+
+                    <div class="framework-detail-card">
+                        <div class="card-number">2</div>
+                        <h4 class="card-title">Leadership Behaviors</h4>
+                        <p class="card-subtitle">Evaluating leadership style and effectiveness</p>
+                        <ul class="card-details">
+                            <li>Team building and talent development approach</li>
+                            <li>Decision-making process and style</li>
+                            <li>Conflict resolution and negotiation skills</li>
+                            <li>Influence and persuasion capabilities</li>
+                            <li>Change management and transformation experience</li>
+                        </ul>
+                    </div>
+
+                    <div class="framework-detail-card">
+                        <div class="card-number">3</div>
+                        <h4 class="card-title">Strategic Mindset</h4>
+                        <p class="card-subtitle">Assessing strategic thinking and vision</p>
+                        <ul class="card-details">
+                            <li>Market and competitive landscape awareness</li>
+                            <li>Long-term strategic planning capabilities</li>
+                            <li>Innovation and creative problem-solving</li>
+                            <li>Systems thinking and complexity management</li>
+                            <li>Future trends identification and adaptation</li>
+                        </ul>
+                    </div>
+
+                    <div class="framework-detail-card">
+                        <div class="card-number">4</div>
+                        <h4 class="card-title">Business Performance</h4>
+                        <p class="card-subtitle">Reviewing track record and results delivery</p>
+                        <ul class="card-details">
+                            <li>P&L responsibility and financial management</li>
+                            <li>Operational excellence and process improvement</li>
+                            <li>Key performance metrics and achievements</li>
+                            <li>Crisis management and turnaround experience</li>
+                            <li>Stakeholder management and relationship building</li>
+                        </ul>
+                    </div>
+
+                    <div class="framework-detail-card">
+                        <div class="card-number">5</div>
+                        <h4 class="card-title">Learning Agility</h4>
+                        <p class="card-subtitle">Measuring adaptability and growth potential</p>
+                        <ul class="card-details">
+                            <li>Speed of learning new skills and concepts</li>
+                            <li>Adaptability to changing environments</li>
+                            <li>Curiosity and continuous improvement mindset</li>
+                            <li>Feedback receptivity and self-awareness</li>
+                            <li>Cross-functional and cross-cultural adaptability</li>
+                        </ul>
+                    </div>
+
+                    <div class="framework-detail-card">
+                        <div class="card-number">6</div>
+                        <h4 class="card-title">Cultural Fit & Values</h4>
+                        <p class="card-subtitle">Ensuring alignment with organizational culture</p>
+                        <ul class="card-details">
+                            <li>Core values alignment and demonstration</li>
+                            <li>Collaboration and teamwork approach</li>
+                            <li>Integrity and ethical decision-making</li>
+                            <li>Diversity and inclusion commitment</li>
+                            <li>Organizational citizenship and engagement</li>
+                        </ul>
+                    </div>
+                </div>
                 </section>
             </div>
 
             <!-- Interview Content -->
             <div class="tab-content" id="interview-tab">
-                <section id="interview" class="section glass interactive-card"></section>
+                <section id="interview" class="section glass interactive-card">
                 <h2 class="section-title">
                     <span class="section-icon">🎤</span>
                     访谈内容
                 </h2>
-                <p style="font-size: 1.1rem; color: #666; margin-bottom: 40px; text-align: center;">
-                    六维深度访谈框架确保全面评估，系统化的访谈框架涵盖职业发展、能力和潜力综合职位评估
+                <p style="font-size: 1.2rem; color: #666; margin-bottom: 50px; text-align: center; line-height: 1.6; padding: 0 30px;">
+                    六维深度访谈框架确保全面评估，系统化的访谈框架涵盖职业发展、能力和潜力的综合职位评估，
+                    <strong style="color: #dd2525;">为Core 50关键岗位继任者提供科学、客观的评估标准</strong>
                 </p>
+
+                <!-- 访谈内容核心介绍 -->
+                <div class="interview-details" style="margin-bottom: 50px; padding: 30px; background: rgba(221, 37, 37, 0.05); border-radius: 15px; border-left: 5px solid #dd2525;">
+                    <h4 style="color: #dd2525; font-size: 1.3rem; margin-bottom: 20px;">
+                        <i class="fas fa-lightbulb"></i> 访谈框架核心价值
+                    </h4>
+                    <ul style="margin: 0; padding: 0; list-style: none;">
+                        <li style="margin: 15px 0; padding: 12px 0; border-bottom: 1px solid rgba(221, 37, 37, 0.1); display: flex; align-items: flex-start;">
+                            <span style="color: #dd2525; font-weight: bold; margin-right: 10px;">•</span>
+                            <div><strong style="color: #dd2525;">系统性评估：</strong>通过六个维度全面评估人才的能力、潜力和适配性，确保评估的全面性和深度</div>
+                        </li>
+                        <li style="margin: 15px 0; padding: 12px 0; border-bottom: 1px solid rgba(221, 37, 37, 0.1); display: flex; align-items: flex-start;">
+                            <span style="color: #dd2525; font-weight: bold; margin-right: 10px;">•</span>
+                            <div><strong style="color: #dd2525;">标准化流程：</strong>确保所有评估者使用一致的标准和方法，提高评估的客观性和可比性</div>
+                        </li>
+                        <li style="margin: 15px 0; padding: 12px 0; border-bottom: 1px solid rgba(221, 37, 37, 0.1); display: flex; align-items: flex-start;">
+                            <span style="color: #dd2525; font-weight: bold; margin-right: 10px;">•</span>
+                            <div><strong style="color: #dd2525;">数据驱动：</strong>基于结构化数据收集和分析，为人才决策提供科学依据和量化支持</div>
+                        </li>
+                        <li style="margin: 15px 0; padding: 12px 0; border-bottom: 1px solid rgba(221, 37, 37, 0.1); display: flex; align-items: flex-start;">
+                            <span style="color: #dd2525; font-weight: bold; margin-right: 10px;">•</span>
+                            <div><strong style="color: #dd2525;">预测性分析：</strong>识别高潜人才的发展轨迹和成功概率，提前规划继任路径</div>
+                        </li>
+                        <li style="margin: 15px 0; padding: 12px 0; display: flex; align-items: flex-start;">
+                            <span style="color: #dd2525; font-weight: bold; margin-right: 10px;">•</span>
+                            <div><strong style="color: #dd2525;">个性化发展：</strong>为每个被评估者制定针对性的发展计划和改进建议，最大化发展效果</div>
+                        </li>
+                    </ul>
+                </div>
 
                 <!-- Six-Dimensional Interview Framework Circle -->
                 <div class="interview-framework-grid">
@@ -4444,14 +4569,13 @@
                         <div class="dimension-number">1</div>
                         <h4 class="dimension-title">职业抱负 & 流动性</h4>
                         <p class="dimension-description">
-                            Explore long-term career goals, geographic flexibility, role progression expectations, and
-                            professional development aspirations.
+                            探索长期职业目标、地理灵活性、角色发展期望和专业发展抱负。
                         </p>
                         <ul class="dimension-details">
-                            <li>5-10 year career vision and objectives</li>
-                            <li>Geographic mobility and relocation preferences</li>
-                            <li>Role progression timeline and expectations</li>
-                            <li>Work-life balance priorities and constraints</li>
+                            <li>5-10年职业愿景和目标</li>
+                            <li>地理流动性和搬迁偏好</li>
+                            <li>角色发展时间表和期望</li>
+                            <li>工作与生活平衡的优先级和限制</li>
                         </ul>
                     </div>
 
@@ -4459,14 +4583,13 @@
                         <div class="dimension-number">2</div>
                         <h4 class="dimension-title">领导行为</h4>
                         <p class="dimension-description">
-                            Assess leadership style, team management approach, decision-making process, and influence
-                            capabilities.
+                            评估领导风格、团队管理方法、决策过程和影响力能力。
                         </p>
                         <ul class="dimension-details">
-                            <li>Team building and talent development approach</li>
-                            <li>Decision-making process and leadership style</li>
-                            <li>Conflict resolution and negotiation skills</li>
-                            <li>Change management and transformation experience</li>
+                            <li>团队建设和人才发展方法</li>
+                            <li>决策过程和领导风格</li>
+                            <li>冲突解决和谈判技巧</li>
+                            <li>变革管理和转型经验</li>
                         </ul>
                     </div>
 
@@ -4474,15 +4597,13 @@
                         <div class="dimension-number">3</div>
                         <h4 class="dimension-title">战略思维</h4>
                         <p class="dimension-description">
-                            Evaluate strategic thinking capabilities, market awareness, innovation mindset, and
-                            long-term
-                            vision.
+                            评估战略思维能力、市场意识、创新思维和长期愿景。
                         </p>
                         <ul class="dimension-details">
-                            <li>Market and competitive landscape understanding</li>
-                            <li>Strategic planning and execution capabilities</li>
-                            <li>Innovation and creative problem-solving</li>
-                            <li>Systems thinking and complexity management</li>
+                            <li>市场和竞争格局理解</li>
+                            <li>战略规划和执行能力</li>
+                            <li>创新和创意问题解决</li>
+                            <li>系统思维和复杂性管理</li>
                         </ul>
                     </div>
 
@@ -4490,15 +4611,13 @@
                         <div class="dimension-number">4</div>
                         <h4 class="dimension-title">业务绩效</h4>
                         <p class="dimension-description">
-                            Review track record of results delivery, operational excellence, and business impact across
-                            various
-                            roles.
+                            审查在各个职位上的成果交付记录、运营卓越性和业务影响力。
                         </p>
                         <ul class="dimension-details">
-                            <li>P&L responsibility and financial management</li>
-                            <li>Key performance metrics and achievements</li>
-                            <li>Operational excellence and process improvement</li>
-                            <li>Crisis management and turnaround experience</li>
+                            <li>损益责任和财务管理</li>
+                            <li>关键绩效指标和成就</li>
+                            <li>运营卓越和流程改进</li>
+                            <li>危机管理和转型经验</li>
                         </ul>
                     </div>
 
@@ -4506,15 +4625,13 @@
                         <div class="dimension-number">5</div>
                         <h4 class="dimension-title">学习敏捷性</h4>
                         <p class="dimension-description">
-                            Measure adaptability, curiosity, speed of learning, and ability to apply new knowledge in
-                            different
-                            contexts.
+                            衡量适应性、好奇心、学习速度和在不同情境中应用新知识的能力。
                         </p>
                         <ul class="dimension-details">
-                            <li>Speed of learning new skills and concepts</li>
-                            <li>Adaptability to changing environments</li>
-                            <li>Feedback receptivity and self-awareness</li>
-                            <li>Cross-functional and cross-cultural adaptability</li>
+                            <li>学习新技能和概念的速度</li>
+                            <li>对变化环境的适应性</li>
+                            <li>反馈接受度和自我意识</li>
+                            <li>跨职能和跨文化适应性</li>
                         </ul>
                     </div>
 
@@ -4522,204 +4639,22 @@
                         <div class="dimension-number">6</div>
                         <h4 class="dimension-title">文化契合 & 价值观</h4>
                         <p class="dimension-description">
-                            Assess alignment with organizational culture, core values, collaboration style, and team
-                            integration
-                            potential.
+                            评估与组织文化、核心价值观、协作风格和团队融合潜力的契合度。
                         </p>
                         <ul class="dimension-details">
-                            <li>Core values alignment and demonstration</li>
-                            <li>Collaboration and teamwork approach</li>
-                            <li>Integrity and ethical decision-making</li>
-                            <li>Diversity and inclusion commitment</li>
+                            <li>核心价值观契合度和体现</li>
+                            <li>协作和团队合作方式</li>
+                            <li>诚信和道德决策</li>
+                            <li>多元化和包容性承诺</li>
                         </ul>
                     </div>
                 </div>
+                </section>
             </div>
-
-
-
-
-
-
-
-
-
-            <!-- Right Side - Interview Framework Value -->
-            <div class="interview-details">
-                <h4>
-                    <i class="fas fa-gem"></i>
-                    Interview Framework Value
-                </h4>
-                <p style="color: #666; margin-bottom: 20px; font-size: 0.95rem;">
-                    Six-dimensional interview framework ensures high-quality talent evaluation, systematic and
-                    comprehensive assessment to support succession planning.
-                </p>
-
-                <p style="color: #333; font-weight: 600; margin-bottom: 15px;">Through structured interviews, we
-                    can:</p>
-
-                <ul class="interview-benefits">
-                    <li>Identify key competency and development needs</li>
-                    <li>Evaluate role fit and potential</li>
-                    <li>Understand career development aspirations and constraints</li>
-                    <li>Develop targeted development and retention plans</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Right Side Continued - Additional Dimensions -->
-        <div class="interview-overview" style="margin-top: 0;">
-            <div class="interview-dimensions">
-
-
-
-
-
-            </div>
-
-            <div style="display: flex; flex-direction: column; gap: 20px;">
-
-
-
-
-
-
-            </div>
-
-            <div class="interview-details">
-                <h4>
-                    <i class="fas fa-lightbulb"></i>
-                    Key Assessment Areas
-                </h4>
-
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px;">
-                    <div style="background: rgba(221, 37, 37, 0.1); padding: 15px; border-radius: 10px;">
-                        <h5 style="color: #dd2525; margin-bottom: 8px; font-size: 0.9rem;">🎯 Core Competencies</h5>
-                        <p style="font-size: 0.8rem; color: #666; margin: 0;">Leadership, strategic thinking,
-                            business acumen, technical skills</p>
-                    </div>
-                    <div style="background: rgba(221, 37, 37, 0.1); padding: 15px; border-radius: 10px;">
-                        <h5 style="color: #dd2525; margin-bottom: 8px; font-size: 0.9rem;">🚀 Growth Potential</h5>
-                        <p style="font-size: 0.8rem; color: #666; margin: 0;">Learning agility, adaptability,
-                            scalability, future readiness</p>
-                    </div>
-                    <div style="background: rgba(221, 37, 37, 0.1); padding: 15px; border-radius: 10px;">
-                        <h5 style="color: #dd2525; margin-bottom: 8px; font-size: 0.9rem;">🤝 Cultural Alignment
-                        </h5>
-                        <p style="font-size: 0.8rem; color: #666; margin: 0;">Values fit, collaboration, team
-                            dynamics, organizational commitment</p>
-                    </div>
-                    <div style="background: rgba(221, 37, 37, 0.1); padding: 15px; border-radius: 10px;">
-                        <h5 style="color: #dd2525; margin-bottom: 8px; font-size: 0.9rem;">⚡ Performance Track
-                            Record</h5>
-                        <p style="font-size: 0.8rem; color: #666; margin: 0;">Results delivery, impact, consistency,
-                            achievement history</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Detailed Framework Cards -->
-        <div class="detailed-framework">
-            <div class="framework-detail-card">
-                <div class="card-number">1</div>
-                <h4 class="card-title">Career Aspiration & Mobility</h4>
-                <p class="card-subtitle">Understanding long-term career goals and flexibility</p>
-                <ul class="card-details">
-                    <li>5-10 year career vision and aspirations</li>
-                    <li>Geographic mobility and relocation preferences</li>
-                    <li>Role progression expectations and timeline</li>
-                    <li>Work-life balance priorities and constraints</li>
-                    <li>Industry and functional area interests</li>
-                </ul>
-            </div>
-
-            <div class="framework-detail-card">
-                <div class="card-number">2</div>
-                <h4 class="card-title">Leadership Behaviors</h4>
-                <p class="card-subtitle">Evaluating leadership style and effectiveness</p>
-                <ul class="card-details">
-                    <li>Team building and talent development approach</li>
-                    <li>Decision-making process and style</li>
-                    <li>Conflict resolution and negotiation skills</li>
-                    <li>Influence and persuasion capabilities</li>
-                    <li>Change management and transformation experience</li>
-                </ul>
-            </div>
-
-            <div class="framework-detail-card">
-                <div class="card-number">3</div>
-                <h4 class="card-title">Strategic Mindset</h4>
-                <p class="card-subtitle">Assessing strategic thinking and vision</p>
-                <ul class="card-details">
-                    <li>Market and competitive landscape awareness</li>
-                    <li>Long-term strategic planning capabilities</li>
-                    <li>Innovation and creative problem-solving</li>
-                    <li>Systems thinking and complexity management</li>
-                    <li>Future trends identification and adaptation</li>
-                </ul>
-            </div>
-
-            <div class="framework-detail-card">
-                <div class="card-number">4</div>
-                <h4 class="card-title">Business Performance</h4>
-                <p class="card-subtitle">Reviewing track record and results delivery</p>
-                <ul class="card-details">
-                    <li>P&L responsibility and financial management</li>
-                    <li>Operational excellence and process improvement</li>
-                    <li>Key performance metrics and achievements</li>
-                    <li>Crisis management and turnaround experience</li>
-                    <li>Stakeholder management and relationship building</li>
-                </ul>
-            </div>
-
-            <div class="framework-detail-card">
-                <div class="card-number">5</div>
-                <h4 class="card-title">Learning Agility</h4>
-                <p class="card-subtitle">Measuring adaptability and growth potential</p>
-                <ul class="card-details">
-                    <li>Speed of learning new skills and concepts</li>
-                    <li>Adaptability to changing environments</li>
-                    <li>Curiosity and continuous improvement mindset</li>
-                    <li>Feedback receptivity and self-awareness</li>
-                    <li>Cross-functional and cross-cultural adaptability</li>
-                </ul>
-            </div>
-
-            <div class="framework-detail-card">
-                <div class="card-number">6</div>
-                <h4 class="card-title">Cultural Fit & Values</h4>
-                <p class="card-subtitle">Ensuring alignment with organizational culture</p>
-                <ul class="card-details">
-                    <li>Core values alignment and demonstration</li>
-                    <li>Collaboration and teamwork approach</li>
-                    <li>Integrity and ethical decision-making</li>
-                    <li>Diversity and inclusion commitment</li>
-                    <li>Organizational citizenship and engagement</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Interview Methodology -->
-        <div class="interview-methodology">
-            <div class="methodology-title">
-                <i class="fas fa-clipboard-check"></i>
-                Interview Results and HRBP Professional Service Shared Responsibility
-            </div>
-            <div class="methodology-content">
-                Interview results are shared with HRBP professional services to ensure consistency and objectivity.
-                This collaborative approach enables comprehensive talent evaluation and supports strategic
-                succession planning decisions.
-            </div>
-        </div>
-        </section>
-
-        </section>
-    </div>
 
     <!-- Traffic Light Dashboard -->
     <div class="tab-content" id="dashboard-tab">
-        <section id="dashboard" class="section glass interactive-card"></section>
+        <section id="dashboard" class="section glass interactive-card">
         <h2 class="section-title">
             <span class="section-icon">🚦</span>
             交通灯仪表盘
@@ -4786,11 +4721,11 @@
 
         <!-- Pie Chart -->
         <div class="chart-container"
-            style="background: rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 20px; margin: 30px 0;">
+            style="background: rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 20px; margin: 30px 0; width: 100%;">
             <h3 style="text-align: center; margin-bottom: 20px; color: #dd2525;">
                 <i class="fas fa-chart-pie"></i> 继任准备度分布
             </h3>
-            <canvas id="trafficPieChart" style="max-height: 250px;"></canvas>
+            <canvas id="trafficPieChart" style="max-height: 250px; width: 100%;"></canvas>
 
             <!-- Visual representation of the data -->
             <div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin-top: 20px;">
@@ -4818,24 +4753,13 @@
             </div>
         </div>
 
-        <div class="glass" style="padding: 20px; margin-top: 30px; text-align: center;">
-            <h4 style="color: #dd2525; margin-bottom: 10px;">
-                <i class="fas fa-lightbulb"></i> Key Insight
-            </h4>
-            <p><strong>Red lights cluster</strong> in Marketing & R&D. Launch targeted retention for all Red/Yellow
-                incumbents to curb short-term flight risk.</p>
-            <button class="filter-btn" onclick="showActionPlan()" style="margin-top: 15px;">
-                <i class="fas fa-rocket"></i> View Action Plan
-            </button>
-        </div>
-        </section>
 
         </section>
     </div>
 
     <!-- 5B Framework -->
     <div class="tab-content" id="framework-tab">
-        <section id="framework" class="section glass interactive-card"></section>
+        <section id="framework" class="section glass interactive-card">
         <h2 class="section-title">
             <span class="section-icon">🔗</span>
             5B Systemic Strategy Framework
@@ -5191,21 +5115,20 @@
             </div>
         </div>
         </section>
-
-        </section>
     </div>
 
     <!-- RACI Matrix Section -->
     <div class="tab-content" id="raci-tab">
-        <section id="raci" class="section glass interactive-card"></section>
+        <section id="raci" class="section glass interactive-card">
+        <h2 class="section-title">
+            <span class="section-icon"><i class="fas fa-users-cog"></i></span>
+            RACI Responsibility Matrix
+        </h2>
         <div class="raci-header">
-            <h2 style="font-size: 2.5rem; font-weight: 800; margin: 0; position: relative; z-index: 1;">
-                <i class="fas fa-users-cog"></i> RACI Responsibility Matrix
-            </h2>
-            <div class="raci-subtitle">
-                Phased implementation of talent evaluation and development framework, utilizing RACI responsibility
-                allocation to ensure Core 50 key position succession health
-            </div>
+        <p style="font-size: 1.1rem; color: #666; margin-bottom: 40px; text-align: center;">
+            Phased implementation of talent evaluation and development framework, utilizing RACI responsibility allocation to ensure Core 50 key position succession health
+        </p>
+        <div class="raci-content">
 
             <!-- RACI Legend -->
             <div class="raci-legend">
@@ -5460,21 +5383,18 @@
             </div>
         </div>
         </section>
-
-        </section>
     </div>
 
     <!-- Talent Insights -->
     <div class="tab-content" id="insights-tab">
-        <section id="insights" class="section glass interactive-card"></section>
-        <div class="insights-hero">
-            <h1 class="insights-title">
-                <i class="fas fa-brain"></i> Talent Insights
-            </h1>
-            <p class="insights-subtitle">
-                Advanced analytics and intelligent recommendations to optimize your Core 50 succession strategy
-            </p>
-        </div>
+        <section id="insights" class="section glass interactive-card">
+        <h2 class="section-title">
+            <span class="section-icon"><i class="fas fa-brain"></i></span>
+            Talent Insights
+        </h2>
+        <p style="font-size: 1.1rem; color: #666; margin-bottom: 40px; text-align: center;">
+            Advanced analytics and intelligent recommendations to optimize your Core 50 succession strategy
+        </p>
 
         <!-- Key Insights Grid -->
         <div class="insights-grid">
@@ -5795,13 +5715,11 @@
             </div>
         </div>
         </section>
-
-        </section>
     </div>
 
     <!-- Data-Driven Strategic Recommendations -->
     <div class="tab-content" id="strategy-tab">
-        <section id="strategy" class="section glass interactive-card"></section>
+        <section id="strategy" class="section glass interactive-card">
         <h2 class="section-title">
             <span class="section-icon">🎯</span>
             Strategic Action Plan
@@ -7978,6 +7896,51 @@
     </div> <!-- Close tab-content-container -->
     </div> <!-- Close container -->
 
+    <script>
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show the selected tab content
+            const selectedTab = document.getElementById(tabName + '-tab');
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+            
+            // Add active class to the clicked button
+            const clickedButton = document.querySelector(`[data-tab="${tabName}"]`);
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            }
+        }
+        
+        // Other functions (simplified)
+        function openModal(modalId) { console.log('Modal:', modalId); }
+        function filterDashboard(filter) { console.log('Filter:', filter); }
+        function showDetailedView() { console.log('Detailed view'); }
+        function showActionPlan() { console.log('Action plan'); }
+        function show5BDetail(strategy) { console.log('5B:', strategy); }
+        function showCombinationDetail(combination) { console.log('Combination:', combination); }
+        function showPhaseDetail(phase) { console.log('Phase:', phase); }
+        function showMetricsDetail() { console.log('Metrics'); }
+        function showTimelineDetail(phase) { console.log('Timeline:', phase); }
+        function showRACIPhase(phase) { console.log('RACI:', phase); }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            showTab('title');
+        });
+    </script>
 </body>
 
 </html>

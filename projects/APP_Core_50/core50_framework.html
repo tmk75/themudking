@@ -4657,7 +4657,7 @@
         <section id="dashboard" class="section glass interactive-card">
         <h2 class="section-title">
             <span class="section-icon">🚦</span>
-            交通灯仪表盘
+            仪表盘
             <button class="filter-btn" onclick="showDetailedView()" style="margin-left: auto; font-size: 14px;">
                 <i class="fas fa-chart-bar"></i> 详细视图
             </button>
@@ -7943,4 +7943,377 @@
     </script>
 </body>
 
+</html>
+
+<script>
+// Tab switching functionality
+function showTab(tabName) {
+    // Hide all tab contents
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(content => {
+        content.classList.remove('active');
+    });
+
+    // Remove active class from all tab buttons
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(button => {
+        button.classList.remove('active');
+    });
+
+    // Show selected tab content
+    const selectedTab = document.getElementById(tabName + '-tab');
+    if (selectedTab) {
+        selectedTab.classList.add('active');
+    }
+
+    // Add active class to clicked button
+    const activeButton = document.querySelector(`[data-tab="${tabName}"]`);
+    if (activeButton) {
+        activeButton.classList.add('active');
+    }
+}
+
+// Mock data for different departments
+const departmentData = {
+    all: { red: 15, yellow: 20, green: 65 },
+    marketing: { red: 35, yellow: 40, green: 25 },
+    rd: { red: 30, yellow: 25, green: 45 },
+    operations: { red: 10, yellow: 15, green: 75 },
+    finance: { red: 5, yellow: 20, green: 75 }
+};
+
+const departmentNames = {
+    all: '所有部门',
+    marketing: '市场部',
+    rd: '研发部', 
+    operations: '运营部',
+    finance: '财务部'
+};
+
+// Dashboard filter functionality
+function filterDashboard(department) {
+    // Remove active class from all filter buttons
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(button => {
+        button.classList.remove('active');
+    });
+
+    // Add active class to clicked button
+    event.target.classList.add('active');
+    
+    // Update dashboard data
+    updateDashboardData(department);
+    
+    // Show toast notification
+    showToast(`已筛选 ${departmentNames[department]} 数据`);
+}
+
+// Update dashboard data based on selected department
+function updateDashboardData(department) {
+    const data = departmentData[department];
+    
+    // Update counter values
+    const redCounter = document.querySelector('.red-light .counter');
+    const yellowCounter = document.querySelector('.yellow-light .counter');
+    const greenCounter = document.querySelector('.green-light .counter');
+    
+    if (redCounter) {
+        animateCounter(redCounter, data.red);
+        redCounter.setAttribute('data-target', data.red);
+    }
+    if (yellowCounter) {
+        animateCounter(yellowCounter, data.yellow);
+        yellowCounter.setAttribute('data-target', data.yellow);
+    }
+    if (greenCounter) {
+        animateCounter(greenCounter, data.green);
+        greenCounter.setAttribute('data-target', data.green);
+    }
+    
+    // Update progress bars
+    const redProgress = document.querySelector('.red-light .progress-bar');
+    const yellowProgress = document.querySelector('.yellow-light .progress-bar');
+    const greenProgress = document.querySelector('.green-light .progress-bar');
+    
+    if (redProgress) redProgress.style.width = data.red + '%';
+    if (yellowProgress) yellowProgress.style.width = data.yellow + '%';
+    if (greenProgress) greenProgress.style.width = data.green + '%';
+    
+    // Update pie chart
+    updatePieChart(data);
+}
+
+// Animate counter to new value
+function animateCounter(element, target) {
+    let current = 0;
+    const increment = target / 50;
+    
+    const updateCounter = () => {
+        if (current < target) {
+            current += increment;
+            element.textContent = Math.ceil(current) + '%';
+            setTimeout(updateCounter, 20);
+        } else {
+            element.textContent = target + '%';
+        }
+    };
+    
+    updateCounter();
+}
+
+// Update pie chart with new data
+function updatePieChart(data) {
+    if (window.dashboardChart) {
+        window.dashboardChart.data.datasets[0].data = [data.green, data.yellow, data.red];
+        window.dashboardChart.update();
+    }
+}
+
+// Modal functionality
+function openModal(modalId) {
+    let title, content;
+    
+    switch(modalId) {
+        case 'redModal':
+            title = '红灯 - 高风险职位';
+            content = '这些职位目前没有合格的继任者，需要立即采取行动：<br>• 启动外部招聘<br>• 加速内部培养<br>• 制定应急计划';
+            break;
+        case 'yellowModal':
+            title = '黄灯 - 中等风险职位';
+            content = '这些职位有潜在继任者，但需要3-5年准备时间：<br>• 加速发展计划<br>• 制定应急预案<br>• 监控进展';
+            break;
+        case 'greenModal':
+            title = '绿灯 - 准备就绪职位';
+            content = '这些职位有准备就绪的继任者：<br>• 监控进展<br>• 锁定保留策略<br>• 持续发展';
+            break;
+    }
+    
+    showModal(title, content);
+}
+
+// Show modal function
+function showModal(title, content) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'block';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close" onclick="closeModal(this)">&times;</span>
+            <h2 style="color: #dd2525; margin-bottom: 20px;">${title}</h2>
+            <p style="line-height: 1.6;">${content}</p>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+// Close modal function
+function closeModal(element) {
+    const modal = element.closest('.modal');
+    modal.remove();
+}
+
+// Show toast notification
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast show';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+// Detailed view functionality
+function showDetailedView() {
+    showToast('详细视图功能开发中...');
+}
+
+// 5B Framework detail functionality
+function show5BDetail(strategy) {
+    const strategies = {
+        bind: { name: 'BIND', desc: '情感依附与保留策略' },
+        buy: { name: 'BUY', desc: '快速填补关键缺口' },
+        build: { name: 'BUILD', desc: '长期能力增长' },
+        borrow: { name: 'BORROW', desc: '灵活能力注入' },
+        bounce: { name: 'BOUNCE', desc: '韧性与应急' }
+    };
+    
+    const info = strategies[strategy];
+    showModal(`${info.name} 策略`, `${info.desc}<br><br>点击了解更多关于 ${info.name} 策略的详细信息和实施方案。`);
+}
+
+// Combination detail functionality
+function showCombinationDetail(combination) {
+    const combinations = {
+        dynamic: '动态平衡策略 - 平衡内外部人才获取',
+        optimization: '优化策略 - 创建灵活的能力提升',
+        resilience: '韧性策略 - 高层支持与跨部门协作'
+    };
+    
+    showModal('策略组合详情', combinations[combination] || '策略组合信息');
+}
+
+// Phase detail functionality
+function showPhaseDetail(phase) {
+    const phases = {
+        assessment: '评估与分析阶段 - 全面人才审计和差距分析',
+        design: '策略设计阶段 - 基于组织需求开发5B组合策略',
+        execution: '执行与优化阶段 - 持续监控和自适应调整'
+    };
+    
+    showModal('实施阶段详情', phases[phase] || '阶段信息');
+}
+
+// Metrics detail functionality
+function showMetricsDetail() {
+    showModal('详细分析', '策略效果指标详细分析：<br>• BIND成功率: 78%<br>• BUY效率: 65%<br>• BUILD投资回报: 85%<br>• BORROW灵活性: 55%<br>• BOUNCE韧性: 72%');
+}
+
+// Timeline detail functionality
+function showTimelineDetail(phase) {
+    const phases = {
+        phase1: '第一阶段：评估 (第1-4周) - 完成人才审计和继任准备度评估',
+        phase2: '第二阶段：策略设计 (第5-8周) - 为每个继任缺口制定5B策略',
+        phase3: '第三阶段：实施 (第9-12周) - 执行发展计划和保留策略'
+    };
+    
+    showModal('时间线详情', phases[phase] || '阶段信息');
+}
+
+// RACI phase functionality
+function showRACIPhase(phase) {
+    const phases = {
+        '30day': '30天行动计划 - 完成人才审计，建立基线指标，利益相关者对齐',
+        '60day': '60天行动计划 - 完成高潜人才识别评估，建立发展路线图',
+        '90day': '90天行动计划 - 完成继任准备度评估，建立人才发展和保留策略'
+    };
+    
+    showModal('RACI阶段详情', phases[phase] || '阶段信息');
+}
+
+// Mock Data
+const mockData = {
+    departments: {
+        all: { red: 15, yellow: 20, green: 65, positions: ['CEO', 'CTO', 'CFO', 'CMO', 'COO'] },
+        marketing: { red: 35, yellow: 30, green: 35, positions: ['VP Marketing', 'Brand Director', 'Digital Marketing Head'] },
+        rd: { red: 30, yellow: 25, green: 45, positions: ['CTO', 'Head of Innovation', 'R&D Director'] },
+        operations: { red: 10, yellow: 15, green: 75, positions: ['COO', 'Operations Director', 'Supply Chain Head'] },
+        finance: { red: 5, yellow: 20, green: 75, positions: ['CFO', 'Finance Director', 'Treasury Head'] }
+    },
+    positions: {
+        red: [
+            { name: 'VP Marketing', department: 'Marketing', risk: 'High', successor: 'None', timeline: 'Immediate' },
+            { name: 'Head of Innovation', department: 'R&D', risk: 'Critical', successor: 'None', timeline: 'Immediate' },
+            { name: 'Regional Sales Director', department: 'Sales', risk: 'High', successor: 'External Only', timeline: '3-6 months' }
+        ],
+        yellow: [
+            { name: 'Brand Director', department: 'Marketing', risk: 'Medium', successor: 'In Development', timeline: '2-3 years' },
+            { name: 'Digital Marketing Head', department: 'Marketing', risk: 'Medium', successor: 'Identified', timeline: '3-4 years' },
+            { name: 'Product Manager', department: 'Product', risk: 'Medium', successor: 'Training', timeline: '2-3 years' }
+        ],
+        green: [
+            { name: 'CFO', department: 'Finance', risk: 'Low', successor: 'Ready', timeline: '6-12 months' },
+            { name: 'Operations Director', department: 'Operations', risk: 'Low', successor: 'Ready', timeline: '1-2 years' },
+            { name: 'HR Director', department: 'HR', risk: 'Low', successor: 'Multiple Options', timeline: 'Immediate' }
+        ]
+    },
+    strategies: {
+        bind: { effectiveness: 78, description: '情感依附与保留策略', actions: ['个性化职业路径', '认可奖励计划', '工作生活平衡'] },
+        buy: { effectiveness: 65, description: '快速填补关键缺口', actions: ['市场情报分析', '竞争性薪酬包', '猎头合作'] },
+        build: { effectiveness: 85, description: '长期能力增长', actions: ['70-20-10发展模式', '导师指导计划', '领导力学院'] },
+        borrow: { effectiveness: 55, description: '灵活能力注入', actions: ['零工经济合作', '战略联盟', '咨询专家'] },
+        bounce: { effectiveness: 72, description: '韧性与应急', actions: ['敏捷组织设计', '危机人才储备', '跨培训计划'] }
+    }
+};
+
+// Update dashboard with filtered data
+function updateDashboard(department) {
+    const data = mockData.departments[department];
+    
+    // Update percentages
+    document.querySelector('.red-light .light-percentage').textContent = data.red + '%';
+    document.querySelector('.yellow-light .light-percentage').textContent = data.yellow + '%';
+    document.querySelector('.green-light .light-percentage').textContent = data.green + '%';
+    
+    // Update progress bars
+    document.querySelector('.red-light .progress-bar').style.width = data.red + '%';
+    document.querySelector('.yellow-light .progress-bar').style.width = data.yellow + '%';
+    document.querySelector('.green-light .progress-bar').style.width = data.green + '%';
+    
+    // Update chart if exists
+    if (window.dashboardChart) {
+        window.dashboardChart.data.datasets[0].data = [data.green, data.yellow, data.red];
+        window.dashboardChart.update();
+    }
+}
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize counters animation
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const increment = target / 100;
+        let current = 0;
+        
+        const updateCounter = () => {
+            if (current < target) {
+                current += increment;
+                counter.textContent = Math.ceil(current) + '%';
+                setTimeout(updateCounter, 20);
+            } else {
+                counter.textContent = target + '%';
+            }
+        };
+        
+        updateCounter();
+    });
+
+    // Initialize scroll progress
+    window.addEventListener('scroll', function() {
+        const scrollProgress = document.getElementById('scrollProgress');
+        if (scrollProgress) {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.offsetHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        }
+    });
+    
+    // Initialize Chart.js pie chart
+    const ctx = document.getElementById('trafficPieChart');
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['绿灯 (65%)', '黄灯 (20%)', '红灯 (15%)'],
+                datasets: [{
+                    data: [65, 20, 15],
+                    backgroundColor: ['#28a745', '#ffc107', '#dc3545'],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            font: {
+                                size: 14
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+
+</body>
 </html>
